@@ -1,0 +1,10 @@
+History.txt
+Manifest.txt
+README.txt
+Rakefile
+bin/rem
+lib/rem.rb
+lib/rem/batch_file.rb
+lib/rem/windows_env.rb
+lib/rem/windows_file.rb
+test/test_rem.rb
