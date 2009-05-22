@@ -1,3 +1,10 @@
 #!/usr/bin/env ruby
 
-abort "you need to write me"
+require File.join(File.dirname(__FILE__), '..', 'lib', 'rem')
+
+unless File.exist? REM_HOME
+	puts "creating #{REM_HOME}"
+	FileUtils.mkpath REM_HOME 
+end
+
+abort "you need to write the rest of me"

@@ -5,6 +5,9 @@ Rakefile
 bin/rem
 lib/rem.rb
 lib/rem/batch_file.rb
+lib/rem/ruby_manager.rb
+lib/rem/search_path.rb
 lib/rem/windows_env.rb
 lib/rem/windows_file.rb
-test/test_rem.rb
+spec/batch_file_spec.rb
+spec/search_path_spec.rb

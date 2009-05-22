@@ -5,5 +5,9 @@ class WindowsFile < File
 		super.gsub('/','\\')
 	end
 
+	def self.to_ruby
+		super.gsub('\\','/')
+	end
+
 end
 
