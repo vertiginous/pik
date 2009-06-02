@@ -1,4 +1,4 @@
-require 'lib/rem/search_path'
+require 'lib/pik/search_path'
 
 describe SearchPath do
 

@@ -1,0 +1,22 @@
+#!/usr/bin/env ruby
+
+# pik 186
+# pik 186 mingw 
+# pik 191 --system
+# pik default
+
+# pik config default=186 mingw
+# pik config home
+# pik config rubyopt=(on|off)
+
+# pik checkup
+
+# pik search
+# pik add (path_to_ruby)
+# pik help (command)
+
+
+require File.join(File.dirname(__FILE__), '..', 'lib', 'pik')
+
+Pik::Runner.execute
+

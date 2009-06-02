@@ -6,7 +6,14 @@ class SearchPath
 	end
 
 	def replace(old, new)
-		@path.map!{|dir|old === dir ? new : dir }
+		@path.map!{|dir| 
+			case dir
+			when old 
+				new 
+			else 
+				dir 
+			end
+		}.uniq!
 		self
 	end
 

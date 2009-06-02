@@ -1,10 +1,9 @@
-= rem
+= pik
 
-* FIX (url)
 
 == DESCRIPTION:
 
-FIX (describe your package)
+PIK, the ruby manager for windows
 
 == FEATURES/PROBLEMS:
 

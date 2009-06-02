@@ -1,0 +1,102 @@
+---
+config: |-
+  this is help for the config command
+   <%= File.basename($0) %> config default=186 mingw
+   <%= File.basename($0) %> config home
+   <%= File.basename($0) %> config rubyopt=(on|off)
+
+add: |-
+  <%= File.basename($0) %> add [-i]|[path_to_ruby]
+  
+      <%= File.basename($0) %> add path_to_ruby     Adds the path if ruby.exe is found.
+      <%= File.basename($0) %> add -i               Opens up interactive mode.
+  
+
+checkup: |-
+  <%= File.basename($0) %> checkup
+
+rm: |-
+  <%= File.basename($0) %> rm [patern1 pattern2 ... pattern*]
+  
+  Removes the 
+
+run: |-
+  <%= File.basename($0) %> run "command args"
+
+rm: |-
+  <%= File.basename($0) %> rm
+  
+  Searches the current drive for ruby 
+  installations, and prompts you if you want to add them
+
+commands: |-
+
+  <%= File.basename($0) %> commands are:
+  
+      add           Add another ruby location to <%= File.basename($0) %>.
+      checkup       Checks your environment for current Ruby best practices.
+      run           Runs command with all version of ruby that <%= File.basename($0) %> is aware of.
+      rm            Remove a ruby location from <%= File.basename($0) %>.
+      help          Diskplays help topics.
+      
+  
+  For help on a particular command, use '<%= File.basename($0) %> help COMMAND'.
+
+help: |-
+  This is the over all help file
+
+  To get help with a command
+
+    <%= File.basename($0) %> help (command)
+  
+  To list all commands:
+
+    <%= File.basename($0) %> help commands
+
+no_text: No text exists for the command '<%= command %>'
+
+rubyopt: 
+  :fail: |-
+    FAIL
+    The 'rubyopt' environment variable is set.  Consider turning this off
+    by running 'pik config rubyopt=off'.
+
+
+  :pass: |-
+    PASS
+    The 'rubyopt' environment variable is not set.
+
+home:
+  :fail: |-
+    FAIL
+    The 'home' environment variable is not set.  Consider adding this
+    by running 'pik config home' to set it to '<%= ENV['homedrive']}#{ENV['homepath'] %>'
+    or 'pik config home=(another_path)' to set it to something else.
+
+  :pass: |-
+    PASS
+    The 'home' environment variable is set.
+
+
+path:
+  :fail: |-
+    FAIL
+    You have more than one ruby path in your system path.
+    Consider fixing this.
+
+  :pass: |-
+    PASS
+    Your path has only one path to ruby.exe.
+
+pathext:
+  :fail: |-
+    FAIL
+    The .rb and .rbw file extensions are missing from the pathext environment variable.
+    You can add them by running 'pik config pathext'
+
+  :pass: |-
+    PASS
+    The pathext environment variable contains the .rb and .rbw file extensions.
+
+no_ruby: This is not a valid path to ruby.exe
+
