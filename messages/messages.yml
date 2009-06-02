@@ -24,16 +24,24 @@ ls: |-
 rm: |-
   <%= File.basename($0) %> rm [patern1 pattern2 ... pattern*]
   
-  Removes the 
+  Removes ruby versions, if you no longer care about them. 
 
 run: |-
   <%= File.basename($0) %> run "command args"
 
-rm: |-
-  <%= File.basename($0) %> rm
+switch: |-
+  <%= File.basename($0) %> switch [patern1 pattern2 ... pattern*]
   
-  Searches the current drive for ruby 
-  installations, and prompts you if you want to add them
+    Switches ruby versions based on a pattern.
+  
+    Examples:
+
+      C:\>pik switch 186 mingw
+      Switching to 186: ruby 1.8.6 (2009-03-31 patchlevel 368) [i386-mingw32]
+        
+      C:>pik switch 191 p0
+      Switching to 191: ruby 1.9.1p0 (2009-01-30 revision 21907) [i386-mingw32]    
+
 
 commands: |-
 
@@ -44,6 +52,7 @@ commands: |-
       list|ls       Lists ruby versions that <%= File.basename($0) %> is aware of.
       run           Runs command with all version of ruby that <%= File.basename($0) %> is aware of.
       rm            Remove a ruby location from <%= File.basename($0) %>.
+      switch        Switches to another ruby location.
       help          Displays help topics.
       
   

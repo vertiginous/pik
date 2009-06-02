@@ -46,7 +46,7 @@ class Pik
 		def run(command)
 			current_dir = @config[get_version]
 			@config.sort.each do |version,ruby_dir|
-				@pik_batch.echo "Running with #{version}"
+				@pik_batch.echo " == Running with #{version} == "
 				switch_path_to(ruby_dir)
 				@pik_batch.call command
 				@pik_batch.echo "."
@@ -113,6 +113,7 @@ class Pik
 
     def help(arg='help')
       @hl.say(message[arg])
+			puts
     end
 
 		def message
