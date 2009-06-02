@@ -1,25 +1,42 @@
 = pik
 
+  Gordon Thiesfeld
 
 == DESCRIPTION:
 
-PIK, the ruby manager for windows
+  PIK, the ruby manager for windows
 
 == FEATURES/PROBLEMS:
 
-* FIX (list of features or problems)
+  Currently, changes are to the open cmd session only.  I haven't wired up the --global switch yet.
 
 == SYNOPSIS:
 
-  FIX (code sample of usage)
+  pik commands are:
+  
+      add           Add another ruby location to pik.
+      checkup       Checks your environment for current Ruby best practices.
+      run           Runs command with all version of ruby that pik is aware of.
+      rm            Remove a ruby location from pik.
+      help          Diskplays help topics.
+  
+  
+  For help on a particular command, use 'pik help COMMAND'.
 
 == REQUIREMENTS:
 
-* FIX (list of requirements)
+  Windows, Ruby, Rubygems
 
 == INSTALL:
 
-* FIX (sudo gem install, anything else)
+  1. gem install pik
+  
+  2. pik add path_to_ruby_bin
+  
+  3. repeat step 2 as many times as necessary,
+     or use 'pik add -i'
+  
+  4. pik run "gem install pik" 
 
 == LICENSE:
 
