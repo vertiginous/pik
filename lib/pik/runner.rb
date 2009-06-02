@@ -39,7 +39,8 @@ class Pik
       # rescue ArgumentError
       #   text(@commands.first)
       #   exit 1
-      # end      
+      # end   
+			puts
     end
 		
 		def run(command)
@@ -68,13 +69,14 @@ class Pik
 
 		def rm(*patterns)
 			to_rm = choose_from(patterns)
-			@hl.say("Removing #{to_rm}")
-			@config.delete(to_rm)
+			if @hl.agree("Are you sure you'd like to remove '#{to_rm}'? [Yn] ")
+				@config.delete(to_rm)
+				@hl.say("#{to_rm} removed")
+			end
 		end
 		
     def checkup
       puts Checkup.new(message).check
-      puts
     end
 
     def config(*args)
@@ -95,8 +97,9 @@ class Pik
     end
 		
 		def list
-			puts @config.keys
+			puts @config.keys.sort
 		end
+		alias :ls :list
 
     def switch(*patterns)
 			new_ver  = choose_from(patterns)

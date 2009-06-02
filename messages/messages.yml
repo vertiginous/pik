@@ -15,6 +15,12 @@ add: |-
 checkup: |-
   <%= File.basename($0) %> checkup
 
+list: <%= File.basename($0) %> list
+ls: |-
+  <%= File.basename($0) %> ls
+  an alias for the list command.
+  see pik help list
+
 rm: |-
   <%= File.basename($0) %> rm [patern1 pattern2 ... pattern*]
   
@@ -35,9 +41,10 @@ commands: |-
   
       add           Add another ruby location to <%= File.basename($0) %>.
       checkup       Checks your environment for current Ruby best practices.
+      list|ls       Lists ruby versions that <%= File.basename($0) %> is aware of.
       run           Runs command with all version of ruby that <%= File.basename($0) %> is aware of.
       rm            Remove a ruby location from <%= File.basename($0) %>.
-      help          Diskplays help topics.
+      help          Displays help topics.
       
   
   For help on a particular command, use '<%= File.basename($0) %> help COMMAND'.
