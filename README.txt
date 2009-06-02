@@ -1,6 +1,7 @@
 = pik
 
-  Gordon Thiesfeld
+http://github.com/vertiginous/pik/tree/master
+Gordon Thiesfeld
 
 == DESCRIPTION:
 
@@ -22,6 +23,22 @@
   
   
   For help on a particular command, use 'pik help COMMAND'.
+
+  >pik run "rake -V"
+  Running with 185: ruby 1.8.5 (2006-12-25 patchlevel 12) [i386-mswin32]
+  rake, version 0.8.7
+  
+  Running with 186: ruby 1.8.6 (2008-08-11 patchlevel 287) [i386-mswin32]
+  rake, version 0.8.7
+  
+  Running with 186: ruby 1.8.6 (2009-03-31 patchlevel 368) [i386-mingw32]
+  rake, version 0.8.7
+  
+  Running with 191: ruby 1.9.1p0 (2009-01-30 revision 21907) [i386-mingw32]
+  rake, version 0.8.3
+  
+  Running with 191: ruby 1.9.1p129 (2009-05-12 revision 23412) [i386-mingw32]
+  rake, version 0.8.7
 
 == REQUIREMENTS:
 
