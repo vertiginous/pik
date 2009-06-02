@@ -1,3 +1,10 @@
+=== 0.0.2 / 2009-06-02
+ 
+* several minor enhancements
+  *updated help messages
+  *updated readme
+  *some formatting of output
+
 === 0.0.1 / 2009-06-02
 
 * 1 major enhancement
