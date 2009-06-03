@@ -231,7 +231,6 @@ class Pik
   # Installs a sigint handler.
 
   def add_sigint_handler
-    puts 'adding sigint handler'
     trap 'INT' do
       raise QuitError
     end

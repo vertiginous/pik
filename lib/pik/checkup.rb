@@ -42,7 +42,8 @@ class Pik
 
 		def path
 			dirs = (WindowsEnv.user['path'] + WindowsEnv.system['path']).split(';')
-			unless dirs.grep(/ruby/) == 1
+			dirs = dirs.select{|dir| File.exist?( File.join(dir,'ruby.exe') ) }
+			unless dirs.size == 1
 				fail('path')				
 			else
 				pass('path')
