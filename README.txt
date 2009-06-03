@@ -28,10 +28,11 @@ Gordon Thiesfeld
   
       add           Add another ruby location to pik.
       checkup       Checks your environment for current Ruby best practices.
+      list|ls       Lists ruby versions that pik is aware of.
       run           Runs command with all version of ruby that pik is aware of.
-      rm            Remove a ruby location from pik.
-      switch        Switches to a different version.
-      help          Diskplays help topics.
+      remove|rm     Remove a ruby location from pik.
+      switch|sw     Switches to another ruby location.
+      help          Displays help topics.
   
   
   For help on a particular command, use 'pik help COMMAND'.
