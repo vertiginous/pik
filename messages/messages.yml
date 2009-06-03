@@ -1,36 +1,43 @@
 ---
 config: |-
   this is help for the config command
-   <%= File.basename($0) %> config default=186 mingw
-   <%= File.basename($0) %> config home
-   <%= File.basename($0) %> config rubyopt=(on|off)
+   pik config default=186 mingw
+   pik config home
+   pik config rubyopt=(on|off)
 
 add: |-
-  <%= File.basename($0) %> add [-i]|[path_to_ruby]
+  pik add [-i]|[path_to_ruby]
   
-      <%= File.basename($0) %> add path_to_ruby     Adds the path if ruby.exe is found.
-      <%= File.basename($0) %> add -i               Opens up interactive mode.
+    pik add path_to_ruby     Adds the path if ruby.exe is found.
+    pik add -i               Opens up interactive mode.
   
 
 checkup: |-
-  <%= File.basename($0) %> checkup
+  pik checkup
 
-list: <%= File.basename($0) %> list
+list: pik list
 ls: |-
-  <%= File.basename($0) %> ls
-  an alias for the list command.
-  see pik help list
+  pik ls
+  
+    An alias for the list command.
+    See 'pik help list' for usage.
+
+remove: |-
+  pik remove [patern1 pattern2 ... pattern*]
+  
+    Removes ruby versions, if you no longer care about them. 
 
 rm: |-
-  <%= File.basename($0) %> rm [patern1 pattern2 ... pattern*]
+  pik rm
   
-  Removes ruby versions, if you no longer care about them. 
+  An alias for the remove command.
+  See 'pik help remove' for usage.
 
 run: |-
-  <%= File.basename($0) %> run "command args"
+  pik run "command args"
 
 switch: |-
-  <%= File.basename($0) %> switch [patern1 pattern2 ... pattern*]
+  pik switch [patern1 pattern2 ... pattern*]
   
     Switches ruby versions based on a pattern.
   
@@ -42,34 +49,40 @@ switch: |-
       C:>pik switch 191 p0
       Switching to 191: ruby 1.9.1p0 (2009-01-30 revision 21907) [i386-mingw32]    
 
+sw: |-
+  pik sw
+
+    An alias for the switch command.
+    See 'pik help switch' for usage.
 
 commands: |-
 
-  <%= File.basename($0) %> commands are:
+  pik commands are:
   
-      add           Add another ruby location to <%= File.basename($0) %>.
+      add           Add another ruby location to pik.
       checkup       Checks your environment for current Ruby best practices.
-      list|ls       Lists ruby versions that <%= File.basename($0) %> is aware of.
-      run           Runs command with all version of ruby that <%= File.basename($0) %> is aware of.
-      rm            Remove a ruby location from <%= File.basename($0) %>.
-      switch        Switches to another ruby location.
+      list|ls       Lists ruby versions that pik is aware of.
+      run           Runs command with all version of ruby that pik is aware of.
+      remove|rm     Remove a ruby location from pik.
+      switch|sw     Switches to another ruby location.
       help          Displays help topics.
       
   
-  For help on a particular command, use '<%= File.basename($0) %> help COMMAND'.
+  For help on a particular command, use 'pik help COMMAND'.
 
 help: |-
   This is the over all help file
 
   To get help with a command
 
-    <%= File.basename($0) %> help (command)
+    pik help (command)
   
   To list all commands:
 
-    <%= File.basename($0) %> help commands
+    pik help commands
 
-no_text: No text exists for the command '<%= command %>'
+no_help: No help message exists for this command
+quit: Quitting...
 
 rubyopt: 
   :fail: |-
