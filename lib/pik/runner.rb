@@ -51,7 +51,7 @@ class Pik
     end
     
     def run(command)
-      current_dir = @config[get_version]
+      current_dir = @config[get_version][:path]
       @config.sort.each do |version,hash|
         ruby_dir = hash[:path]
         @pik_batch.echo " == Running with #{version} == "
