@@ -68,7 +68,6 @@ class Pik
         version = get_version(path)
         path    = File.expand_path(path).gsub('\\','/')
         puts "Adding:  #{version}'\n Located at:  #{path}\n"
-        @config[version] = {}
         @config[version][:path] = path
       else
         help('no_ruby')
@@ -87,6 +86,7 @@ class Pik
 
     def remove(*patterns)
       to_remove = choose_from(patterns)
+      raise QuitError unless to_remove
       if @hl.agree("Are you sure you'd like to remove '#{to_remove}'? [Yn] ")
         @config.delete(to_remove)
         @hl.say("#{to_remove} removed")
