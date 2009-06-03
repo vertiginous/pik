@@ -11,7 +11,7 @@ class Pik
 
     def initialize
       @options   = {}
-      @config    = Config.new
+      @config    = Config.new{|h,k| h[k] = Hash.new }
       @msg_file  = File.join(File.dirname(__FILE__), '..', '..', 'messages','messages.yml')
       @hl        = HighLine.new
       
@@ -38,13 +38,13 @@ class Pik
       begin
         @commands = ['help'] if @commands.empty?
         send(*@commands) 
-        @config.write
       rescue ArgumentError 
         help(@commands.first)
         exit 1
       rescue QuitError
         help('quit')
       ensure 
+        @config.write
         @pik_batch.write
         puts
       end   
@@ -52,7 +52,8 @@ class Pik
     
     def run(command)
       current_dir = @config[get_version]
-      @config.sort.each do |version,ruby_dir|
+      @config.sort.each do |version,hash|
+        ruby_dir = hash[:path]
         @pik_batch.echo " == Running with #{version} == "
         switch_path_to(ruby_dir)
         @pik_batch.call command
@@ -67,12 +68,22 @@ class Pik
         version = get_version(path)
         path    = File.expand_path(path).gsub('\\','/')
         puts "Adding:  #{version}'\n Located at:  #{path}\n"
-        @config[version] = path
+        @config[version] = {}
+        @config[version][:path] = path
       else
         help('no_ruby')
       end
     end
     alias :init_config :add
+
+    def add_gem_home(*patterns)
+      to_add = choose_from(patterns)
+      new_dir = @hl.ask("Enter a path to a GEM_HOME dir")
+      if @hl.agree("Add a GEM_HOME and GEM_PATH for '#{to_add}'? [Yn] ")
+        @config[to_add][:gem_home] = new_dir
+        @hl.say("GEM_HOME and GEM_PATH added for:  #{to_add} ")
+      end
+    end
 
     def remove(*patterns)
       to_remove = choose_from(patterns)
@@ -113,7 +124,8 @@ class Pik
       new_ver  = choose_from(patterns)
       if new_ver
         @hl.say "Switching to #{new_ver}"
-        switch_path_to(@config[new_ver])
+        switch_path_to(@config[new_ver][:path])
+        switch_gem_home_to(@config[new_ver][:gem_home]) if @config[new_ver][:gem_home] 
       else
         abort
       end      
@@ -132,11 +144,7 @@ class Pik
     end
 
     def method_missing(meth)
-      if @config[meth]
-        switch[meth]
-      else
-        abort "The command #{meth} isn't recognized"
-      end
+      abort "The command #{meth} isn't recognized"
     end
     
     private
@@ -145,6 +153,11 @@ class Pik
       dir = current_dir.gsub('/', '\\')
       new_path = SearchPath.new(ENV['PATH']).replace_or_add(dir, ruby_dir).join
       @pik_batch.set('PATH' => WindowsFile.join(new_path) )
+    end
+
+    def switch_gem_home_to(gem_home_dir)
+      @pik_batch.set('GEM_PATH' => WindowsFile.join(gem_home_dir) )
+      @pik_batch.set('GEM_HOME' => WindowsFile.join(gem_home_dir) )
     end
 
     def add_interactive
