@@ -54,8 +54,19 @@ class BatchFile
   def echo(string)
     string = ' ' + string unless string == '.'
     @file_data << "ECHO#{string}"
+    self
   end
-  
+
+  def echo_ruby_version(verb='Switching to')
+    @file_data << "for /f \"delims=\" %%a in ('ruby -v') do @echo  == #{verb} %%a == "
+    self
+  end
+
+  def echo_running_with_ruby_version
+    echo_ruby_version('Running with')
+    self
+  end
+
   def to_s
     @file_data.join("\n")
   end

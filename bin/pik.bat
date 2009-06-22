@@ -4,4 +4,4 @@ IF NOT "%~f0" == "~f0" GOTO :WinNT
 GOTO :EOF
 :WinNT
 @"ruby.exe" -rubygems "%~dpn0" %*
-CALL "C:\Documents and Settings\gthiesfeld\.pik\pik.bat"
+CALL "C:\Documents and Settings\gthiesfeld\.pik\pik_4388.bat"

@@ -5,15 +5,27 @@ class SearchPath
 		@path = path.split(';')
 	end
 
-	def replace(old, new)
-		@path.map!{|dir| 
+	def remove(old)
+		@path = @path.map{|dir|
 			case dir
-			when old 
+			when regex(old)
+				nil 
+			else 
+				dir 
+			end
+		}.uniq.compact
+		self
+	end
+
+	def replace(old, new)
+		@path = @path.map{|dir|
+			case dir
+			when regex(old)
 				new 
 			else 
 				dir 
 			end
-		}.uniq!
+		}.uniq.compact
 		self
 	end
 
@@ -30,8 +42,11 @@ class SearchPath
 	end
 
 	def join
-		@path.join(';')
+		WindowsFile.join(@path.join(';'))
 	end
 	alias :to_s :join
 
+  def regex(string)
+    Regexp.new(Regexp.escape(string.gsub('/', "\\")), true)
+  end
 end
