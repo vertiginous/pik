@@ -13,7 +13,7 @@ class Pik
     end
 
     def write
-      File.open(@file, 'w'){|f| f.puts YAML::dump(self) }
+      File.open(@file, 'w'){|f| f.puts YAML::dump(Hash[self]) }
     end
 
   end
