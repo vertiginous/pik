@@ -20,7 +20,7 @@ Gordon Thiesfeld
 
   'pik config' could be dangerous.  Use only if you know what you're doing.
 
-  Only works on CRuby at present.
+  Only works on MRI at present.
 
 == SYNOPSIS:
 
@@ -84,7 +84,7 @@ Gordon Thiesfeld
 
 (The MIT License)
 
-Copyright (c) 2009 FIX
+Copyright (c) 2009 Gordon Thiesfeld
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

@@ -22,6 +22,8 @@ class Pik
           @options[:global] = true
         when '-i', '--interactive'
           @options[:interactive] = true
+        when '-d', '--default'
+          @options[:default] = true
         end
       end
     end
@@ -75,8 +77,8 @@ class Pik
     alias :init_config :add
 
     def add_gem_home(*patterns)
-      to_add = choose_from(patterns)
-      new_dir = @hl.ask("Enter a path to a GEM_HOME dir")
+      to_add = get_version
+      new_dir = @options[:default] ? Gem.default_path.first : @hl.ask("Enter a path to a GEM_HOME dir")
       if @hl.agree("Add a GEM_HOME and GEM_PATH for '#{to_add}'? [Yn] ")
         @config[to_add][:gem_home] = new_dir
         @hl.say("GEM_HOME and GEM_PATH added for:  #{to_add} ")
@@ -220,7 +222,11 @@ class Pik
     end
 
     def current_gem_bin_path
-      File.join(Gem.default_path.first, 'bin')
+      File.join(default_gem_home, 'bin')
+    end
+
+    def default_gem_home
+      Gem.default_path.first.gsub("\\","/")
     end
   
     def set(items)
