@@ -71,14 +71,14 @@ Gordon Thiesfeld
 
 == INSTALL:
 
-  1. gem install pik
+  1. gem install vertiginous-pik
   
-  2. pik add path_to_ruby_bin
+  2. pik add path_to_ruby_bin # add your current ruby's bin dir
   
-  3. repeat step 2 as many times as necessary,
-     or use 'pik add -i'
+  3. repeat step 2 once for each version of ruby you have,
+     or use 'pik add -i' for interactive console to do the same.
   
-  4. pik run "gem install pik" 
+  4. pik run "gem install vertiginous-pik" 
 
 == LICENSE:
 
