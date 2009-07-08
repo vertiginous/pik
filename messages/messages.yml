@@ -23,7 +23,7 @@ ls: |-
     See 'pik help list' for usage.
 
 remove: |-
-  pik remove [patern1 pattern2 ... pattern*]
+  pik remove [pattern1 pattern2 ... pattern*]
   
     Removes ruby versions, if you no longer care about them. 
 
@@ -37,7 +37,7 @@ run: |-
   pik run "command args"
 
 switch: |-
-  pik switch [patern1 pattern2 ... pattern*]
+  pik switch [pattern1 pattern2 ... pattern*]
   
     Switches ruby versions based on a pattern.
   
