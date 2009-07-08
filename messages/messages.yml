@@ -77,7 +77,7 @@ help: |-
 
     pik help (command)
   
-  To list all commands:
+  To list all commands (add, checkup, list, run, remove, switch, help) and descriptions:
 
     pik help commands
 
