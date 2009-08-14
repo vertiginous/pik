@@ -243,21 +243,20 @@ class Pik
 
     def update_gem_batch
       BatchFile.open("#{$0}.bat") do |batch|
-        case batch.file_data.last 
-        when Regexp.new( Regexp.escape(PIK_HOME), true )
-          puts batch.file_data.last
-        when /call/i
-          batch.file_data.pop
-          batch.call("\"#{WindowsFile.join(@pik_batch.file_name)}\"").write
-        else
-          batch.call("\"#{WindowsFile.join(@pik_batch.file_name)}\"").write
-        end
+        # remove old calls to .pik/pik batches
+        data = batch.file_data.reject{ |i| i =~ /call.+pik.+bat/i }
+        batch.file_data = data
+        
+        # call new .pik/pik batch
+        batch.call("\"#{WindowsFile.join(@pik_batch.file_name)}\"").write
       end
     end
 
     def delete_old_pik_batches
       one_day_ago = Time.now - (2 * 60 * 60)
-      Dir[File.join(PIK_HOME, "*.bat").gsub("\\","/")].each{|f| File.delete(f) if File.ctime(f) < one_day_ago }
+      Dir[File.join(PIK_HOME, "*.bat").gsub("\\","/")].each do |f| 
+        File.delete(f) if File.ctime(f) < one_day_ago 
+      end
     end
 
   # Installs a sigint handler.
