@@ -24,6 +24,8 @@ class Pik
           @options[:interactive] = true
         when '-d', '--default'
           @options[:default] = true
+        when '-v', '--verbose'
+          @options[:verbose] = true
         end
       end
     end
@@ -117,7 +119,11 @@ class Pik
     end
     
     def list
-      puts @config.keys.sort
+      @config.each do |name, config|
+        v = '*' if name == get_version
+        puts "#{name} #{v}"
+        config.each{|k,v| puts "\t#{k}: #{v}\n\n"} if @options[:verbose]
+      end
     end
     alias :ls :list
 
