@@ -132,6 +132,7 @@ class Pik
       end      
     end
     alias :sw :switch
+    alias :use :switch
     
     def help(arg='help')
       @arg = arg
