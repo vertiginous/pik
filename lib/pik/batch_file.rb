@@ -1,31 +1,29 @@
 
 class BatchFile
 
-  def self.open(file_name)
-    bf = new(file_name, :open)
+  def self.open(file)
+    bf = new(file, :open)
     yield bf if block_given?
     bf
   end
 
   attr_accessor :file_data, :file_name, :ruby_dir
 
-  def initialize(file_name, mode=:new)
+  def initialize(file, mode=:new)
     @rubyw_exe = 'rubyw.exe'
     @ruby_exe  = 'ruby.exe'
-    @file_name = file_name 
+    @file = Pathname.new(file)
     case mode
     when :open
-      @file_data = File.read(@file_name).split("\n")
-      @fmode        = 'r+'
+      @file_data = File.read(@file).split("\n")
     when :new
       @file_data = [header]
-      @fmode        = 'w+'
     end
     yield self if block_given?
   end
-
-  def bin_dir
-    WindowsFile.join(File.dirname(@ruby_exe))
+  
+  def path
+    @file
   end
 
   def header
@@ -57,14 +55,8 @@ class BatchFile
     self
   end
 
-  def echo_ruby_version(verb='Switching to')
-    @file_data << "for /f \"delims=\" %%a in ('ruby -v') do @echo  == #{verb} %%a == "
-    self
-  end
-
-  def echo_running_with_ruby_version
-    echo_ruby_version('Running with')
-    self
+  def remove_line(re)
+    @file_data.reject!{ |i| i =~ re }
   end
 
   def to_s
@@ -72,7 +64,7 @@ class BatchFile
   end
 
   def write
-    File.open(@file_name, @fmode){|f| f.puts self.to_s }
+    File.open(@file, 'w+'){|f| f.puts self.to_s }
   end
 
 end
