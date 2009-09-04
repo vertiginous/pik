@@ -2,14 +2,23 @@
 class SearchPath
 
 	def initialize(path)
-		@path = path.split(';')
+	  @path = path.to_s.split(';')
 	end
 
-	def remove(old)
-		@path = @path.map{|dir|
+	def remove(old_path)
+    old = Pathname.new(old_path).to_windows
+		@path.reject!{|dir| dir =~ regex(old) }
+		self
+	end
+
+	def replace(old_path, new_path)
+  
+    old_path = Pathname.new(old_path)
+    new_path = Pathname.new(new_path)
+		@path.map!{|dir|
 			case dir
-			when regex(old)
-				nil 
+			when regex(old_path.to_windows)
+				new_path.to_windows
 			else 
 				dir 
 			end
@@ -17,36 +26,26 @@ class SearchPath
 		self
 	end
 
-	def replace(old, new)
-		@path = @path.map{|dir|
-			case dir
-			when regex(old)
-				new 
-			else 
-				dir 
-			end
-		}.uniq.compact
+	def add(new_path)
+    new_path = Pathname.new(new_path)
+		@path << new_path.to_windows
 		self
 	end
 
-	def add(new)
-		@path << new
-		self
-	end
-
-	def replace_or_add(old, new)
-		old_path = @path.dup
-		replace(old, new)
-		add(new) if @path == old_path
+	def replace_or_add(old_path, new_path)
+	  return self if old_path == new_path
+		old_search_path = @path.dup
+		replace(old_path, new_path)
+		add(new_path) if @path == old_search_path
 		self
 	end
 
 	def join
-		WindowsFile.join(@path.join(';'))
+		@path.join(';')
 	end
 	alias :to_s :join
 
   def regex(string)
-    Regexp.new(Regexp.escape(string.gsub('/', "\\")), true)
+    Regexp.new(Regexp.escape(string), true)
   end
 end

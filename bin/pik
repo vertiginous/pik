@@ -1,20 +1,30 @@
 #!/usr/bin/env ruby
- 
-# pik switch 186
-# pik switch 186 mingw
-# pik switch 191 --system
- 
-# pik config default=186 mingw
-# pik config home
-# pik config rubyopt=(on|off)
- 
-# pik checkup
- 
-# pik search
-# pik add (path_to_ruby)
-# pik help (command)
- 
- 
 require File.join(File.dirname(__FILE__), '..', 'lib', 'pik')
- 
-Pik::Runner.execute
+
+include Pik
+
+args = ARGV
+cmd  = args.shift || 'help'
+cmd  = cmd.downcase.to_sym
+
+Command.clean_gem_batch
+
+begin
+  config  = ConfigFile.new
+  command = Commands.find(cmd) 
+  command ||= if args = [Command.choose_from(ARGV.unshift(cmd), config)]
+    Switch
+  else
+    Help
+  end
+  cmd = command.new(args, config)
+  cmd.execute
+rescue QuitError
+  puts "\nQuitting..."
+rescue => e
+  puts "\nThere was an error"
+  puts " Error: #{e.message}\n\n"
+  puts e.backtrace
+ensure
+  cmd.close if cmd
+end 

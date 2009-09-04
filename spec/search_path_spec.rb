@@ -1,5 +1,6 @@
 require 'lib/pik/search_path'
-require 'lib/pik/windows_file'
+require 'pathname'
+require 'lib/pik/core_ext/pathname'
 
 describe SearchPath do
 
@@ -25,7 +26,7 @@ describe SearchPath do
 	describe '#replace' do
 
 		it "should replace one element with another using a string" do
-			path =	'C:\ruby\191\bin'
+			path =	'C:/ruby/191/bin'
 			new_path =  'C:\Program Files\Common Files\Shoes\0.r1134\..;'
 			new_path <<	'C:\bin;'
 			new_path <<	'C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727;'
@@ -41,14 +42,14 @@ describe SearchPath do
 			new_path <<	'C:\WINDOWS\system32\WindowsPowerShell\v1.0\;'
 			new_path <<	'C:\ruby\191\bin;'
 			new_path <<	'C:\Program Files\Putty'
-			updated_path = @path.replace('C:\ruby\186-mswin32\bin', path).join
+			updated_path = @path.replace('C:/ruby/186-mswin32/bin', path).join
 			updated_path.should == new_path
 		end
 	end
 
 	describe '#add' do
 		it "should add an element to the end" do
-			path =	'C:\ruby\191\bin'
+			path =	'C:/ruby/191/bin'
 			new_path =  'C:\Program Files\Common Files\Shoes\0.r1134\..;'
 			new_path <<	'C:\bin;'
 			new_path <<	'C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727;'
@@ -73,7 +74,7 @@ describe SearchPath do
 	describe '#replace_or_add' do
 
 		it "should replace one element with another using a string" do
-			path =	'C:\ruby\191\bin'
+			path =	'C:/ruby/191/bin'
 			new_path =  'C:\Program Files\Common Files\Shoes\0.r1134\..;'
 			new_path <<	'C:\bin;'
 			new_path <<	'C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727;'
@@ -89,12 +90,12 @@ describe SearchPath do
 			new_path <<	'C:\WINDOWS\system32\WindowsPowerShell\v1.0\;'
 			new_path <<	'C:\ruby\191\bin;'
 			new_path <<	'C:\Program Files\Putty'
-			@path.replace_or_add('C:\ruby\186-mswin32\bin', path)
+			@path.replace_or_add('C:/ruby/186-mswin32/bin', path)
 			@path.join.should == new_path
 		end
 
 		it "should add an element to the end if it doesn't already exist" do
-			path =	'C:\xray\yankee\zebra'
+			path =	'C:/xray/yankee/zebra'
 			new_path =  'C:\Program Files\Common Files\Shoes\0.r1134\..;'
 			new_path <<	'C:\bin;'
 			new_path <<	'C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727;'
@@ -111,7 +112,7 @@ describe SearchPath do
 			new_path <<	'C:\ruby\186-mswin32\bin;'
 			new_path <<	'C:\Program Files\Putty;'
 			new_path <<	'C:\xray\yankee\zebra'
-			@path.replace_or_add('C:\xray\yankee\zebra', path)
+			@path.replace_or_add('C:/xray/yankee/alpha', path)
 			@path.join.should == new_path
 		end
 

@@ -1,12 +1,12 @@
 require 'yaml'
 
-class Pik
+module Pik
 
-  class Config < Hash
+  class ConfigFile < Hash
       
     def initialize
       @file = File.join(PIK_HOME, 'config.yml')
-      super
+      super{|h,k| h[k] = Hash.new }
       if File.exists? @file
         self.update( YAML.load( File.read( @file ) ) )
       end
