@@ -5,31 +5,31 @@ Gordon Thiesfeld
 
 == DESCRIPTION:
 
-  Pik is a tool to switch between multiple versions of ruby on Windows.  
+Pik is a tool to switch between multiple versions of ruby on Windows.  
+
+Or to put it another way
+
+  <code>doskey rvm=pik $*</code>
   
-  Or to put it another way
-  
-    <tt>doskey rvm=pik $*</tt>
-  
-  You have to tell it where your different ruby versions live using 
-  'pik add'.  Then you can change to one by using 'pik switch'.
-  
-  It also has a "sort of" multiruby functionality in 'pik run'.
+You have to tell it where your different ruby versions live using 
+'pik add'.  Then you can change to one by using 'pik switch'.
+
+It also has a "sort of" multiruby functionality in 'pik run'.
    
 
 == FEATURES/PROBLEMS:
 
-  Currently, changes are to the open cmd session only.  I haven't wired up the --global switch yet.
+Currently, changes are to the open cmd session only.  I haven't wired up the --global switch yet.
 
-  Specs are very incomplete.
+Specs are very incomplete.
 
-  'pik config' could be dangerous.  Use only if you know what you're doing.
+'pik config' could be dangerous.  Use only if you know what you're doing.
 
-  Only works on MRI at present.
+Only works on MRI at present.
 
 == SYNOPSIS:
 
-    C:\scripts\repo\pik>pik help commands
+    C:\>pik help commands
     
       add             Adds another ruby location to pik.
       checkup|cu      Checks your environment for current Ruby best practices.
@@ -43,9 +43,9 @@ Gordon Thiesfeld
       run             Runs command with all version of ruby that pik is aware of.
       switch|sw|use   Switches to another Ruby version.
     
-    For help on a particular command, use 'pik help COMMAND'.
+For help on a particular command, use 'pik help COMMAND'.
 
-  Example:
+Example:
 
     C:\>pik run "gem in hpricot --no-ri --no-rdoc"
      == Running with 185: ruby 1.8.5 (2006-12-25 patchlevel 12) [i386-mswin32] ==
@@ -76,18 +76,18 @@ Gordon Thiesfeld
     
 == REQUIREMENTS:
 
-  Windows, Ruby, Rubygems
+Windows, Ruby, Rubygems
 
 == INSTALL:
 
-  1. gem install vertiginous-pik
-  
-  2. pik add path_to_ruby_bin # add your current ruby's bin dir
-  
-  3. repeat step 2 once for each version of ruby you have,
-     or use 'pik add -i' for interactive console to do the same.
-  
-  4. pik run "gem install vertiginous-pik" 
+1. gem install vertiginous-pik
+
+2. pik add path_to_ruby_bin # add your current ruby's bin dir
+
+3. repeat step 2 once for each version of ruby you have,
+   or use 'pik add -i' for interactive console to do the same.
+
+4. pik run "gem install vertiginous-pik" 
 
 == LICENSE:
 
