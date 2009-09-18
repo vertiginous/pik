@@ -1,6 +1,7 @@
 = pik
 
-http://github.com/vertiginous/pik/tree/master
+http://github.com/vertiginous/pik
+
 Gordon Thiesfeld
 
 == DESCRIPTION:
@@ -9,7 +10,7 @@ Pik is a tool to switch between multiple versions of ruby on Windows.
 
 Or to put it another way
 
-  <code>doskey rvm=pik $*</code>
+  doskey rvm=pik $*
   
 You have to tell it where your different ruby versions live using 
 'pik add'.  Then you can change to one by using 'pik switch'.
