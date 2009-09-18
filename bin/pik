@@ -4,19 +4,22 @@ require File.join(File.dirname(__FILE__), '..', 'lib', 'pik')
 include Pik
 
 args = ARGV
-cmd  = args.shift || 'help'
-cmd  = cmd.downcase.to_sym
 
 Command.clean_gem_batch
 
 begin
   config  = ConfigFile.new
-  command = Commands.find(cmd) 
-  command ||= if args = [Command.choose_from(ARGV.unshift(cmd), config)]
+  
+  args << 'help' if args.empty?
+  
+  command = if Command.choose_from(args, config)
     Switch
+  elsif (cmd = Commands.find(args.shift))
+    cmd
   else
     Help
   end
+  
   cmd = command.new(args, config)
   cmd.execute
 rescue QuitError

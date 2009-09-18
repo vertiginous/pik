@@ -2,7 +2,13 @@
 class Pathname
 
   def to_windows
-    @path.dup.gsub('/','\\')
+    @path.gsub!('/','\\')
+    self
+  end
+  
+  def to_ruby
+    @path.gsub!('\\','/')
+    self
   end
 
 end

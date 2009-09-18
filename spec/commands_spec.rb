@@ -1,12 +1,12 @@
+module Pik
+  class Spec < Command
+    it  'is a command called spec'
+    aka :sp
+  end
+end
+
 describe Pik::Commands do
  
-  module Pik
-    class Spec < Command
-      it  'is a command called spec'
-      aka :sp
-    end
-  end
-  
   before do
     Pik::Commands.clear
     Pik::Commands.add(Pik::Spec)
@@ -19,14 +19,19 @@ describe Pik::Commands do
 
 For help on a particular command, use 'pik help COMMAND'.
 MSG
-      Pik::Commands.description.should == msg.chomp
+      Pik::Commands.description.should eql(msg.chomp)
     end
   end
   
   describe 'find' do
     it 'should find a command class' do 
-      Pik::Commands.find(:spec).should == Pik::Spec
+      Pik::Commands.find(:spec).should eql(Pik::Spec)
     end
+    
+    it "should return nil if the command doesn't exist" do
+      Pik::Commands.find(:nil).should be_nil
+    end
+    
   end
   
   describe "list" do
