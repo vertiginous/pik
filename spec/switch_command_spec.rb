@@ -23,7 +23,7 @@ describe Pik::Switch do
   end
   
   it "should use a batch file to switch paths" do
-    cmd = Pik::Switch.new(['spec'], {'spec', {:path => 'C:/ruby/bin'}})
+    cmd = Pik::Switch.new(['spec'], {'spec' => {:path => 'C:/ruby/bin'}})
     cmd.execute
     batch = cmd.instance_variable_get('@batch').file_data
     batch.should include("SET GEM_PATH=")
@@ -33,7 +33,8 @@ describe Pik::Switch do
   end
   
   it "should switch gem_home and gem_path if the config has a :gem_home" do
-    cmd = Pik::Switch.new(['spec'], {'spec', {:path => 'C:/ruby/bin', :gem_home => 'C:/Users/martin_blanke/.gems'}})
+    conf = {'spec' => {:path => 'C:/ruby/bin', :gem_home => 'C:/Users/martin_blanke/.gems'}}
+    cmd = Pik::Switch.new(['spec'], conf)
     cmd.execute
     batch = cmd.instance_variable_get('@batch').file_data
     batch.should include("SET GEM_PATH=C:\\Users\\martin_blanke\\.gems")

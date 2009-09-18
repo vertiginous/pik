@@ -58,7 +58,6 @@ module Pik
       end
       case possibles.size
       when 0
-        hl.say 'Nothing matches:'
         return nil
       when 1
         return possibles.first
@@ -107,7 +106,8 @@ module Pik
     end
         
     def get_version(path=current_ruby_bin_path)
-      cmd = Pathname.new(path) + 'ruby.exe'
+      cmd = ruby_exe(path).basename
+      cmd = Pathname.new(path) + cmd
       ruby_ver = `#{cmd} -v`
       ruby_ver =~ /ruby (\d\.\d\.\d)/
       major    = $1.gsub('.','')
@@ -119,7 +119,12 @@ module Pik
     end
 
     def ruby_exists_at?(path)
-      File.exist?("#{path}/ruby.exe")
+      !!ruby_exe(path)
+    end
+    
+    def ruby_exe(path)
+      glob = "#{Pathname.new(path).to_ruby}/{jruby.bat,ruby.exe}"
+      Pathname.glob(glob).first
     end
 
     def current_gem_bin_path
@@ -135,10 +140,9 @@ module Pik
       home.mkpath
     end
    
-    def delete_old_pik_batches
-      one_day_ago = Time.now - (2 * 60 * 60)
-      Dir[(PIK_HOME + "*.bat").to_windows].each do |f| 
-        File.delete(f) if File.ctime(f) < one_day_ago 
+    def delete_old_pik_batches( cutoff=(Time.now - (2 * 60 * 60)) )
+      Dir[(PIK_HOME + "*.bat").to_windows.to_s].each do |f| 
+        File.delete(f) if File.ctime(f) < cutoff 
       end
     end
 

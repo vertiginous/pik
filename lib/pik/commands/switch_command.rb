@@ -10,7 +10,7 @@ module Pik
     attr_accessor :gem_home
     
     def execute
-      abort unless new_ver = self.class.choose_from(@args, @config)
+      abort('Nothing matches:') unless new_ver = self.class.choose_from(@args, @config)
       switch_path_to(@config[new_ver])
       switch_gem_home_to(@config[new_ver][:gem_home]) 
       echo_ruby_version

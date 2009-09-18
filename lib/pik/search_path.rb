@@ -7,7 +7,7 @@ class SearchPath
 
 	def remove(old_path)
     old = Pathname.new(old_path).to_windows
-		@path.reject!{|dir| dir =~ regex(old) }
+		@path.reject!{|dir| dir =~ regex(old.to_s) }
 		self
 	end
 
@@ -18,7 +18,7 @@ class SearchPath
 		@path.map!{|dir|
 			case dir
 			when regex(old_path.to_windows)
-				new_path.to_windows
+				new_path.to_windows.to_s
 			else 
 				dir 
 			end
@@ -28,7 +28,7 @@ class SearchPath
 
 	def add(new_path)
     new_path = Pathname.new(new_path)
-		@path << new_path.to_windows
+		@path << new_path.to_windows.to_s
 		self
 	end
 
@@ -46,6 +46,6 @@ class SearchPath
 	alias :to_s :join
 
   def regex(string)
-    Regexp.new(Regexp.escape(string), true)
+    Regexp.new(Regexp.escape(string.to_s), true)
   end
 end

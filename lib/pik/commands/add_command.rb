@@ -14,9 +14,11 @@ module Pik
     end
 
     def add(path)
+      path = Pathname.new(path)
+      path = path.dirname if path.file?
       if ruby_exists_at?(path)
         version = get_version(path)
-        path    = File.expand_path(path).gsub('\\','/')
+        path    = path.expand_path.to_ruby
         puts "Adding:  #{version}'\n Located at:  #{path}\n"
         @config[version][:path] = path
       end   
@@ -40,7 +42,8 @@ module Pik
         }
         menu.choice('s]earch'){
           search_dir = @hl.ask("Enter a search path")
-          files = Dir[File.join(search_dir, '**','ruby.exe').gsub('\\','/')]
+          glob = Pathname.new(search_dir + '**/{ruby.exe,jruby.bat}')
+          files = Dir[glob.to_ruby.to_s]
           files.each{|file| 
             dir = File.dirname(file)
             add(dir) if @hl.agree("Add '#{dir}'? [Yn] ")

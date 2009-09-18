@@ -5,9 +5,14 @@ Gordon Thiesfeld
 
 == DESCRIPTION:
 
-  PIK is a tool to switch between multiple versions of ruby on Windows.  You have to tell it where
-  your different ruby versions are located using 'pik add'.  Then you can change to one by using 
-  'pik switch'.
+  Pik is a tool to switch between multiple versions of ruby on Windows.  
+  
+  Or to put it another way
+  
+    <code>doskey rvm=pik $*</code>
+  
+  You have to tell it where your different ruby versions live using 
+  'pik add'.  Then you can change to one by using 'pik switch'.
   
   It also has a "sort of" multiruby functionality in 'pik run'.
    
@@ -24,6 +29,7 @@ Gordon Thiesfeld
 
 == SYNOPSIS:
 
+  <code>
   pik commands are:
   
       add           Add another ruby location to pik.
@@ -36,9 +42,11 @@ Gordon Thiesfeld
   
   
   For help on a particular command, use 'pik help COMMAND'.
+  </code>
 
   Example:
 
+  <code>
     C:\>pik run "gem in hpricot --no-ri --no-rdoc"
      == Running with 185: ruby 1.8.5 (2006-12-25 patchlevel 12) [i386-mswin32] ==
     Successfully installed hpricot-0.8.1-x86-mswin32
@@ -64,7 +72,9 @@ Gordon Thiesfeld
     Building native extensions.  This could take a while...
     Successfully installed hpricot-0.8.1
     1 gem installed
-
+    
+    </code>
+    
 == REQUIREMENTS:
 
   Windows, Ruby, Rubygems

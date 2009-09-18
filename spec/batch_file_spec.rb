@@ -1,6 +1,3 @@
-require 'lib/pik/windows_file'
-require 'lib/pik/batch_file'
-require 'lib/pik/search_path'
 
 describe BatchFile do
 
