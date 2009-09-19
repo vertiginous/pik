@@ -12,15 +12,15 @@ describe Pik::Switch do
     Pik::Switch.names.should include(:use)
   end
   
-  it "should have a global option" do
-    sw = Pik::Switch.new(['-g'])
-    sw.global.should be_true
-  end
+  it "should have a global option" #do
+  #   sw = Pik::Switch.new(['-g'])
+  #   sw.global.should be_true
+  # end
 
-  it "should have a gem_home option" do
-    sw = Pik::Switch.new(['-m', 'test'])
-    sw.gem_home.should eql("test")
-  end
+  it "should have a gem_home option" # do
+  #   sw = Pik::Switch.new(['-m', 'test'])
+  #   sw.gem_home.should eql("test")
+  # end
   
   it "should use a batch file to switch paths" do
     cmd = Pik::Switch.new(['spec'], {'spec' => {:path => 'C:/ruby/bin'}})
