@@ -25,7 +25,10 @@ module Pik
   
     Examples:
 
-        pik run "command args"
+        C:\\>pik run "ruby -v"
+        
+        C:\\>pik run "rake spec"
+        
 SEP
       options.separator sep  
     end
