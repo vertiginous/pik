@@ -54,7 +54,9 @@ Windows, more than one version of Ruby (otherwise, what's the point?) and Rubyge
 2. pik add # adds your current ruby's bin dir
 3. pik add path\to\some\other\ruby\bin # for another version
 4. repeat step 3 for each version of ruby you have, or use 'pik add -i' for super-fancy interactive mode!
-5. pik run "gem install vertiginous-pik" 
+5. pik run "gem install vertiginous-pik"
+
+
 
 == EXAMPLES:
 

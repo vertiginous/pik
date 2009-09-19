@@ -8,11 +8,13 @@ require 'pik'
 
 Hoe.plugin :git
 
-Hoe.spec('pik') do |p|
-  p.rubyforge_name = 'pik' # if different than lowercase project name
-  p.developer('Gordon Thiesfeld', 'gthiesfeld@gmail.com')
-  p.extra_deps = ['highline']
-  p.post_install_message =<<-PIM
+Hoe.spec('pik') do
+
+  developer('Gordon Thiesfeld', 'gthiesfeld@gmail.com')
+  
+  self.extra_deps = {'highline' =>  '>= 0.0.0'}
+  self.readme_file = 'README.rdoc'
+  self.post_install_message =<<-PIM
 
 ----------------------------------------------------------------------------
 
