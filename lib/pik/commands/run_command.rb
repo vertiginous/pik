@@ -18,7 +18,17 @@ module Pik
       switch_path_to(current_ruby)
       switch_gem_home_to(current_ruby[:gem_home])
     end
+    
+    def command_options
+
+      sep =<<SEP
   
+    Examples:
+
+        pik run "command args"
+SEP
+      options.separator sep  
+    end
   end
   
 end
