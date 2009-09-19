@@ -11,7 +11,10 @@ module Pik
       config.sort.each do |name, conf|
         name += ' *' if current_version?(name)
         puts name
-        conf.each{|k,v| puts "     %s: %s\n\n" % [k, v]} if verbose
+        if verbose
+          conf.each{|k,v| puts "     %s: %s" % [k, v]} 
+          puts
+        end
       end
     end
     
