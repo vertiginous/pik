@@ -123,10 +123,14 @@ module Pik
     end
     
     def ruby_exe(path)
-      glob = "#{Pathname.new(path).to_ruby}/{jruby.bat,ruby.exe}"
-      Pathname.glob(glob).first
+      ruby_glob(path).first
     end
-
+    
+    def ruby_glob(path)
+      glob = "#{Pathname.new(path).to_ruby}/{jruby.bat,ruby.exe}"
+      Pathname.glob(glob)
+    end
+    
     def current_gem_bin_path
       default_gem_home + 'bin'
     end
