@@ -42,8 +42,7 @@ module Pik
         }
         menu.choice('s]earch'){
           search_dir = @hl.ask("Enter a search path")
-          glob = Pathname.new(search_dir + '**/{ruby.exe,jruby.bat}')
-          files = Dir[glob.to_ruby.to_s]
+          files = ruby_glob(search_dir + '**')
           files.each{|file| 
             dir = File.dirname(file)
             add(dir) if @hl.agree("Add '#{dir}'? [Yn] ")
