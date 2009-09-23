@@ -1,18 +1,19 @@
 module Pik
 
-  class  GemDup < Command
+  class  GemSync < Command
   
     it "Duplicates gems from one Ruby version to another."
     include BatchFileEditor
     
     def execute
-      target  = choose_from(@args)
+      target  = self.class.choose_from(@args, config)
       current = get_version
       install_gems(current, target) if target
     end
     
     def install_gems(current, target)
       switch_path_to(config[target])
+      switch_gem_home_to(config[target][:gem_home]) 
       target_cache = gem_cache(target)
       
       gem_cache(current).find do |file|
@@ -25,15 +26,16 @@ module Pik
         end
       end
       switch_path_to(config[current])
+      switch_gem_home_to(config[target][:gem_home]) 
     end
     
     def gem_cache(version)
       conf = config[version]
-      
+      p conf
       path = if conf[:gem_home] 
         Pathname.new( conf[:gem_home] )
       else
-        cmd = conf[:path] + "/ruby.exe -rubygems -e \"puts Gem.default_path.last\""
+        cmd = ruby_exe(conf[:path]).to_s + " -rubygems -e \"puts Gem.default_path.last\""
         Pathname.new( `#{cmd}`.chomp ) 
       end
       puts path + "cache"
