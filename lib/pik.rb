@@ -2,7 +2,7 @@ module Pik
   VERSION = '0.0.3'
 end
 
-require 'erb'
+# require 'erb'
 require 'highline'
 require 'pathname'
 require 'rbconfig'
@@ -20,7 +20,7 @@ require 'pik/commands/run_command'
 require 'pik/commands/remove_command'
 require 'pik/commands/checkup_command'
 require 'pik/commands/config_command'
-require 'pik/commands/gemdup_command'
+require 'pik/commands/gemsync_command'
 require 'pik/commands/default_command'
 require 'pik/commands/implode_command'
 require 'pik/config_file'

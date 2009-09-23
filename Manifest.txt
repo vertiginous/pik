@@ -32,7 +32,7 @@ spec/batch_file_spec.rb
 spec/command_spec.rb
 spec/commands_spec.rb
 spec/default_command_spec.rb
-spec/gemdup_command_spec.rb
+spec/gemsync_command_spec.rb
 spec/help_command_spec.rb
 spec/list_command_spec.rb
 spec/remove_command_spec.rb
