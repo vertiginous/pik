@@ -2,7 +2,7 @@ module Pik
 
   class  GemSync < Command
   
-    it "Duplicates gems from one Ruby version to another."
+    it "Duplicates gems from the current version to the one specified."
     include BatchFileEditor
     
     def execute
@@ -31,7 +31,6 @@ module Pik
     
     def gem_cache(version)
       conf = config[version]
-      p conf
       path = if conf[:gem_home] 
         Pathname.new( conf[:gem_home] )
       else
@@ -45,6 +44,24 @@ module Pik
     def gem_install(file)
       @batch.echo "Installing #{file.basename}"
       @batch.call "gem install -q --no-rdoc --no-ri #{file}"
+    end
+    
+    def command_options
+      super
+      sep =<<SEP
+  Examples:
+
+    C:\\>ruby -v
+    ruby 1.8.6 (2009-03-31 patchlevel 368) [i386-mingw32]
+    
+    C:\\>pik gemsync 191 p2
+    Gem ZenTest-4.1.4.gem already installed
+    Installing xml-simple-1.0.12.gem
+    Successfully installed xml-simple-1.0.12
+    1 gem installed
+    ...
+SEP
+      options.separator sep
     end
   
   end

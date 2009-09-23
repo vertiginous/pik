@@ -41,7 +41,7 @@ module Pik
     C:\\>pik 191 p2
     Using ruby 1.9.1p243 (2009-07-16 revision 24175) [i386-mingw32]
 SEP
-      options.separator sep  
+      options.separator sep
     end
   end
 
