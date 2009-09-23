@@ -41,8 +41,8 @@ module Pik
       @batch.set('GEM_HOME' => gem_path )
     end
   
-    def echo_ruby_version(verb='Switching to')
-      @batch.file_data << "for /f \"delims=\" %%a in ('ruby -v') do @echo  == #{verb} %%a == "
+    def echo_ruby_version(verb='Using')
+      @batch.file_data << "for /f \"delims=\" %%a in ('ruby -v') do @echo #{verb} %%a "
     end
   
     def echo_running_with_ruby_version

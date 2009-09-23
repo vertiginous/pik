@@ -1,7 +1,7 @@
 describe Pik::Switch do
   
   it "should have a summary" do
-    Pik::Switch.summary.should eql("Switches to another Ruby version.")
+    Pik::Switch.summary.should eql("Switches ruby versions based on patterns.")
   end
   
   it "should have an alias of sw" do

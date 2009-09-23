@@ -2,7 +2,7 @@ module Pik
 
   class  Config < Command
     
-    it "Usage for #{cmd_name}"
+    it "Adds/modifies configuration options."
     include BatchFileEditor
     include ConfigFileEditor
     

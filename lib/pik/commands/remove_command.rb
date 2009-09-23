@@ -18,6 +18,7 @@ module Pik
     end
     
     def command_options
+      super
       options.on("--quiet", "-q", "Remove without prompting") do |value|
         @quiet = value
       end
