@@ -95,6 +95,9 @@ module Pik
     end
     
     def command_options
+      options.separator ""
+      options.separator self.class.summary
+      options.separator ""
     end
     
     def parse_options

@@ -21,6 +21,7 @@ module Pik
     private
     
     def command_options
+      super
       @options.on("--verbose", "-v",
          "Verbose output"
          ) do |value|

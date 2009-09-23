@@ -20,18 +20,18 @@ module Pik
     end
     
     def command_options
-
+      super
       sep =<<SEP
-  
-    Examples:
+  Examples:
 
-        C:\\>pik run "ruby -v"
-        
-        C:\\>pik run "rake spec"
-        
+    C:\\>pik run "ruby -v"
+
+    C:\\>pik run "rake spec"
+
 SEP
       options.separator sep  
     end
+
   end
   
 end

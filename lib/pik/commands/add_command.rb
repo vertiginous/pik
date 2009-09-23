@@ -25,6 +25,7 @@ module Pik
     end
 
     def command_options
+      super
       options.banner += "[path_to_ruby]"
       options.separator ""      
       options.on("--interactive", "-i", "Add interactively") do |value|
