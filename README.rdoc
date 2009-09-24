@@ -10,7 +10,7 @@ Pik is a tool to switch between multiple versions of ruby on Windows.
 
 Or to put it another way
 
-  doskey rvm=pik $*
+  doskey rvm=pik $*  # (sort of)
   
 You have to tell it where your different ruby versions live using 
 'pik add'.  Then you can change to one by using 'pik switch'.
@@ -22,26 +22,24 @@ It also has a "sort of" multiruby functionality in 'pik run'.
 
 Changes are to the open cmd session only.
 
-'pik config' could be dangerous.  Use only if you know what you're doing.
-
 Only works on MRI at present, support for JRuby, and maybe IronRuby are planned.
 
 == SYNOPSIS:
 
   C:\>pik help commands
-    
-      add             Adds another ruby location to pik.
-      checkup|cu      Checks your environment for current Ruby best practices.
-      config          Usage for config
-      default         switches back to the default settings
-      gemdup          Duplicates gems from one Ruby version to another.
-      help            Displays help information.
-      implode         removes your pik config
-      list|ls         Lists ruby versions that pik is aware of.
-      remove|rm       Removes a ruby location from pik.
-      run             Runs command with all version of ruby that pik is aware of.
-      switch|sw|use   Switches to another Ruby version.
-    
+
+    add             Adds another ruby location to pik.
+    checkup|cu      Checks your environment for current Ruby best practices.
+    config          Adds/modifies configuration options.
+    default         switches back to the default settings
+    gemsync         Duplicates gems from the current version to the one specified.
+    help            Displays help information.
+    implode         Removes your pik configuration.
+    list|ls         Lists ruby versions that pik is aware of.
+    remove|rm       Removes a ruby location from pik.
+    run             Runs command with all version of ruby that pik is aware of.
+    switch|sw|use   Switches ruby versions based on patterns.
+  
   For help on a particular command, use 'pik help COMMAND'.
 
 == REQUIREMENTS:
@@ -50,7 +48,7 @@ Windows, more than one version of Ruby (otherwise, what's the point?) and Rubyge
 
 == INSTALL:
 
-1. gem install vertiginous-pik
+1. gem install pik
 2. pik add # adds your current ruby's bin dir
 3. pik add path\to\some\other\ruby\bin # for another version
 4. repeat step 3 for each version of ruby you have, or use 'pik add -i' for super-fancy interactive mode!
