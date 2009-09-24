@@ -1,5 +1,5 @@
 # -*- ruby -*-
-require 'win32console'
+# require 'win32console'
 require 'autotest/restart'
 
 Autotest.add_hook :initialize do |at|
@@ -8,7 +8,8 @@ Autotest.add_hook :initialize do |at|
   # at.libs << ":../some/external"
 
   at.add_exception 'bin'
-
+  at.add_exception '.git'
+  
   # at.add_mapping(/dependency.rb/) do |f, _|
   #   at.files_matching(/test_.*rb$/)
   # end
