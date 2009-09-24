@@ -130,7 +130,7 @@ module Pik
     end
     
     def ruby_glob(path)
-      glob = "#{Pathname.new(path).to_ruby}/{jruby.bat,ruby.exe}"
+      glob = "#{Pathname.new(path).to_ruby}/{ruby.exe}"
       Pathname.glob(glob)
     end
     
