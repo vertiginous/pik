@@ -2,11 +2,10 @@ module Pik
   VERSION = '0.1.0'
 end
 
-# require 'erb'
 require 'highline'
 require 'pathname'
 require 'rbconfig'
-$LOAD_PATH.unshift File.dirname(__FILE__)
+
 require 'pik/core_ext/pathname'
 require 'pik/commands'
 require 'pik/commands/config_file_editor'
