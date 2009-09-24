@@ -4,6 +4,7 @@
 * added more helpful messages to pik add
 * renamed gemdup to gemsync.  fixed the code up a bit
 * added default and implode commands, shortcuts for switch, more specs, lots of refactors
+* removed add_gem_home command.  GEM_HOME can be configured with pik config
 * change remove 'force' to 'quiet'
 * added simpler switch semantics (`pik 191 p243` instead of `pik switch 191 p243`)
 * added gemdup command
