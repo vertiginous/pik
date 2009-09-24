@@ -1,3 +1,19 @@
+=== 0.1.0 / 2009-09-24
+
+* removed jruby support for the time being (lack of win32ole is a problem)
+* added more helpful messages to pik add
+* renamed gemdup to gemsync.  fixed the code up a bit
+* added default and implode commands, shortcuts for switch, more specs, lots of refactors
+* change remove 'force' to 'quiet'
+* added simpler switch semantics (`pik 191 p243` instead of `pik switch 191 p243`)
+* added gemdup command
+* option parsing is now done with optparse and not a regex
+* rewrote pik to use classes for each command in the hopes that my code would be easier to read
+* Added post install instructions - issue 5. Switched to Hoe.spec for Hoe compatibility.  added Hoe-git plugin.
+* added verbose output and current version specifier to 'list'
+* added 'use' as an alias for 'switch'
+* cleaner method of remvoving .pik/pik batch file, fixed some long lines
+
 === 0.0.3 / 2009-06-10
 
 * added 'add_gem_home' command
