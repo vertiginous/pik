@@ -16,12 +16,18 @@ module Pik
     def add(path)
       path = Pathname.new(path)
       path = path.dirname if path.file?
-      if ruby_exists_at?(path)
-        version = get_version(path)
-        path    = path.expand_path.to_ruby
-        puts "Adding:  #{version}'\n Located at:  #{path}\n"
-        @config[version][:path] = path
-      end   
+      if ruby_exists_at?(path) 
+        if config[get_version(path)]
+          puts "This version has already been added."
+        else
+          version = get_version(path)
+          path    = path.expand_path.to_ruby
+          puts "Adding:  #{version}'\n Located at:  #{path}\n"
+          @config[version][:path] = path
+        end
+      else
+        puts "Couldn't find a Ruby version at #{path}"
+      end
     end
 
     def command_options
