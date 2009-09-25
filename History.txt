@@ -1,3 +1,8 @@
+=== 0.1.1 / 2009-09-25
+
+* add rubyforge info to README
+* Fixes bug in add command that wouldn't allow you to add - GH-13
+
 === 0.1.0 / 2009-09-24
 
 * removed jruby support for the time being (lack of win32ole is a problem)
