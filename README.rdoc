@@ -1,6 +1,7 @@
 = pik
 
 http://github.com/vertiginous/pik
+http://rubyforge.org/projects/pik/
 
 Gordon Thiesfeld
 
