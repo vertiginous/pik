@@ -6,7 +6,7 @@ module Pik
       
     def initialize
       @file = File.join(PIK_HOME, 'config.yml')
-      super{|h,k| h[k] = Hash.new }
+      super
       if File.exists? @file
         self.update( YAML.load( File.read( @file ) ) )
       end
