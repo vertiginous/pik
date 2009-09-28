@@ -112,7 +112,8 @@ module Pik
       cmd = ruby_exe(path).basename
       cmd = Pathname.new(path) + cmd
       ruby_ver = `#{cmd} -v`
-      ruby_ver =~ /ruby (\d\.\d\.\d)/
+      p ruby_ver
+      ruby_ver =~ /ruby (\d\.\d\.\d)/i
       major    = $1.gsub('.','')
       "#{major}: #{ruby_ver.strip}"
     end
@@ -130,7 +131,7 @@ module Pik
     end
     
     def ruby_glob(path)
-      glob = "#{Pathname.new(path).to_ruby}/{ruby.exe}"
+      glob = "#{Pathname.new(path).to_ruby}/{ruby.exe,ir.exe}"
       Pathname.glob(glob)
     end
     

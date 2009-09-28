@@ -2,9 +2,11 @@ module Pik
   VERSION = '0.1.0'
 end
 
-require 'highline'
+
 require 'pathname'
 require 'rbconfig'
+
+$LOAD_PATH.unshift File.dirname(__FILE__) unless Kernel.const_defined?(:Gem)
 
 require 'pik/core_ext/pathname'
 require 'pik/commands'
@@ -26,5 +28,8 @@ require 'pik/config_file'
 require 'pik/windows_env'
 require 'pik/batch_file'
 require 'pik/search_path'
+
+require 'rubygems'
+require 'highline'
 
 PIK_HOME = Pathname.new( ENV['HOME'] || ENV['USERPROFILE'] ) + '.pik'
