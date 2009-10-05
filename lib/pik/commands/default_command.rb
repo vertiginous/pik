@@ -19,7 +19,7 @@ module Pik
       @batch.set('PATH' => new_path )
       @batch.set('GEM_PATH' => usr['GEM_PATH'] || sys['GEM_PATH'] )
       @batch.set('GEM_HOME' => usr['GEM_HOME'] || sys['GEM_HOME'] )
-      echo_ruby_version(first_ruby_in_path(new_path)) if verbose
+      echo_ruby_version(Which::Ruby.find(new_path)) if verbose
     end
     
     def command_options
