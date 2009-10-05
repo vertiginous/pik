@@ -13,6 +13,8 @@ module Pik
     
     attr_accessor :output
     
+    attr_accessor :version
+    
     def self.cmd_name
       name.split('::').last.downcase.to_sym
     end
@@ -42,7 +44,7 @@ module Pik
     end
   
     def self.clean_gem_batch
-      BatchFile.open("#{$0}.bat") do |gem_bat|
+      BatchFile.open(PIK_BATCH) do |gem_bat|
         # remove old calls to .pik/pik batches
         gem_bat.remove_line( /call.+pik.+bat/i )
         gem_bat.write  
@@ -82,7 +84,6 @@ module Pik
       command_options
       parse_options
       create(PIK_HOME) unless PIK_HOME.exist?
-      # Add.new(nil, config).execute if config.empty?
       delete_old_pik_batches
     end
 
@@ -101,7 +102,11 @@ module Pik
     end
     
     def parse_options
-      options.parse! @args
+      options.on("--version", "-V", "Pik version") do |value|
+        puts "pik " + Pik::VERSION
+        @version = true
+      end
+      options.parse! @args 
     end
    
     def current_version?(string)
@@ -112,35 +117,65 @@ module Pik
       cmd = ruby_exe(path).basename
       cmd = Pathname.new(path) + cmd
       ruby_ver = `#{cmd} -v`
-      p ruby_ver
       ruby_ver =~ /ruby (\d\.\d\.\d)/i
       major    = $1.gsub('.','')
       "#{major}: #{ruby_ver.strip}"
     end
         
     def current_ruby_bin_path
-      Pathname.new(::RbConfig::CONFIG['bindir'] )
+      first_ruby_in_path
+    end
+    
+    def current_path?(config_path)
+      @path ||= SearchPath.new(ENV['PATH'])
+      @path.find{|dir| dir.downcase == config_path.to_windows.to_s.downcase }
+    end
+    
+    def find_config_from_path(path=current_ruby_bin_path)
+      config.find{|k,v| 
+        cfg  = v[:path].to_ruby.to_s.downcase 
+        path = Pathname.new(path).to_ruby.to_s.downcase
+        cfg == path
+      }.first rescue nil
+    end
+    
+    def first_ruby_in_path(search_path=ENV['PATH'])
+      path = SearchPath.new(search_path)
+      path = path.find{|dir| ruby_exists_at?(dir)}
+      Pathname.new(path)
     end
 
     def ruby_exists_at?(path)
       !!ruby_exe(path)
     end
     
-    def ruby_exe(path)
+    def ironruby?
+      puts 'deprecation notice: ironruby? method called'
+      defined?(RUBY_ENGINE) && RUBY_ENGINE == 'ironruby'
+    end
+    
+    def ruby_exe(path=first_ruby_in_path)
       ruby_glob(path).first
     end
     
     def ruby_glob(path)
-      glob = "#{Pathname.new(path).to_ruby}/{ruby.exe,ir.exe}"
+      glob = "#{Pathname.new(path).to_ruby}/{#{ruby_exes.join(',')}}"
       Pathname.glob(glob)
     end
     
+    def ruby_exes
+      ['ruby.exe', 'ir.exe', 'jruby.bat']
+    end
+    
     def current_gem_bin_path
-      default_gem_home + 'bin'
+      cfg = config[find_config_from_path]
+      p = cfg[:gem_home] || default_gem_home 
+      p + 'bin'
     end
 
     def default_gem_home
-      Pathname.new(Gem.default_path.first).to_windows
+      path = `#{ruby_exe} -rubygems -e\"require 'rubygems' ; puts Gem.default_path.first\"`
+      Pathname.new(path.chomp).to_windows
     end
     
     def create(home)

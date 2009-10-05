@@ -6,21 +6,21 @@ module Pik
     it "Removes a ruby location from pik."
     include ConfigFileEditor
     
-    attr_reader :quiet
+    attr_reader :force
     
     def execute
       to_remove = self.class.choose_from(@args, @config)
       raise QuitError unless to_remove
-      if quiet || @hl.agree("Are you sure you'd like to remove '#{to_remove}'? [Yn] ")  
+      if force || @hl.agree("Are you sure you'd like to remove '#{to_remove}'? [Yn] ")  
         @config.delete(to_remove)
-        @hl.say("#{to_remove} removed") unless quiet
+        @hl.say("#{to_remove} removed")
       end
     end
     
     def command_options
       super
-      options.on("--quiet", "-q", "Remove without prompting") do |value|
-        @quiet = value
+      options.on("--force", "-f", "Remove without prompting") do |value|
+        @force = value
       end
     end
     

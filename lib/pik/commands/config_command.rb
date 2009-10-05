@@ -17,7 +17,11 @@ module Pik
         when 'off' then set('RUBYOPT' => nil)
         end
       when 'gem_home'
-        config[get_version][:gem_home] = @args.include?('default') ? default_gem_home : value
+        config[find_config_from_path][:gem_home] = if @args.include?('default') 
+          Pathname.new(default_gem_home)
+        else
+          Pathname.new(value)
+        end
       else
         puts "Unknown configuration option"
       end

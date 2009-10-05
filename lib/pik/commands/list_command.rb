@@ -7,9 +7,9 @@ module Pik
 
     attr_reader :verbose 
     
-    def execute
+    def execute  
       config.sort.each do |name, conf|
-        name += ' *' if current_version?(name)
+        name += ' *' if current_path?(conf[:path])
         puts name
         if verbose
           conf.each{|k,v| puts "     %s: %s" % [k, v]} 

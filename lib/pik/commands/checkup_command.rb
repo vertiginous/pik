@@ -17,7 +17,7 @@ module Pik
     end
 
     def rubyopt
-      unless WindowsEnv.user['rubyopt'].empty? && WindowsEnv.system['rubyopt'].empty?
+      unless WindowsEnv.user['rubyopt'].nil? && WindowsEnv.system['rubyopt'].nil?
         fail('rubyopt')        
       else
         pass('rubyopt')
@@ -33,7 +33,9 @@ module Pik
     end
 
     def path
-      dirs = (WindowsEnv.user['path'] + WindowsEnv.system['path']).split(';')
+      user_path = WindowsEnv.user['path']    || ''
+      syst_path = WindowsEnv.system['path']  || ''
+      dirs = (user_path + syst_path).split(';')
       dirs = dirs.select{|dir| File.exist?( File.join(dir,'ruby.exe') ) }
       unless dirs.size == 1
         fail('path')        
@@ -59,6 +61,7 @@ module Pik
 
     def fail(test)
       print 'F'
+      $stdout.flush
       # @output << @text[test][:fail]
     end
 

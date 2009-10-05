@@ -9,7 +9,7 @@ module Pik
 
     def execute(path=nil)
       return add_interactive if interactive
-      path = @args.first || ::Config::CONFIG['bindir']
+      path = @args.first || first_ruby_in_path
       add(path)
     end
 
@@ -17,12 +17,12 @@ module Pik
       path = Pathname.new(path)
       path = path.dirname if path.file?
       if ruby_exists_at?(path) 
-        if config[get_version(path)]
+        if find_config_from_path(path)
           puts "This version has already been added."
         else
           version = get_version(path)
           path    = path.expand_path.to_ruby
-          puts "Adding:  #{version}'\n Located at:  #{path}\n"
+          puts "Adding:  #{version}\n Located at:  #{path}\n"
           @config[version] = {}
           @config[version][:path] = path
         end
