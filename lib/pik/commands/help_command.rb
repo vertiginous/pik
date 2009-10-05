@@ -5,7 +5,7 @@ module Pik
     it 'Displays help information.'
     
     def execute
-      puts options if @args.empty?
+      puts options if @args.empty? && !version
       
       @args.each do |a|
         @msg = case a.to_sym

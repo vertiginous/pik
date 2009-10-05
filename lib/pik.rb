@@ -2,11 +2,11 @@ module Pik
   VERSION = '0.1.1'
 end
 
+$LOAD_PATH.unshift(File.dirname(__FILE__))
 
 require 'pathname'
+require 'fileutils'
 require 'rbconfig'
-
-$LOAD_PATH.unshift File.dirname(__FILE__) unless Kernel.const_defined?(:Gem)
 
 require 'pik/core_ext/pathname'
 require 'pik/commands'
@@ -29,7 +29,12 @@ require 'pik/windows_env'
 require 'pik/batch_file'
 require 'pik/search_path'
 
-require 'rubygems'
 require 'highline'
 
-PIK_HOME = Pathname.new( ENV['HOME'] || ENV['USERPROFILE'] ) + '.pik'
+PIK_HOME  = Pathname.new( ENV['HOME'] || ENV['USERPROFILE'] ) + '.pik'
+if defined? ExerbRuntime
+  PIK_BATCH = Pathname.new(ARGV.shift).to_ruby
+else
+  pik_exe = Pathname.new($0).expand_path + '..' 
+  PIK_BATCH = pik_exe.dirname + "#{pik_exe.basename}.bat"
+end

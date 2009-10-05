@@ -8,7 +8,8 @@ module Pik
       @file = File.join(PIK_HOME, 'config.yml')
       super
       if File.exists? @file
-        self.update( YAML.load( File.read( @file ) ) )
+        contents = File.read( @file )
+        self.update( YAML.load( contents ) ) unless contents.empty?
       end
     end
 

@@ -4,14 +4,16 @@ module Pik
   	
   	it "Runs command with all version of ruby that pik is aware of."
     include BatchFileEditor
+    
+    attr_accessor :verbose
 
     def execute
       command = @args.join(' ')
-      current_ruby = @config[get_version]
+      current_ruby = @config[find_config_from_path]
       @config.sort.each do |version,hash|
         switch_path_to(hash)
         switch_gem_home_to(hash[:gem_home])
-        echo_running_with_ruby_version
+        echo_ruby_version(hash[:path], 'Running with') if verbose
         @batch.call command
         @batch.echo "."
       end
@@ -21,6 +23,13 @@ module Pik
     
     def command_options
       super
+      
+      options.on("--verbose", "-v",
+         "Display verbose output"
+         ) do |value|
+        @verbose = true
+      end
+      
       sep =<<SEP
   Examples:
 

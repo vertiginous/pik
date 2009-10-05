@@ -8,24 +8,24 @@ module Pik
     
     attr_accessor :global
     attr_accessor :gem_home
+    attr_accessor :verbose
     
     def execute
       abort('Nothing matches:') unless new_ver = self.class.choose_from(@args, @config)
       switch_path_to(@config[new_ver])
-      switch_gem_home_to(@config[new_ver][:gem_home]) 
-      echo_ruby_version
+      switch_gem_home_to(@config[new_ver][:gem_home])
+      echo_ruby_version(@config[new_ver][:path]) if verbose
     end
     
     def command_options
-      # options.on("--global", "-g", "Make changes globally") do |value|
-      #   @global = value
-      # end
-      
-      # options.on("-m name", "specify gem_home (Named gem sets)") do |value|
-      #   @gem_home = value
-      # end
-      
       super
+      
+      options.on("--verbose", "-v",
+         "Display verbose output"
+         ) do |value|
+        @verbose = true
+      end
+
       sep =<<SEP
   Examples:
 
