@@ -113,8 +113,8 @@ module Pik
       string == get_version
     end
         
-    def get_version(path=current_ruby_bin_path)
-      cmd = ruby_exe(path).basename
+    def get_version(path=Which::Ruby.find)
+      cmd = Which::Ruby.exe(path).basename
       cmd = Pathname.new(path) + cmd
       ruby_ver = `#{cmd} -v`
       ruby_ver =~ /ruby (\d\.\d\.\d)/i
@@ -122,49 +122,21 @@ module Pik
       "#{major}: #{ruby_ver.strip}"
     end
         
-    def current_ruby_bin_path
-      first_ruby_in_path
-    end
+    # def current_ruby_bin_path
+    #   first_ruby_in_path
+    # end
     
     def current_path?(config_path)
       @path ||= SearchPath.new(ENV['PATH'])
       @path.find{|dir| dir.downcase == config_path.to_windows.to_s.downcase }
     end
     
-    def find_config_from_path(path=current_ruby_bin_path)
+    def find_config_from_path(path=Which::Ruby.find)
       config.find{|k,v| 
         cfg  = v[:path].to_ruby.to_s.downcase 
         path = Pathname.new(path).to_ruby.to_s.downcase
         cfg == path
       }.first rescue nil
-    end
-    
-    def first_ruby_in_path(search_path=ENV['PATH'])
-      path = SearchPath.new(search_path)
-      path = path.find{|dir| ruby_exists_at?(dir)}
-      Pathname.new(path)
-    end
-
-    def ruby_exists_at?(path)
-      !!ruby_exe(path)
-    end
-    
-    def ironruby?
-      puts 'deprecation notice: ironruby? method called'
-      defined?(RUBY_ENGINE) && RUBY_ENGINE == 'ironruby'
-    end
-    
-    def ruby_exe(path=first_ruby_in_path)
-      ruby_glob(path).first
-    end
-    
-    def ruby_glob(path)
-      glob = "#{Pathname.new(path).to_ruby}/{#{ruby_exes.join(',')}}"
-      Pathname.glob(glob)
-    end
-    
-    def ruby_exes
-      ['ruby.exe', 'ir.exe', 'jruby.bat']
     end
     
     def current_gem_bin_path
@@ -174,7 +146,7 @@ module Pik
     end
 
     def default_gem_home
-      path = `#{ruby_exe} -rubygems -e\"require 'rubygems' ; puts Gem.default_path.first\"`
+      path = `#{Which::Ruby.exe} -rubygems -e\"require 'rubygems' ; puts Gem.default_path.first\"`
       Pathname.new(path.chomp).to_windows
     end
     

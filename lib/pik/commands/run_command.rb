@@ -2,7 +2,7 @@ module Pik
 
   class  Run < Command
   	
-  	it "Runs command with all version of ruby that pik is aware of."
+  	it "Runs command with all versions of ruby that pik is aware of."
     include BatchFileEditor
     
     attr_accessor :verbose

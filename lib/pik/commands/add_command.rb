@@ -9,14 +9,14 @@ module Pik
 
     def execute(path=nil)
       return add_interactive if interactive
-      path = @args.first || first_ruby_in_path
+      path = @args.first || Which::Ruby.find
       add(path)
     end
 
     def add(path)
       path = Pathname.new(path)
       path = path.dirname if path.file?
-      if ruby_exists_at?(path) 
+      if Which::Ruby.exist?(path) 
         if find_config_from_path(path)
           puts "This version has already been added."
         else
@@ -50,7 +50,7 @@ module Pik
         }
         menu.choice('s]earch'){
           search_dir = @hl.ask("Enter a search path")
-          files = ruby_glob(search_dir + '**')
+          files = Which::Ruby.glob(search_dir + '**')
           files.each{|file| 
             dir = File.dirname(file)
             add(dir) if @hl.agree("Add '#{dir}'? [Yn] ")

@@ -24,7 +24,7 @@ module Pik
     end  
       
     def switch_path_to(new_ver)
-      dir = current_ruby_bin_path
+      dir = Which::Ruby.find
       current_config = config[ find_config_from_path(dir) ]
       
       new_path = SearchPath.new(ENV['PATH']).replace_or_add(dir, new_ver[:path])
@@ -55,7 +55,7 @@ module Pik
     end
   
     def echo_ruby_version(path, verb='')
-      rb = ruby_exe(path).basename
+      rb = Which::Ruby.exe(path).basename
       @batch.file_data << "for /f \"delims=\" %%a in ('#{rb} -v') do @echo #{verb} %%a "
     end
   

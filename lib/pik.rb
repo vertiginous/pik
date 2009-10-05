@@ -26,6 +26,7 @@ require 'pik/commands/default_command'
 require 'pik/commands/implode_command'
 require 'pik/config_file'
 require 'pik/windows_env'
+require 'pik/which'
 require 'pik/batch_file'
 require 'pik/search_path'
 
