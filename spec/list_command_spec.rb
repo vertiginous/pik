@@ -1,7 +1,7 @@
 describe Pik::List do
 
   before do
-    @cmd = 'bin\\pik.bat'
+    @cmd = 'tools\\pik.bat'
     Pik::Commands.clear
     Pik::Commands.add(Pik::List)
     #Pik::ConfigFile.stub!(:new).and_return({})

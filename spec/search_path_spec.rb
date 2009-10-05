@@ -116,6 +116,15 @@ describe SearchPath do
 			@path.join.should == new_path
 		end
 
+		describe "find" do
+			it "should return the first path where block is not false" do
+				path = SearchPath.new(ENV['PATH'])
+				dir = path.find{|i| !!Dir[ File.join(i.gsub('\\','/'), '{ruby.exe, ir.exe}') ].first }
+				dir.should_not be_nil
+				dir.should be_a(String)
+			end
+		end
+
 	end
 
 end

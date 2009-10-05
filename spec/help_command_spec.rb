@@ -2,7 +2,7 @@
 describe Pik::Help do
 
   before do
-    @cmd = 'bin\\pik.bat'
+    @cmd = 'tools\\pik.bat'
   end
 
   it "should have a summary" do
