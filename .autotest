@@ -9,6 +9,9 @@ Autotest.add_hook :initialize do |at|
 
   at.add_exception 'bin'
   at.add_exception '.git'
+  at.add_exception 'log'
+  at.add_exception 'tools'
+  at.add_exception 'features'
   
   # at.add_mapping(/dependency.rb/) do |f, _|
   #   at.files_matching(/test_.*rb$/)
