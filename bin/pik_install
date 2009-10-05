@@ -1,0 +1,21 @@
+require 'fileutils'
+
+include FileUtils
+
+puts "Thank you for using pik.\n\n"
+
+install_dir = ARGV.first
+tools_dir   = File.join(File.dirname(__FILE__), '..', 'tools')
+
+if File.directory?(install_dir)
+  puts "Installing to #{install_dir}\n\n"
+  cp File.join(tools_dir, 'pik.bat'), install_dir , 
+      :verbose => true
+  mkdir_p File.join(install_dir, 'pik'), :verbose => true
+  cp File.join(tools_dir, 'pik', 'pik.exe'), 
+     File.join(install_dir, 'pik') ,
+      :verbose => true
+   puts "\npik is installed"
+else
+  puts "#{install_dir} is not a directory.  pik was not installed."
+end

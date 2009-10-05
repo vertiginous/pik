@@ -34,4 +34,40 @@ PIM
 
 end
 
+file 'tools/pik/pik.exy' do
+  Dir.chdir 'tools/pik' do
+    sh('ruby -rexerb/mkexy pik')
+  end
+end
+
+file 'tools/pik/pik.exe', :needs => 'tools/pik/pik.exy' do
+  Dir.chdir 'tools/pik' do
+    sh('ruby -S exerb pik.exy')
+  end
+end
+
+task :build, :needs => 'tools/pik/pik.exe'
+
+task :install, :needs => :build do
+  sh('ruby bin/pik_install C:\\bin')
+end
+
+task :clobber_exe do
+  rm_rf 'tools/pik/pik.exe'
+end
+
+task :clobber_exy, :needs => :clobber_exe do
+  rm_rf 'tools/pik/pik.exy'
+end
+
+task :rebuild, :needs => [:clobber_exy, :build]
+task :reinstall, :needs => [:clobber_exy, :install]
+
+require 'cucumber'
+require 'cucumber/rake/task'
+
+Cucumber::Rake::Task.new(:features) do |t|
+  t.cucumber_opts = "features --format pretty"
+end
+
 # vim: syntax=Ruby

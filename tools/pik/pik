@@ -1,0 +1,46 @@
+#!/usr/bin/env ruby
+
+lib = File.join(File.dirname(__FILE__), '..','..', 'lib')
+require File.join(lib, 'pik')
+
+include Pik
+
+args = ARGV
+
+Command.clean_gem_batch
+
+begin
+  config  = ConfigFile.new
+  
+  args_minus_opts = args.reject{|p| p =~ /^-/}
+  
+  command = if args_minus_opts.empty?
+    Help
+  elsif (c = Commands.find(args.first))
+    args.shift
+    c
+  elsif (choice = Command.choose_from(args_minus_opts, config))
+    args = [choice] + args
+    Switch
+  end
+  
+  if config.empty? && command != Pik::Add
+    add = Pik::Add.new([], config)
+    add.execute
+    add.close
+  end
+  
+  raise "The command '#{args.join(' ')}' is unknown." unless command
+  
+  cmd = command.new(args, config)
+  cmd.execute
+rescue QuitError
+  puts "\nQuitting..."
+rescue => e
+  puts "\nThere was an error"
+  puts " Error: #{e.message}\n\n"
+  puts e.backtrace.map{|m| "  in: #{m}" }
+ensure
+  cmd.close if cmd
+end 
+
