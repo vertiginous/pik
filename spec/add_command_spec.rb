@@ -10,6 +10,4 @@ describe Pik::Add do
     add.interactive.should be_true
   end
 
-  it "should exit with a message if nothing is found"
-
 end
