@@ -10,6 +10,11 @@ class Pathname
     @path.gsub!('\\','/')
     self
   end
-
+  
+  def ==(other)
+    self_ = self.dup.to_ruby.to_s.downcase
+    other = other.dup.to_ruby.to_s.downcase
+    self_ == other
+  end
+  
 end
-

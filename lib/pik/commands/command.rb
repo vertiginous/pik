@@ -114,28 +114,21 @@ module Pik
     end
         
     def get_version(path=Which::Ruby.find)
-      cmd = Which::Ruby.exe(path).basename
-      cmd = Pathname.new(path) + cmd
+      cmd = Which::Ruby.exe(path)
       ruby_ver = `#{cmd} -v`
       ruby_ver =~ /ruby (\d\.\d\.\d)/i
       major    = $1.gsub('.','')
       "#{major}: #{ruby_ver.strip}"
     end
-        
-    # def current_ruby_bin_path
-    #   first_ruby_in_path
-    # end
     
     def current_path?(config_path)
       @path ||= SearchPath.new(ENV['PATH'])
-      @path.find{|dir| dir.downcase == config_path.to_windows.to_s.downcase }
+      @path.find{|dir| Pathname(dir) == Pathname(config_path) }
     end
     
     def find_config_from_path(path=Which::Ruby.find)
       config.find{|k,v| 
-        cfg  = v[:path].to_ruby.to_s.downcase 
-        path = Pathname.new(path).to_ruby.to_s.downcase
-        cfg == path
+        Pathname(v[:path])== Pathname(path)
       }.first rescue nil
     end
     
