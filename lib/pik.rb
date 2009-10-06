@@ -1,5 +1,5 @@
 module Pik
-  VERSION = '0.1.1'
+  VERSION = '0.2.0'
 end
 
 $LOAD_PATH.unshift(File.dirname(__FILE__))
