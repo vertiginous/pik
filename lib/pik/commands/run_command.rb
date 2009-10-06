@@ -66,12 +66,17 @@ SEP
     end
 
     def switch_gem_home_to(gem_home_dir)
-      gem_home_dir ||= ''
-      gem_path = Pathname.new(gem_home_dir).to_windows 
-      ENV['GEM_PATH'] = gem_path
-      ENV['GEM_HOME'] = gem_path
+      if gem_home_dir
+        gem_home_dir ||= ''
+        gem_path = Pathname.new(gem_home_dir).to_windows 
+        ENV['GEM_PATH'] = gem_path
+        ENV['GEM_HOME'] = gem_path
+      else
+        ENV.delete 'GEM_PATH'
+        ENV.delete 'GEM_HOME'
+      end
     end
-    
+        
     def echo_ruby_version(path, verb='')
       rb = Which::Ruby.exe(path).basename
       puts `for /f \"delims=\" %a in ('#{rb} -v') do @echo #{verb} %a `
