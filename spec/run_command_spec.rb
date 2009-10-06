@@ -1,13 +1,13 @@
 
 describe Pik::Run do
   it "should have a summary" do
-    Pik::Run.summary.should eql("Runs command with all version of ruby that pik is aware of.")
+    Pik::Run.summary.should eql("Runs command with all versions of ruby that pik is aware of.")
   end
   
   it "should use a batch file to switch paths" do
     cmd = Pik::Command.new([],nil)
     current_version = cmd.get_version
-    current_path    = cmd.current_ruby_bin_path
+    current_path    = Which::Ruby.find
     ENV['PATH']="C:\\Program Files\\Putty;#{Pathname.new(current_path).to_windows}"
     cmd = Pik::Run.new(['rake -V'], {
                                      current_version => {:path => Pathname(current_path)},

@@ -24,11 +24,4 @@ describe Pik::Command do
     end
   end
   
-  describe "current_ruby_bin_path" do
-    it "should be a Pathname" do
-      @cmd.current_ruby_bin_path.should be_a(Pathname)
-      @cmd.current_ruby_bin_path.basename.to_s.should == "bin"
-    end
-  end
-  
 end
