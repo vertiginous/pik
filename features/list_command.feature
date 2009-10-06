@@ -4,7 +4,7 @@ Feature: list command
   Wants an interface to the program
   So that he can list configuration information
 
-  Scenario: Listing versions
+  Scenario: list versions
     When I run "pik list"
     Then I should find "^\d+\: .+ruby"
 
@@ -12,7 +12,7 @@ Feature: list command
     When I run "pik list"
     Then I should find "^\d+\: .+\*$"
     
-  Scenario: Displaying verbose output
+  Scenario: list verbose output
     When I run "pik list -v"
     Then I should find "^\d+\: .+\*$"
-    And I should find "path\: C\:\\.+"
+    And I should find "path\: C\:[\\\/].+"
