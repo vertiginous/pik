@@ -40,6 +40,7 @@ lib/pik/core_ext/pathname.rb
 lib/pik/options.rb
 lib/pik/runner.rb
 lib/pik/search_path.rb
+lib/pik/which.rb
 lib/pik/windows_env.rb
 spec/add_command_spec.rb
 spec/batch_file_spec.rb
@@ -49,11 +50,14 @@ spec/default_command_spec.rb
 spec/gemsync_command_spec.rb
 spec/help_command_spec.rb
 spec/list_command_spec.rb
+spec/pathname_spec.rb
 spec/remove_command_spec.rb
 spec/run_command_spec.rb
 spec/search_path_spec.rb
 spec/spec.opts
 spec/switch_command_spec.rb
+spec/which_spec.rb
 tools/pik.bat
 tools/pik/pik
 tools/pik/pik.exe
+tools/pik/pik.exy
