@@ -9,7 +9,7 @@ class SearchPath
 
 	def remove(old_path)
     old = Pathname(old_path).expand_path.to_windows
-    @path = @path.reject{|dir| dir.downcase == old.to_s.downcase }
+    @path = @path.reject{|dir| Pathname(dir) == old }
     @path = @path.uniq
 		self
 	end
@@ -18,7 +18,7 @@ class SearchPath
     old_path = Pathname(old_path)
     new_path = Pathname(new_path)
 		@path.map!{|dir|
-			if dir.downcase == old_path.expand_path.to_windows.to_s.downcase
+			if Pathname(dir) == old_path
  				new_path.to_windows.to_s
 			else
  				dir 
@@ -41,7 +41,7 @@ class SearchPath
 	def replace_or_add(old_path, new_path)
     old_path = Pathname(old_path)
     new_path = Pathname(new_path)
-	  return self if old_path.to_windows == new_path.to_windows
+	  return self if old_path == new_path
 		old_search_path = @path.dup
 		replace(old_path, new_path)
 		add(new_path) if @path == old_search_path
