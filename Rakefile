@@ -18,15 +18,20 @@ Hoe.spec('pik') do
 
 ----------------------------------------------------------------------------
 
-  1.  Use 'pik add' to add all versions of ruby to your pik config, 
-      or use 'pik add -i' for an interactive console to do the same.
-      The current ruby version is added by default.  
-     
-        see 'pik help add' for more info
-  
-  2.  Run 'pik run "gem install pik"' to install pik to all Ruby versions.
+1. If you've used a version previous to this one, you'll need to uninstall them.
+   Don't worry, this will leave your pik config intact.
+    
+    pik run "gem uninstall pik"
+    
+2. Install the pik gem
 
-  3.  Run 'pik help' for help.
+    gem install pik
+    
+3. You need to install pik to a location that's in your path, but someplace other than your ruby\bin dir
+
+    pik_install C:\\some\\other\\path
+  
+4. Add all the versions of ruby that you want to use with pik
 
 ----------------------------------------------------------------------------  
 
