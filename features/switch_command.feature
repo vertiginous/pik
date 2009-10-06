@@ -14,22 +14,21 @@ Feature: switch command
     Examples:
       | version                                                   | patterns  |
       | IronRuby 0.9.1.0 on .NET 2.0.0.0                          | Ir 91     |
-      | jruby 1.3.1 (ruby 1.8.6p287) (2009-06-15 2fd6c3d)         | jruby 1.3 |
+      | jruby 1.4.0RC1 (ruby 1.8.7 patchlevel 174)                | jruby 1.4 |
       | ruby 1.8.6 (2008-08-11 patchlevel 287) [i386-mswin32]     | 186 ms    |
       | ruby 1.8.6 (2009-03-31 patchlevel 368) [i386-mingw32]     | 186 mi    |
       | ruby 1.9.1p243 (2009-07-16 revision 24175) [i386-mingw32] | 191 p2    |
       
   Scenario Outline: Switching versions with pattern only
     Given I have added "<version>" to pik
-    When I run "pik sw <patterns> -v" and check the path
-    Then I should see "<version>"
-    And the path should point to it.
+    When I run "pik <patterns>" and check the path
+    Then the path should point to it.
     And the GEM_HOME might get set.
 
     Examples:
       | version                                                   | patterns  |
       | IronRuby 0.9.1.0 on .NET 2.0.0.0                          | Ir 91     |
-      | jruby 1.3.1 (ruby 1.8.6p287) (2009-06-15 2fd6c3d)         | jruby 1.3 |
+      | jruby 1.4.0RC1 (ruby 1.8.7 patchlevel 174)                | jruby 1.4 |
       | ruby 1.8.6 (2008-08-11 patchlevel 287) [i386-mswin32]     | 186 ms    |
       | ruby 1.8.6 (2009-03-31 patchlevel 368) [i386-mingw32]     | 186 mi    |
       | ruby 1.9.1p243 (2009-07-16 revision 24175) [i386-mingw32] | 191 p2    |
