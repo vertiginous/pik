@@ -3,33 +3,24 @@ module Pik
   class  Run < Command
   	
   	it "Runs command with all versions of ruby that pik is aware of."
-    
-    attr_accessor :verbose
 
     def execute
       @config.sort.each do |version,hash|
         switch_path_to(hash)
         switch_gem_home_to(hash[:gem_home])
-        echo_ruby_version(hash[:path], 'Running with') if verbose
-        puts command if verbose
+        echo_ruby_version(hash[:path])
         puts `#{command}`
         puts
       end
     end
     
     def command
-      @args.join(' ')
+      cmd = 'CALL'
+      "#{cmd} #{@args.join(' ')}"
     end
     
     def command_options
       super
-      
-      options.on("--verbose", "-v",
-         "Display verbose output"
-         ) do |value|
-        @verbose = true
-      end
-      
       sep =<<SEP
   Examples:
 
@@ -39,6 +30,9 @@ module Pik
 
 SEP
       options.separator sep  
+    end
+    
+    def parse_options
     end
 
     def switch_path_to(new_ver)
@@ -65,21 +59,15 @@ SEP
       ENV['PATH'] = new_path.join
     end
 
-    def switch_gem_home_to(gem_home_dir)
-      if gem_home_dir
-        gem_home_dir ||= ''
-        gem_path = Pathname.new(gem_home_dir).to_windows 
-        ENV['GEM_PATH'] = gem_path
-        ENV['GEM_HOME'] = gem_path
-      else
-        ENV.delete 'GEM_PATH'
-        ENV.delete 'GEM_HOME'
-      end
+    def switch_gem_home_to(gem_home)
+      gem_home = Pathname(gem_home).to_windows rescue nil
+      ENV['GEM_PATH'] = gem_home
+      ENV['GEM_HOME'] = gem_home
     end
         
-    def echo_ruby_version(path, verb='')
+    def echo_ruby_version(path)
       rb = Which::Ruby.exe(path).basename
-      puts `for /f \"delims=\" %a in ('#{rb} -v') do @echo #{verb} %a `
+      puts `#{rb} -v `
     end
 
   end
