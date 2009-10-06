@@ -3,22 +3,22 @@ module Pik
   class  Run < Command
   	
   	it "Runs command with all versions of ruby that pik is aware of."
-    include BatchFileEditor
     
     attr_accessor :verbose
 
     def execute
-      command = @args.join(' ')
-      current_ruby = @config[find_config_from_path]
       @config.sort.each do |version,hash|
         switch_path_to(hash)
         switch_gem_home_to(hash[:gem_home])
         echo_ruby_version(hash[:path], 'Running with') if verbose
-        @batch.call command
-        @batch.echo "."
+        puts command if verbose
+        puts `#{command}`
+        puts
       end
-      switch_path_to(current_ruby)
-      switch_gem_home_to(current_ruby[:gem_home])
+    end
+    
+    def command
+      @args.join(' ')
     end
     
     def command_options
@@ -41,6 +41,66 @@ SEP
       options.separator sep  
     end
 
+    def switch_path_to(new_ver)
+      dir = Which::Ruby.find
+      current_config = config[ find_config_from_path(dir) ]
+      
+      new_path = SearchPath.new(ENV['PATH']).replace_or_add(dir, new_ver[:path])
+      if new_gem_home = new_ver[:gem_home]
+        
+        new_gem_bin = Pathname.new(new_gem_home) + 'bin'
+        
+        if current_gem_home = current_config[:gem_home]
+          current_gem_bin = Pathname.new(current_gem_home) + 'bin'
+          new_path.replace(current_gem_bin, new_gem_bin)
+        else
+          new_path.add(new_gem_bin)
+        end
+      else
+        if current_gem_home = current_config[:gem_home]
+          current_gem_bin = Pathname.new(current_gem_home) + 'bin'
+          new_path.remove(current_gem_bin)
+        end
+      end
+      ENV['PATH'] = new_path.join
+    end
+
+    def switch_gem_home_to(gem_home_dir)
+      gem_home_dir ||= ''
+      gem_path = Pathname.new(gem_home_dir).to_windows 
+      ENV['GEM_PATH'] = gem_path
+      ENV['GEM_HOME'] = gem_path
+    end
+    
+    def echo_ruby_version(path, verb='')
+      rb = Which::Ruby.exe(path).basename
+      puts `for /f \"delims=\" %a in ('#{rb} -v') do @echo #{verb} %a `
+    end
+
+  end
+
+  class Ruby < Run
+  
+    aka :rb
+    it "Runs ruby with all versions that pik is aware of."
+    
+    def command
+      cmd = Which::Ruby.exe.basename
+      "#{cmd} #{@args.join(' ')}"
+    end
+    
+  end
+  
+  class Gem < Run
+  
+    it "Runs the gem command with all versions that pik is aware of."
+    
+    def command
+      cmd = Which::Gem.bat.basename
+      "#{cmd} #{@args.join(' ')}"
+    end
+    
   end
   
 end
+
