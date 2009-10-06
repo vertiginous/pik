@@ -5,7 +5,7 @@ Feature: implode command
   So that he can delete all pik configuration data
   
   
-  Scenario: run pik implode
+  Scenario: pik implode
     Given I have a directory "C:/temp/.pik"
     And it contains a config.yml
     When I run "pik implode -f"
