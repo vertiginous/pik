@@ -7,7 +7,7 @@ module Which
       def find(search_path=ENV['PATH'])
         path = SearchPath.new(search_path)
         path = path.find{|dir| exist?(dir)}
-        Pathname.new(path)
+        Pathname(path) rescue nil
       end
   
       def exist?(path)
@@ -20,6 +20,7 @@ module Which
       alias :bat :exe
       
       def glob(path)
+        return [] if path.nil?
         glob = "#{Pathname.new(path).to_ruby}/{#{executables.join(',')}}"
         Pathname.glob(glob)
       end
@@ -29,7 +30,7 @@ module Which
   class Ruby < Base
   
     def self.executables
-      ['ruby.exe', 'ir.exe', 'jruby.bat']
+      ['ruby.exe', 'ir.exe', 'jruby.exe', 'jruby.bat']
     end
   
   end
@@ -40,6 +41,12 @@ module Which
       ['gem.bat', 'igem.bat']
     end  
   
+  end
+  
+  class SevenZip < Base
+    def self.executables
+      ['7za.exe']
+    end 
   end
 
 end

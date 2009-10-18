@@ -13,7 +13,9 @@ describe Pathname do
     it 'should change the file separator' do
       path   = Pathname('Z:/This/is/to/test/separators')
       result = "Z:\\This\\is\\to\\test\\separators"
-      path.to_windows.to_s.should eql(result)
+      path.to_windows.should eql(result)
+      p = "C:\\Doc\\gthiesfeld/.pik/dl/ir.zip"
+      Pathname(p).to_windows.should eql("C:\\Doc\\gthiesfeld\\.pik\\dl\\ir.zip")    
     end
   end
   
@@ -21,7 +23,7 @@ describe Pathname do
     it 'should change the file separator' do
       path   = Pathname("Z:\\This\\is\\to\\test\\separators")
       result = 'Z:/This/is/to/test/separators'
-      path.to_ruby.to_s.should eql(result)
+      path.to_ruby.should eql(result)
     end
   end
 

@@ -14,9 +14,9 @@ module Pik
       end
     end
     
-    def command
-      cmd = 'CALL'
-      "#{cmd} #{@args.join(' ')}"
+    def command(cmd='CALL')
+      args = @args.map{|a| a.sub(/.*\s.*/m, '"\&"')}.join(' ')
+      "#{cmd} #{args}"
     end
     
     def command_options
@@ -66,7 +66,7 @@ SEP
     end
         
     def echo_ruby_version(path)
-      rb = Which::Ruby.exe(path).basename
+      rb = Which::Ruby.exe(path)
       puts `#{rb} -v `
     end
 
@@ -77,9 +77,8 @@ SEP
     aka :rb
     it "Runs ruby with all versions that pik is aware of."
     
-    def command
-      cmd = Which::Ruby.exe.basename
-      "#{cmd} #{@args.join(' ')}"
+    def command(cmd=Which::Ruby.exe.basename)
+      super(cmd)
     end
     
   end
@@ -88,9 +87,8 @@ SEP
   
     it "Runs the gem command with all versions that pik is aware of."
     
-    def command
-      cmd = Which::Gem.bat.basename
-      "#{cmd} #{@args.join(' ')}"
+    def command(cmd=Which::Gem.bat.basename)
+      super(cmd)
     end
     
   end
