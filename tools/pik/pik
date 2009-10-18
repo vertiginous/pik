@@ -31,7 +31,6 @@ begin
   end
   
   raise "The command '#{args.join(' ')}' is unknown." unless command
-  
   cmd = command.new(args, config)
   cmd.execute
 rescue QuitError

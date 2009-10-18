@@ -4,7 +4,10 @@ module Pik
 
   class QuitError < StandardError
   end
-
+  
+  class VersionUnknown < StandardError
+  end
+  
   class  Command
     
     attr_reader :config

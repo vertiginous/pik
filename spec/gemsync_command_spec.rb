@@ -9,7 +9,7 @@ describe Pik::GemSync do
       gemsync = Pik::GemSync.new([])
       gemsync.gem_install(Pathname.new('c:/fake/file.gem'))
       gemsync.batch.file_data.should include( "ECHO Installing file.gem" )
-      gemsync.batch.file_data.should include( "CALL gem install -q --no-rdoc --no-ri c:/fake/file.gem\n" )
+      gemsync.batch.file_data.should include( "CALL gem install -q --no-rdoc --no-ri c:\\fake\\file.gem\n" )
     end
   end
 end
