@@ -124,10 +124,10 @@ module Pik
       "#{major}: #{ruby_ver.strip}"
     end
     
-    def current_path?(config_path)
-      @path ||= SearchPath.new(ENV['PATH'])
-      @path.find{|dir| Pathname(dir) == Pathname(config_path) }
-    end
+    # def current_path?(config_path)
+    #   @path ||= SearchPath.new(ENV['PATH'])
+    #   @path.find{|dir| Pathname(dir) == Pathname(config_path) }
+    # end
     
     def find_config_from_path(path=Which::Ruby.find)
       config.find{|k,v| 
@@ -152,7 +152,7 @@ module Pik
     end
    
     def delete_old_pik_batches( cutoff=(Time.now - (2 * 60 * 60)) )
-      Dir[(PIK_HOME + "*.bat").to_windows.to_s].each do |f| 
+      Dir[(PIK_HOME + "*.bat").to_ruby.to_s].each do |f|
         File.delete(f) if File.ctime(f) < cutoff 
       end
     end
