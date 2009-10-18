@@ -65,6 +65,13 @@ Then /^I should find "(.*)"$/ do |regexp|
   stdout.should match(Regexp.new(regexp))
 end
 
+
+Then /^I should find "(.*)" (\d+) times$/ do |regexp, count|
+  stdout = File.read(PIK_LOG)
+  items = stdout.scan(Regexp.new(regexp))
+  items.size.should eql(count.to_i)
+end
+
 Then /^the path should point to it\.$/ do
   path  = @ver[0][:path]
   path = path.to_s.gsub('/','\\')
@@ -74,6 +81,27 @@ end
 Then /^the path should point to "(.+)"$/ do |path|
   stdout = File.read(PIK_LOG)
   stdout.should match( Regexp.new(Regexp.escape(path)) )
+end
+
+
+Then /^I should see each version.s path listed$/ do
+  stdout = File.read(PIK_LOG)
+  config_file = PIK_HOME + 'config.yml'
+  config = YAML.load(File.read(config_file))
+  config.each{|k,v| 
+    path = Regexp.new(Regexp.escape(v[:path].to_s.gsub('/','\\')))
+    stdout.should match(path)
+  }
+end
+
+Then /^I should see each version listed\.$/ do
+  stdout = File.read(PIK_LOG)
+  config_file = PIK_HOME + 'config.yml'
+  config = YAML.load(File.read(config_file))
+  config.each{|k,v| 
+    version = Regexp.new(Regexp.escape(k.split(': ')[1..-1].join(': ')))
+    stdout.should match(version)
+  }  
 end
 
 Then /^the GEM_HOME might get set\.$/ do
