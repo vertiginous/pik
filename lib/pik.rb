@@ -3,7 +3,7 @@ module Pik
 end
 
 $LOAD_PATH.unshift(File.dirname(__FILE__))
-
+require 'yaml'
 require 'pathname'
 require 'fileutils'
 require 'rbconfig'
@@ -25,6 +25,7 @@ require 'pik/commands/config_command'
 require 'pik/commands/gemsync_command'
 require 'pik/commands/default_command'
 require 'pik/commands/implode_command'
+require 'pik/commands/tag_command'
 require 'pik/config_file'
 require 'pik/windows_env'
 require 'pik/which'
@@ -34,8 +35,9 @@ require 'pik/search_path'
 require 'highline'
 
 PIK_HOME  = Pathname.new( ENV['HOME'] || ENV['USERPROFILE'] ) + '.pik'
+
 if defined? ExerbRuntime
-  PIK_BATCH = Pathname.new(ARGV.shift).to_ruby
+  PIK_BATCH = Pathname.new(ARGV.shift).ruby
 else
   pik_exe = Pathname.new($0).expand_path + '..' 
   PIK_BATCH = pik_exe.dirname + "#{pik_exe.basename}.bat"
