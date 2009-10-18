@@ -5,7 +5,18 @@ Feature: run command
   So that he can run commands against all versions that pik is aware of
 
   Scenario: run code
-    Given I have 9 versions configured
-    When I run "pik run "path" -v"
+    When I run "pik run "path""
     Then I should find "PATH=" 9 times
-    And I should see all paths to each version
+    And I should see each version's path listed
+    And I should see each version listed.  
+  
+  Scenario: ruby command
+    When I run "pik ruby -e "puts 'hello world!'" "
+    Then I should find "hello world!" 9 times
+    And I should see each version listed.
+  
+  Scenario: gem command
+    When I run "pik gem -v"
+    Then I should find "\n\d\.\d\.\d\n" 9 times
+    And I should see each version listed.
+    
