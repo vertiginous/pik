@@ -66,7 +66,10 @@ Windows, more than one version of Ruby (otherwise, what's the point?) and Rubyge
     
 3. You need to install pik to a location that's in your path, but someplace other than your ruby\bin dir
 
-    pik_install C:\some\other\path
+    >path
+      PATH=C:\tools\;C:\ruby\186-p368-mingw32\bin;C:\WINDOWS\system32;C:\WINDOWS
+
+    >pik_install C:\tools
   
 4. Add all the versions of ruby that you want to use with pik
 
