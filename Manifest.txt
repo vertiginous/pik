@@ -13,6 +13,7 @@ features/help_command.feature
 features/implode_command.feature
 features/install_command.feature
 features/list_command.feature
+features/pik_install.feature
 features/remove_command.feature
 features/run_command.feature
 features/step_definitions/pik_commands.rb
