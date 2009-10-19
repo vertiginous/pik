@@ -36,33 +36,15 @@ config=<<CONFIG
   path: c:\\temp\\.pik\\downloads
 :install_dir: !ruby/object:Pathname 
   path: c:\\temp\\ruby
-:tags: 
-  "186": 
-  - "186: ruby 1.8.6 (2009-03-31 patchlevel 368) [i386-mingw32]"
-  - "186: ruby 1.8.6 (2008-08-11 patchlevel 287) [i386-mswin32]"
-  "191": 
-  - "191: ruby 1.9.1p243 (2009-07-16 revision 24175) [i386-mingw32]"
-  - "191: ruby 1.9.1p129 (2009-05-12 revision 23412) [i386-mingw32]"
-  iron: 
-  - "091: IronRuby 0.9.1.0 on .NET 2.0.0.0"
-  - "090: IronRuby 0.9.0.0 on .NET 2.0.0.0"
-  jruby: 
-  - "131: jruby 1.3.1 (ruby 1.8.6p287) (2009-06-15 2fd6c3d) (Java HotSpot(TM) Client VM 1.6.0_14) [x86-java]"
-  mingw: 
-  - "186: ruby 1.8.6 (2009-03-31 patchlevel 368) [i386-mingw32]"
-  - "191: ruby 1.9.1p129 (2009-05-12 revision 23412) [i386-mingw32]"
-  - "191: ruby 1.9.1p243 (2009-07-16 revision 24175) [i386-mingw32]"
-  ms: 
-  - "185: ruby 1.8.5 (2006-12-25 patchlevel 12) [i386-mswin32]"
-  - "185: ruby 1.8.5 (2006-12-25 patchlevel 12) [i386-mswin32]"
-  - "186: ruby 1.8.6 (2008-08-11 patchlevel 287) [i386-mswin32]"
 CONFIG
 
+REAL_PATH  = ENV['PATH']
 FAKE_PIK_HOME = 'c:/temp/.pik'
-
 ENV['HOME'] = "C:\\temp"
+ENV['JAVA_HOME'] = "C:\\Program Files\\Java\\jre6"
 
 Before do
+  ENV['PATH'] = REAL_PATH
   FileUtils.rm_rf FAKE_PIK_HOME
   FileUtils.mkdir_p FAKE_PIK_HOME
   File.open(File.join(FAKE_PIK_HOME, 'config.yml'), 'w'){|f| f.puts config }

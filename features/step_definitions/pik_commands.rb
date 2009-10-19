@@ -19,7 +19,6 @@ Given /^I am currently using it\.$/ do
     k,v = `pik switch #{@version} & path`.split('=')
     ENV[k]=v
   end
-  
   `ruby -v`.should match(@version_reg)
 end
 
@@ -47,7 +46,11 @@ Given /^I have an empty config\.yml/ do
   File.open(PIK_HOME + 'config.yml','w'){|f| }
 end
 
-When /^I run "pik (.*)"$/ do |args|
+When /^I run "pik (.+?)" and "pik (.+)",$/ do |args1, args2|
+  %x[tools\\pik.bat #{args1} > #{PIK_LOG} 2>&1 && tools\\pik.bat #{args2} > #{PIK_LOG} 2>&1]
+end
+
+When /^I run "pik (.+?)"$/ do |args|
   %x[tools\\pik.bat #{args} > #{PIK_LOG} 2>&1 ]
 end
 
