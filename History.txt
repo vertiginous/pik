@@ -1,3 +1,16 @@
+=== 0.2.0 / 2009-10-18
+
+* pik is now an exerb compile executable, and must be installed to a location that is in the system path, but is
+  seperate from ruby
+* added pik_install command
+* added support for IronRuby and Jruby
+* added install command to install new Ruby versions
+* added tag and tags command
+* added cucumber functional tests
+* updated gem post-install message
+* changed pik run to run in ruby instead of in a batch file.  
+* Added pik ruby and pik gem commands.
+
 === 0.1.1 / 2009-09-25
 
 * add rubyforge info to README
