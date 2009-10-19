@@ -3,7 +3,7 @@ module Pik
   
   class Default < Command
   
-    it "switches back to the default settings"
+    it "Switches back to the default settings."
   
     attr_accessor :verbose
   

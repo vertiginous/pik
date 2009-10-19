@@ -37,7 +37,7 @@ module Pik
 
   class Tag < Command
   
-    it 'adds the given tag to the current version'
+    it 'Adds the given tag to the current version.'
 
     include ConfigFileEditor
 

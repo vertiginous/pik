@@ -7,6 +7,7 @@ module Pik
   class  Install < Command
   
     aka :in
+    it "Downloads and installs different ruby versions."
     
     def versions
        {
@@ -54,6 +55,26 @@ module Pik
       add( Pathname(target) + 'bin' )
     rescue VersionUnknown
       puts 'unknown'   
+    end
+    
+    def command_options
+      super
+      sep =<<SEP
+  
+  Choices are: ruby, jruby, or ironruby
+  
+  If no version is specified, the latest version will be installed.
+  
+  Examples:
+
+    # install the latest version of JRuby (currently 1.4.0RC1)
+    >pik install jruby
+
+    # install the latest 1.8 version of MinGW Ruby 
+    >pik install ruby 1.8    
+
+SEP
+      options.separator sep  
     end
     
     def most_recent(version)
