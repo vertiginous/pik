@@ -17,6 +17,7 @@ features/remove_command.feature
 features/run_command.feature
 features/step_definitions/pik_commands.rb
 features/switch_command.feature
+features/tag_command.feature
 features/version.feature
 lib/pik.rb
 lib/pik/batch_file.rb
