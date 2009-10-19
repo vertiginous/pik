@@ -46,6 +46,20 @@ Given /^I have an empty config\.yml/ do
   File.open(PIK_HOME + 'config.yml','w'){|f| }
 end
 
+Given /^I have not installed pik to (.+)$/ do |path|
+  FileUtils.rm_rf path if File.exist? path
+  FileUtils.mkdir_p path
+  Dir[path + "\\pik.bat"].should be_empty
+end
+
+Given /^"(.*)" is in the system path$/ do |arg1|
+  ENV['PATH'] = [arg1, ENV['PATH']].join(';')
+end
+
+When /^I run "pik_install (.+)"$/ do |args|
+  %x[ruby bin/pik_install #{args} > #{PIK_LOG} 2>&1 ]
+end
+
 When /^I run "pik (.+?)" and "pik (.+)",$/ do |args1, args2|
   %x[tools\\pik.bat #{args1} > #{PIK_LOG} 2>&1 && tools\\pik.bat #{args2} > #{PIK_LOG} 2>&1]
 end
@@ -56,6 +70,10 @@ end
 
 When /^I run "pik (.*)" and check the path$/ do |args|
   %x[tools\\pik.bat #{args} > #{PIK_LOG} 2>&1 & PATH >> #{PIK_LOG} ]
+end
+
+And /^then I run "(.*)"$/ do |args|
+  %x[#{args} >> #{PIK_LOG} 2>&1 ]
 end
 
 Then /^I should see "(.*)"$/ do |data|
