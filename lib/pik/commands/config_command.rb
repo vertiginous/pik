@@ -60,6 +60,20 @@ module Pik
       end
     end
     
+    def command_options
+      super
+      sep =<<SEP
+  Configuration options are:
+    
+    rubyopt      on = -rubygems, off = blank         
+    gem_home     Location of current version's GEM_HOME env. var.
+    downloads    Location where 'pik install' will download new versions
+    installs     Location where 'pik install' will install new versions
+
+SEP
+      options.separator sep  
+    end
+    
   end 
   
 end
