@@ -44,14 +44,14 @@ SEP
         
         new_gem_bin = Pathname.new(new_gem_home) + 'bin'
         
-        if current_gem_home = current_config[:gem_home]
+        if current_config && (current_gem_home = current_config[:gem_home])
           current_gem_bin = Pathname.new(current_gem_home) + 'bin'
           new_path.replace(current_gem_bin, new_gem_bin)
         else
           new_path.add(new_gem_bin)
         end
       else
-        if current_gem_home = current_config[:gem_home]
+        if current_config && (current_gem_home = current_config[:gem_home])
           current_gem_bin = Pathname.new(current_gem_home) + 'bin'
           new_path.remove(current_gem_bin)
         end
