@@ -60,10 +60,10 @@ module Pik
     def command_options
       super
       sep =<<SEP
-  
   Choices are: ruby, jruby, or ironruby
   
   If no version is specified, the latest version will be installed.
+  Download and install locations can be configured with 'pik config'.
   
   Examples:
 
