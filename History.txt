@@ -1,6 +1,6 @@
 === 0.2.1 / 2009-10-19
 
-* bugfix - path to pik could have spaces.
+* bugfix - path to pik could have spaces - thanks, Dominic Sisneros
 * update install instructions
 
 === 0.2.0 / 2009-10-18
