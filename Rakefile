@@ -59,7 +59,7 @@ Hoe.spec('pik') do
 
     gem install pik
     
-3. You need to install pik to a location that's in your path, but someplace other than your ruby\bin dir
+3. You need to install pik to a location that's in your path, but someplace other than your ruby\\bin dir
 
     pik_install C:\\some\\other\\path
   
