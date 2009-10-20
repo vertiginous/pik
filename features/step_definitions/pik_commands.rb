@@ -61,7 +61,7 @@ When /^I run "pik_install (.+)"$/ do |args|
 end
 
 When /^I run "pik (.+?)" and "pik (.+)",$/ do |args1, args2|
-  %x[tools\\pik.bat #{args1} > #{PIK_LOG} 2>&1 && tools\\pik.bat #{args2} > #{PIK_LOG} 2>&1]
+  %x[tools\\pik.bat #{args1} > #{PIK_LOG} 2>&1 & tools\\pik.bat #{args2} >> #{PIK_LOG} 2>&1]
 end
 
 When /^I run "pik (.+?)"$/ do |args|
@@ -136,7 +136,7 @@ Then /^the GEM_HOME might get set\.$/ do
 end
 
 Then /^the directory should be deleted$/ do
-  Pathname(@dir).should_not exist
+  Pathname(PIK_HOME).should_not exist
 end
 
 Then /^nothing should be added to the config file\.$/ do
@@ -148,7 +148,6 @@ Then /^the version should be removed\.$/ do
   @current_config = YAML.load(File.read(@config_file))
   @current_config.size.should eql(@original_config.size - 1)
 end
-
 
 Then /^a gem_home option should be added to the config\.$/ do
   @ver[0][:gem_home].should be_nil

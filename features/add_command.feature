@@ -26,3 +26,11 @@ Feature: add command
   Scenario: add a nonexistent version
     When I run "pik add C:\ruby\nonexistent_ruby\bin"
     Then I should see "Couldn't find a Ruby version at C:\ruby\nonexistent_ruby\bin"
+    
+  Scenario: add a version with spaces in the path.
+    Given I have an empty config.yml
+    When I run "pik add "C:\temp\more spaces in path\ruby\jruby_140RC1\bin""
+    Then I should see "Adding:  140: jruby 1.4.0RC1 (ruby 1.8.7 patchlevel 174)"
+    And I should see "Located at:  C:\temp\more spaces in path\ruby\jruby_140RC1\bin"
+    
+    

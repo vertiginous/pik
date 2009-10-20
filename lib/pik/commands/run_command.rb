@@ -67,7 +67,7 @@ SEP
         
     def echo_ruby_version(path)
       rb = Which::Ruby.exe(path)
-      puts `#{rb} -v `
+      puts `"#{rb}" -v `
     end
 
   end

@@ -6,7 +6,7 @@ Feature: implode command
   
   
   Scenario: pik implode
-    Given I have a directory "C:/temp/.pik"
+    Given I have a directory "C:/temp/path with spaces/.pik"
     And it contains a config.yml
     When I run "pik implode -f"
     Then the directory should be deleted
