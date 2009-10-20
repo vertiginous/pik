@@ -1,14 +1,7 @@
-require 'yaml'
-require 'pathname'
-require 'fileutils'
-
-PIK_LOG = 'log\\output.log'
-PIK_HOME  = Pathname.new( ENV['HOME'] || ENV['USERPROFILE'] ) + '.pik'
-
 Given /^I have.+added "(.+)"/ do |version|
   @version = version
   @version_reg = Regexp.new(Regexp.escape(version), Regexp::IGNORECASE)
-  @config_file = PIK_HOME + 'config.yml'
+  @config_file = TEST_PIK_HOME + 'config.yml'
   @original_config = YAML.load(File.read(@config_file))
   @ver = @original_config.keys.grep(@version_reg){|k| @original_config[k] }
   @ver.size.should eql(1)
@@ -38,12 +31,12 @@ Given /^it contains a config\.yml/ do
 end
 
 Given /^I have no \.pik directory/ do
-  FileUtils.rm_rf PIK_HOME
-  PIK_HOME.should_not exist
+  FileUtils.rm_rf TEST_PIK_HOME
+  TEST_PIK_HOME.should_not exist
 end
 
 Given /^I have an empty config\.yml/ do
-  File.open(PIK_HOME + 'config.yml','w'){|f| }
+  File.open(TEST_PIK_HOME + 'config.yml','w'){|f| }
 end
 
 Given /^I have not installed pik to (.+)$/ do |path|
@@ -80,6 +73,12 @@ Then /^I should see "(.*)"$/ do |data|
   stdout = File.read(PIK_LOG)
   stdout.should match(Regexp.new(Regexp.escape(data)))
 end
+
+
+Then /^I should see the Pik::VERSION$/ do
+  stdout = File.read(PIK_LOG)
+  stdout.should match(Regexp.new(Regexp.escape(Pik::VERSION)))
+end
  
 Then /^I should find "(.*)"$/ do |regexp|
   stdout = File.read(PIK_LOG)
@@ -107,7 +106,7 @@ end
 
 Then /^I should see each version.s path listed$/ do
   stdout = File.read(PIK_LOG)
-  config_file = PIK_HOME + 'config.yml'
+  config_file = TEST_PIK_HOME + 'config.yml'
   config = YAML.load(File.read(config_file))
   config.each{|k,v| 
     path = Regexp.new(Regexp.escape(v[:path].to_s.gsub('/','\\')))
@@ -117,7 +116,7 @@ end
 
 Then /^I should see each version listed\.$/ do
   stdout = File.read(PIK_LOG)
-  config_file = PIK_HOME + 'config.yml'
+  config_file = TEST_PIK_HOME + 'config.yml'
   config = YAML.load(File.read(config_file))
   config.each{|k,v| 
     version = Regexp.new(Regexp.escape(k.split(': ')[1..-1].join(': ')))
@@ -136,7 +135,7 @@ Then /^the GEM_HOME might get set\.$/ do
 end
 
 Then /^the directory should be deleted$/ do
-  Pathname(PIK_HOME).should_not exist
+  Pathname(TEST_PIK_HOME).should_not exist
 end
 
 Then /^nothing should be added to the config file\.$/ do

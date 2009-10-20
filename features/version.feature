@@ -6,4 +6,5 @@ Feature: display pik version
   
   Scenario: Listing versions
     When I run "pik -V"
-    Then I should find "^pik \d.\d.\d"
+    Then I should see "pik "
+    And I should see the Pik::VERSION
