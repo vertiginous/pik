@@ -6,17 +6,17 @@ Feature: run command
 
   Scenario: run code
     When I run "pik run "path""
-    Then I should find "PATH=" 9 times
+    Then I should find "PATH=" 5 times
     And I should see each version's path listed
     And I should see each version listed.  
   
   Scenario: ruby command
     When I run "pik ruby -e "puts 'hello world!'" "
-    Then I should find "hello world!" 9 times
+    Then I should find "hello world!" 5 times
     And I should see each version listed.
   
   Scenario: gem command
     When I run "pik gem -v"
-    Then I should find "\n\d\.\d\.\d\n" 9 times
+    Then I should find "\n\d\.\d\.\d\n" 5 times
     And I should see each version listed.
     

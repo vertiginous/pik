@@ -15,8 +15,7 @@ Feature: switch command
       | version                                                   | patterns  |
       | IronRuby 0.9.1.0 on .NET 2.0.0.0                          | Ir 91     |
       | jruby 1.4.0RC1 (ruby 1.8.7 patchlevel 174)                | jruby 1.4 |
-      | ruby 1.8.6 (2008-08-11 patchlevel 287) [i386-mswin32]     | 186 ms    |
-      | ruby 1.8.6 (2009-03-31 patchlevel 368) [i386-mingw32]     | 186 mi    |
+      | ruby 1.8.6 (2009-08-04 patchlevel 383) [i386-mingw32]     | 186 383   |
       | ruby 1.9.1p243 (2009-07-16 revision 24175) [i386-mingw32] | 191 p2    |
       
   Scenario Outline: Switching versions with pattern only
@@ -29,7 +28,6 @@ Feature: switch command
       | version                                                   | patterns  |
       | IronRuby 0.9.1.0 on .NET 2.0.0.0                          | Ir 91     |
       | jruby 1.4.0RC1 (ruby 1.8.7 patchlevel 174)                | jruby 1.4 |
-      | ruby 1.8.6 (2008-08-11 patchlevel 287) [i386-mswin32]     | 186 ms    |
-      | ruby 1.8.6 (2009-03-31 patchlevel 368) [i386-mingw32]     | 186 mi    |
+      | ruby 1.8.6 (2009-08-04 patchlevel 383) [i386-mingw32]     | 186 383   |
       | ruby 1.9.1p243 (2009-07-16 revision 24175) [i386-mingw32] | 191 p2    |
       

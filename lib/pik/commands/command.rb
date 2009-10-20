@@ -118,7 +118,7 @@ module Pik
         
     def get_version(path=Which::Ruby.find)
       cmd = Which::Ruby.exe(path)
-      ruby_ver = `#{cmd} -v`
+      ruby_ver = `"#{cmd}" -v`
       ruby_ver =~ /ruby (\d\.\d\.\d)/i
       major    = $1.gsub('.','')
       "#{major}: #{ruby_ver.strip}"
