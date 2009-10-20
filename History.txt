@@ -1,3 +1,8 @@
+=== 0.2.2 / 2009-10-20
+
+* Pik::Command#get_version now handles paths with spaces.  Thanks to Dominic Sisneros and Vassilis Rizopoulos 
+* All Cucumber scenarios are run against 'C:\temp\path with spaces' instead of 'C:\temp'
+
 === 0.2.1 / 2009-10-19
 
 * bugfix - path to pik could have spaces - thanks, Dominic Sisneros
