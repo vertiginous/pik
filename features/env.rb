@@ -22,10 +22,19 @@ config=<<CONFIG
   path: C:\\temp\\path with spaces
 CONFIG
 
+require 'yaml'
+require 'pathname'
+require 'fileutils'
+require 'lib/pik'
+
 REAL_PATH  = ENV['PATH']
-FAKE_PIK_HOME = 'c:/temp/path with spaces/.pik'
+
 ENV['HOME'] = "C:\\temp\\path with spaces"
 ENV['JAVA_HOME'] = "C:\\Program Files\\Java\\jre6"
+
+PIK_LOG = 'log\\output.log'
+TEST_PIK_HOME  = Pathname.new( ENV['HOME'] || ENV['USERPROFILE'] ) + '.pik'
+FAKE_PIK_HOME = 'c:/temp/path with spaces/.pik'
 
 Before do
   ENV['PATH'] = REAL_PATH

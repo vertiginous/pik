@@ -4,7 +4,6 @@ README.rdoc
 Rakefile
 bin/pik_install
 features/add_command.feature
-features/checkup_command.feature
 features/config_command.feature
 features/default_command.feature
 features/env.rb
