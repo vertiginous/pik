@@ -16,3 +16,8 @@ Feature: tag command
     And I run "pik tags mingw run echo."
     Then I should see "ruby 1.8.6 (2009-08-04 patchlevel 383) [i386-mingw32]"
     And I should see "ruby 1.9.1p243 (2009-07-16 revision 24175) [i386-mingw32]"
+
+  Scenario: run tags with no options
+    When I run "pik tags"
+    Then I should see "The tags command allows you to run a subset of versions."
+    And I should see "C:\>pik tags mingw,jruby gem install my_gem"
