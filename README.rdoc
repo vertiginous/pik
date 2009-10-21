@@ -4,6 +4,8 @@ Homepage:     http://github.com/vertiginous/pik
 
 Bugs/Feature: http://github.com/vertiginous/pik/issues
 
+Mailing List: http://groups.google.com/group/discuss_pik
+
 Rubyforge:    http://rubyforge.org/projects/pik/
 
 Gordon Thiesfeld
