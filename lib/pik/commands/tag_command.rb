@@ -8,6 +8,8 @@ module Pik
       config.global[:tags] ||= Hash.new{|h,k| h[k] = [] }
       @tag_config = config.dup
       @tag_config.clear
+      abort self.class.description if @args.empty?
+      
       tags = @args.shift.split(',')
       tags.each do |tag|
         versions = config.global[:tags][tag]
@@ -31,6 +33,23 @@ module Pik
     end
     
     def parse_options
+    end
+    
+    def command_options
+      super
+      sep =<<SEP
+  The tags command allows you to run a subset of versions.  
+  It should be used in conjunction with the run, ruby, or gems commands. 
+  Multpile tags can be given in a comma separated (no spaces) list.
+  
+  Examples:
+
+    C:\\>pik tags jruby run ruby -v
+
+    C:\\>pik tags mingw,jruby gem install my_gem
+
+SEP
+      options.separator sep  
     end
     
   end

@@ -19,17 +19,21 @@ module Pik
       "#{cmd} #{args}"
     end
     
+    
     def command_options
       super
+      options.separator help_message  
+    end
+    
+    def help_message
       sep =<<SEP
   Examples:
 
-    C:\\>pik run "ruby -v"
+    C:\\>pik run PATH
 
-    C:\\>pik run "rake spec"
+    C:\\>pik run rake spec
 
 SEP
-      options.separator sep  
     end
     
     def parse_options
@@ -80,6 +84,17 @@ SEP
     def command(cmd=Which::Ruby.exe.basename)
       super(cmd)
     end
+
+    def help_message
+      sep =<<SEP
+  Examples:
+
+    C:\\>pik ruby -v
+
+    C:\\>pik rb -e "puts 'Hello world!'"
+
+SEP
+    end
     
   end
   
@@ -89,6 +104,17 @@ SEP
     
     def command(cmd=Which::Gem.bat.basename)
       super(cmd)
+    end
+    
+    def help_message
+      sep =<<SEP
+  Examples:
+
+    C:\\>pik gem list
+
+    C:\\>pik gem install my_gem
+
+SEP
     end
     
   end
