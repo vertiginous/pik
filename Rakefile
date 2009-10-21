@@ -75,7 +75,7 @@ require 'cucumber'
 require 'cucumber/rake/task'
 
 Cucumber::Rake::Task.new(:features) do |t|
-  t.cucumber_opts = "features  -f html -o ..pik_cucumber.html -f progress"
+  t.cucumber_opts = "features  -f html -o ../pik_cucumber.html -f progress"
 end
 
 # vim: syntax=Ruby
