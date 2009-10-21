@@ -1,12 +1,12 @@
 = pik
 
-Homepage:     http://github.com/vertiginous/pik
+Homepage:  http://github.com/vertiginous/pik
 
-Bugs/Feature: http://github.com/vertiginous/pik/issues
+Mailing List:  http://groups.google.com/group/discuss_pik
 
-Mailing List: http://groups.google.com/group/discuss_pik
+Rubyforge:  http://rubyforge.org/projects/pik/
 
-Rubyforge:    http://rubyforge.org/projects/pik/
+Bugs/Feature requests:  http://github.com/vertiginous/pik/issues
 
 Gordon Thiesfeld
 
