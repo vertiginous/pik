@@ -1,7 +1,10 @@
 = pik
 
-http://github.com/vertiginous/pik
-http://rubyforge.org/projects/pik/
+Homepage:     http://github.com/vertiginous/pik
+
+Bugs/Feature: http://github.com/vertiginous/pik/issues
+
+Rubyforge:    http://rubyforge.org/projects/pik/
 
 Gordon Thiesfeld
 
