@@ -1,7 +1,16 @@
+=== 0.2.3 / 2009-10-21
+
+* renamed tools/pik.exe to pik_runner.exe to minimize confusion/conflicts
+* Upgraded to exerb 0.4.4
+* Added documentation for tags commands. Thanks Luis Lavena
+* 'pik tags' with no options will display the help docs, instead of throwing a cryptic error.  
+* Added docs for ruby and gem command. Improved docs for run command
+
 === 0.2.2 / 2009-10-20
 
 * Pik::Command#get_version now handles paths with spaces.  Thanks to Dominic Sisneros and Vassilis Rizopoulos 
 * All Cucumber scenarios are run against 'C:\temp\path with spaces' instead of 'C:\temp'
+* Added :rebuild task as a dependency to :package task, so that the executable gets rebuilt on packaging.  Thanks, skim.
 
 === 0.2.1 / 2009-10-19
 
@@ -10,7 +19,7 @@
 
 === 0.2.0 / 2009-10-18
 
-* pik is now an exerb compile executable, and must be installed to a location that is in the system path, but is
+* pik is now an exerb compiled executable, and must be installed to a location that is in the system path, but is
   seperate from ruby
 * added pik_install command
 * added support for IronRuby and Jruby
