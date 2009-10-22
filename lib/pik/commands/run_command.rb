@@ -9,7 +9,7 @@ module Pik
         switch_path_to(hash)
         switch_gem_home_to(hash[:gem_home])
         echo_ruby_version(hash[:path])
-        puts `#{command}`
+        system command
         puts
       end
     end
