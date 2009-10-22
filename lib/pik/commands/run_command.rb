@@ -15,10 +15,7 @@ module Pik
         rescue => e
           version = version.split(': ')[1..-1].join(': ')
           puts version
-          puts "\nThere was an error."
-          puts " Error: #{e.message}\n\n"
-          puts e.backtrace.map{|m| "  in: #{m}" }
-          puts
+          Pik.print_error(e)
         end
       end
     end

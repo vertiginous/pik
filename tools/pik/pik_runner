@@ -36,9 +36,7 @@ begin
 rescue QuitError
   puts "\nQuitting..."
 rescue => e
-  puts "\nThere was an error"
-  puts " Error: #{e.message}\n\n"
-  puts e.backtrace.map{|m| "  in: #{m}" }
+  Pik.print_error(e)
 ensure
   cmd.close if cmd
 end 
