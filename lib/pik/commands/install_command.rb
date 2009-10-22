@@ -5,45 +5,34 @@ require 'pik/contrib/progressbar'
 module Pik
 
   class  Install < Command
-  
+    
+    VERSIONS = 'http://pik.rubyforge.org/versions.yml'
+    
     aka :in
     it "Downloads and installs different ruby versions."
     
-    def versions
-       {
-        'ruby' => {
-          '1.8.6-p383' =>
-          'http://rubyforge.org/frs/download.php/62267/ruby-1.8.6-p383-i386-mingw32.7z',
-          '1.9.1-p243' =>
-          'http://rubyforge.org/frs/download.php/62269/ruby-1.9.1-p243-i386-mingw32.7z'
-          },
-        'ironruby' => {
-          '0.9.1' =>
-          'http://rubyforge.org/frs/download.php/64504/ironruby-0.9.1.zip',
-          '0.9.0' =>
-          'http://rubyforge.org/frs/download.php/61382/ironruby-0.9.0.zip'
-        },
-        'jruby' => {
-          '1.4.0RC1' =>
-          'http://dist.codehaus.org/jruby/1.4.0RC1/jruby-bin-1.4.0RC1.zip'
-        }
-      }
+    def version_list
+      YAML.load(URI.read(VERSIONS))
     end
     
     def execute
       target = ''
       @download_dir = config.global[:download_dir] || PIK_HOME + 'downloads'
       FileUtils.mkdir_p @download_dir.to_s
-      version = @args.shift
-      if versions[version]
-        target += version
-        version = versions[version]
-        @args.each{ |i| version = version.select{|k,v| k =~ Regexp.new(Regexp.escape(i)) } }
-        t, version = most_recent(version)
+      implementation = @args.shift
+      if version_list[implementation]
+        target += implementation
+        implementation = version_list[implementation]
+        @args.each{ |i| implementation = implementation.select{|k,v| k =~ Regexp.new(Regexp.escape(i)) } }
+        t, version = most_recent(implementation[:versions])
+        version = implementation[:url] + version
         target += "_#{t}"
-      elsif URI.parse(version.to_s) === URI::HTTP
-        version = URI.parse(version.to_s)
-        target  = @args.shift
+      # elsif URI::HTTP === URI.parse(implementation.to_s)
+      #   version = URI.parse(implementation.to_s)
+      #   target  = @args.shift
+      #   p version
+      #   p target
+      #   exit 0
       else
         raise VersionUnknown
       end
