@@ -4,13 +4,13 @@ require 'rubygems'
 
 file 'tools/pik/pik.exy' do
   Dir.chdir 'tools/pik' do
-    sh('ruby -rexerb/mkexy pik')
+    sh('ruby -rexerb/mkexy pik_runner')
   end
 end
 
 file 'tools/pik/pik.exe', :needs => 'tools/pik/pik.exy' do
   Dir.chdir 'tools/pik' do
-    sh('ruby -S exerb pik.exy')
+    sh('ruby -S exerb pik_runner.exy')
   end
 end
 
