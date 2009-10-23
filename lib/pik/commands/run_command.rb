@@ -6,11 +6,17 @@ module Pik
 
     def execute
       @config.sort.each do |version,hash|
-        switch_path_to(hash)
-        switch_gem_home_to(hash[:gem_home])
-        echo_ruby_version(hash[:path])
-        puts `#{command}`
-        puts
+        begin
+          switch_path_to(hash)
+          switch_gem_home_to(hash[:gem_home])
+          echo_ruby_version(hash[:path])
+          system command
+          puts
+        rescue => e
+          version = version.split(': ')[1..-1].join(': ')
+          puts version
+          Pik.print_error(e)
+        end
       end
     end
     
@@ -71,6 +77,7 @@ SEP
         
     def echo_ruby_version(path)
       rb = Which::Ruby.exe(path)
+      raise "Unable to find a Ruby executable at #{path}" unless rb
       puts `"#{rb}" -v `
     end
 

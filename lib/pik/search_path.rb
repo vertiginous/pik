@@ -39,6 +39,10 @@ class SearchPath
 	end
 
 	def replace_or_add(old_path, new_path)
+    if old_path.nil?
+      add(new_path)
+      return self
+    end
     old_path = Pathname(old_path)
     new_path = Pathname(new_path)
 	  return self if old_path == new_path
