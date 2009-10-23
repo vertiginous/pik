@@ -50,8 +50,8 @@ lib/pik/contrib/zip/zip.rb
 lib/pik/contrib/zip/zipfilesystem.rb
 lib/pik/contrib/zip/ziprequire.rb
 lib/pik/core_ext/pathname.rb
+lib/pik/implementations.rb
 lib/pik/options.rb
-lib/pik/runner.rb
 lib/pik/search_path.rb
 lib/pik/which.rb
 lib/pik/windows_env.rb
@@ -62,6 +62,7 @@ spec/commands_spec.rb
 spec/default_command_spec.rb
 spec/gemsync_command_spec.rb
 spec/help_command_spec.rb
+spec/implementations_spec.rb
 spec/list_command_spec.rb
 spec/pathname_spec.rb
 spec/remove_command_spec.rb
@@ -71,6 +72,6 @@ spec/spec.opts
 spec/switch_command_spec.rb
 spec/which_spec.rb
 tools/pik.bat
-tools/pik/pik
-tools/pik/pik.exe
-tools/pik/pik.exy
+tools/pik/pik_runner
+tools/pik/pik_runner.exe
+tools/pik/pik_runner.exy
