@@ -83,7 +83,7 @@ module Pik
       @config  = config_ || ConfigFile.new
       @hl      = HighLine.new
       add_sigint_handler
-      options.program_name = "#{File.basename($0)} #{self.class.names.join('|')}"
+      options.program_name = "#{PIK_BATCH.basename('.*')} #{self.class.names.join('|')}"
       command_options
       parse_options
       create(PIK_HOME) unless PIK_HOME.exist?
