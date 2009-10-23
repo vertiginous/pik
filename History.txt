@@ -1,5 +1,7 @@
-=== 0.2.3 / 2009-10-21
+=== 0.2.3 / 2009-XX-XX
 
+* better error message when a version was deleted, but not removed from the config
+* bugfix: run/gem/ruby command hangs when waiting for input
 * renamed tools/pik.exe to pik_runner.exe to minimize confusion/conflicts
 * Upgraded to exerb 0.4.4
 * Added documentation for tags commands. Thanks Luis Lavena
