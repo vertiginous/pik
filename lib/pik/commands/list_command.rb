@@ -5,9 +5,21 @@ module Pik
     aka :ls
     it "Lists ruby versions that pik is aware of."
 
-    attr_reader :verbose 
+    attr_reader :verbose, :remote
     
     def execute 
+      if remote
+        remote_list
+      else
+        list
+      end
+    end
+    
+    def remote_list
+      puts Implementations.list.to_yaml
+    end
+    
+    def list
       current_path = Which::Ruby.find
       config.sort.each do |name, conf|
         name += ' *' if current_path == conf[:path]
@@ -27,6 +39,11 @@ module Pik
          "Verbose output"
          ) do |value|
         @verbose = value
+      end
+      @options.on("--remote", "-r",
+         "List remote install packages"
+         ) do |value|
+        @remote = value
       end
     end
     
