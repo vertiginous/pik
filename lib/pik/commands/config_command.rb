@@ -63,6 +63,9 @@ module Pik
     def command_options
       super
       sep =<<SEP
+If no options are given, the current and global configuration
+is displayed.
+
   Configuration options are:
     
     rubyopt      on = -rubygems, off = blank         
