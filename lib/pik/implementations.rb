@@ -5,7 +5,7 @@ module Pik
   module Implementations
     
     def self.[](implementation)
-      self.send(implementation)
+      self.send(implementation.downcase)
     end
   
     def self.ruby
@@ -21,18 +21,14 @@ module Pik
     end
     
     def self.method_missing(meth)
-      raise "The implementation '#{meth}' wasn't found"
+      raise "Pik isn't aware of an implementation called '#{meth}' for Windows."
     end
   
     def self.list
       h = {}
-      self.each{|i| h[i.subclass] = i.versions  }
+      [ruby, jruby, ironruby].each{|i| h[i.subclass] = i.versions  }
       h
     end
-  
-    def self.each
-      [ruby, jruby, ironruby].each{|i| yield i }
-    end 
     
     class Base
     
@@ -49,12 +45,12 @@ module Pik
           return most_recent
         else
           pattern = Regexp.new(Regexp.escape(args.first))
-          versions.find{|v,k| v =~ pattern }
+          versions.select{|v,k| v =~ pattern }.max
         end
       end
           
       def most_recent(vers=versions)
-        vers.sort.last
+        vers.max
       end
       
       def versions

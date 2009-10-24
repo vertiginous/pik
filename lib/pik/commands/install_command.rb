@@ -12,15 +12,15 @@ module Pik
     def initialize(args=ARGV, config_=nil)
       super
       @download_dir = config.global[:download_dir] || PIK_HOME + 'downloads'
-      @install_root = config.global[:install_dir] || PIK_BATCH.dirname + 'pik'
+      @install_root = config.global[:install_dir]  || PIK_BATCH.dirname + 'pik'
       FileUtils.mkdir_p @download_dir.to_s
     end
     
     def execute
-      implementation = @args.shift.downcase
+      implementation  = @args.shift
       target, package = Implementations[implementation].find(*@args)
-      target =  @install_root + target.gsub('.','')
-      file   = download(package)
+      target          =  @install_root + "#{implementation}-#{target.gsub('.','')}"
+      file            = download(package)
       extract(target, file)
       add( Pathname(target) + 'bin' )
     end
@@ -45,10 +45,10 @@ SEP
       options.separator sep  
     end
     
-    def download(version, download_dir=@download_dir)   
-      target = download_dir + version.split('/').last
-      puts "** Downloading:  #{version}\n   to:  #{target.windows}\n\n"
-      URI.download(version,target.to_s, {:progress => true})
+    def download(package, download_dir=@download_dir)   
+      target = download_dir + package. split('/').last
+      puts "** Downloading:  #{package} \n   to:  #{target.windows}\n\n"
+      URI.download(package, target.to_s, {:progress => true})
       puts
       return target
     end
