@@ -24,4 +24,4 @@ Feature: list command
     And I should see "JRuby:"
     And I should see "1.4.0RC2:"
     Then I should see "Ruby:"
-    And I should see " 1.8.6-p383-i386-mingw32:"
+    And I should see " 1.8.6-p383"

@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en   ">
+
+  <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name='author' content="Bruce Williams (http://codefluency.com), for
+Ruby Central (http://rubycentral.org)">
+	<title>RubyForge: IronRuby: Project Filelist</title>
+  <link rel="alternate" type="application/rss+xml" title="Recent gems" href="http://gems.rubyforge.org/index.rss" />
+<link rel="alternate" type="text/xml" title="RSS" href="http://rubyforge.org/export/rss_sfnews.php"/>
+        <link rel="Shortcut Icon" href="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/favicon.ico"/>
+	<script language="JavaScript" type="text/javascript">
+	<!--
+	function help_window(helpurl) {
+		HelpWin = window.open( 'http://rubyforge.org' + helpurl,'HelpWindow','scrollbars=yes,resizable=yes,toolbar=no,height=400,width=400');
+	}
+	// -->
+	</script>
+
+<style type="text/css">
+	<!--
+
+        body {
+          margin: 0px;
+          background: #fff;
+        }
+
+	OL,UL,P,BODY,TR,TD,TH,FORM {
+		font-family: Lucida Grande,verdana,arial,helvetica,sans-serif;
+		font-size:13px;
+		color: #202020;
+	}
+
+	HR { margin: 2px 0px 2px 0px }
+
+
+	H1 { font-size: x-large; font-family: Lucida Grande,verdana,arial,helvetica,sans-serif; }
+	H2 { font-size: large; font-family: Lucida Grande,verdana,arial,helvetica,sans-serif; }
+	H3 { font-size: medium; font-family: Lucida Grande,verdana,arial,helvetica,sans-serif; }
+	H4 { font-size: small; font-family: Lucida Grande,verdana,arial,helvetica,sans-serif; }
+	H5 { font-size: x-small; font-family: Lucida Grande,verdana,arial,helvetica,sans-serif; }
+	H6 { font-size: xx-small; font-family: Lucida Grande,verdana,arial,helvetica,sans-serif; }
+
+	PRE,TT { font-family: 'Bitstream Vera Sans Mono',courier,sans-serif }
+  a {
+    color: #cc3333;
+    text-decoration: none;
+  }
+  a img {
+    border: 0px;
+  }
+  table em {
+    font-style: normal;
+    font-weight: bold;
+    color: #666;
+    margin-left: 0px;
+  }
+  hr { /* unfortunately hrs are hardcoded */
+    height: 2px;
+    color: #e6e6e6;
+    background: #e6e6e6;
+    border: 0px;
+  }
+  td hr {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+        #header {
+          height: 79px;
+          background: #fff url(http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/header-bg.png) bottom left repeat-x;
+          margin: 0px;
+        }
+        #header-right {
+          position: absolute;
+          top: 0px;
+          right: 0px;
+          width: 40%;
+        }
+        #search {
+          margin: 10px;
+        }
+        #controls {
+          padding: 0px;
+          height: 20px;
+          line-height: 20px;
+          vertical-align: middle;
+          background: url(http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/controls-bg.png) top left repeat-x;
+        }
+        #controls img {
+          float: left;
+          margin-right: 1em;
+        }
+        #controls a {
+          padding: 0px;
+          margin: 0px;
+          color: #fff;
+          text-decoration: none;
+          margin-right: 1em;
+        }
+        #controls a:hover {
+          color: #ffffcc;
+        }
+        #content {
+          padding-left: 2em;
+          padding-right: 2em;
+        }
+        .tabs {
+          clear: both;
+          margin: 0px;
+          height: 26px;
+          padding: 0px;
+        }
+        #outer-tabs {
+          background: #fff url(http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/tabs-bg.png) top left repeat-x;
+        }
+        #inner-tabs {
+          background: #fff url(http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/inner-tabs-bg.png) top left repeat-x;
+        }
+        .tabs li {
+          padding: 4px;
+          padding-left: 10px;
+          padding-right: 10px;
+          float: left;
+          display: block;
+          margin-left: 0.5em;
+        }
+        .tabs li a {
+          color: #444;
+          text-decoration: none;
+          font-size: 14px;
+          font-weight: bold;
+        }
+        .tabs li a:hover {
+          color: red; }
+        #outer-tabs li.active {
+          background: url(http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/active-tab-bg.png) top left repeat-x;
+        }
+        #inner-tabs li a {
+          font-size: 13px; }
+        #inner-tabs li.active {
+          background: url(http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/active-inner-tab-bg.png) top left repeat-x;
+        }
+        .tabs li.active a {
+          color: #000;
+        }
+        #fade { 
+          background: url(http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/bottom-fade-bg.png) bottom left repeat-x;
+          height: 13px;
+        }
+
+        .titlebar {
+          background: #FFFFCC;
+          padding: 4px;
+          font-size: 14px;
+          font-weight: bold;
+          border-bottom: 1px #fab444 solid; }
+        .files-header td {
+          background: #ffffcc;
+          border: 1px #fab444 solid;
+        }
+        .files-header td * {
+          background: none;
+          border: 0px; }
+        .files-header + tr td {
+          background: #ddd;
+        }
+        .files-header + tr td * {
+          background: none;
+          border: 0px;
+          color: #666;
+        }
+        .package td {
+          background: #ffffcc;
+        }
+	-->
+  </style>
+</head>
+<body>
+
+<div id='header'>
+  <div id='header-right'>
+    <div id='controls'><img alt='' src='http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/controls-left.png'/>
+      				<a href="/account/login.php">Log In</a>
+				<a href="/projects/support/">Support</a>
+				<a href="/account/register.php">New Account</a>
+          </div>
+    <div id='search'>
+		<form action="/search/" method="get">
+		<table border="0" cellpadding="0" cellspacing="0">
+		<tr><td>
+		<div align="center" style="font-size:smaller"><select name="type_of_search"><option value="trackers">This project's trackers</option>
+<option value="forums">This project's forums</option>
+<option value="tasks">This project's tasks</option>
+<option value="frs">This project's releases</option>
+<option value="docs">This project's documents</option>
+<option value="news">This project's news</option>
+<option value="soft">Software/Group</option>
+<option value="people">People</option>
+<option value="skill">Skill</option>
+</select></div></td><td>&nbsp;<input type="hidden" value="4359" name="group_id" /></td><td><input type="text" size="12" name="words" value="" /></td><td>&nbsp;</td><td><input type="submit" name="Search" value="Search" /></td>
+					<td width="10">&nbsp;</td>
+					<td><b><a style="color: #FFFFFF" href="/search/advanced_search.php?group_id=4359"> Advanced search</a></b></td></tr></table></form></div>
+  </div>
+  <a href='/' title='Back to Homepage'><img alt='RubyForge' src='http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/header.png'/></a>
+  <!-- <a href='http://alohaonrails.com/'><img alt='Aloha on Rails' src='/images/alohaconf.jpg'/></a> -->
+</div>
+<ul id="outer-tabs"
+class="tabs"><li><a href='/'>Home</a></li><li><a href='/my/'>My&nbsp;Page</a></li><li><a href='/softwaremap/'>Project&nbsp;Tree</a></li><li><a href='/snippet/'>Code&nbsp;Snippets</a></li><li><a href='/people/'>Project&nbsp;Openings</a></li><li class='active'><a href='/projects/ironruby/'>IronRuby</a></li></ul><ul id="inner-tabs"
+class="tabs"><li><a href='/projects/ironruby/'>Summary</a></li><li><a href='/tracker/?group_id=4359'>Tracker</a></li><li><a href='/mail/?group_id=4359'>Lists</a></li><li class='active'><a href='/frs/?group_id=4359'>Files</a></li></ul><div id='fade'></div>
+
+<div id='content'>
+<table border="0" width="100%" cellspacing="0" cellpadding="0">
+
+			<tr>
+				<td><img
+					src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/clear.png" width="10" height="1" alt="" /></td>
+				<td valign="top" width="99%">
+	
+			<p><strong>
+				<a href=/frs/?group_id=4359>Files</a> | 
+				<a href=/frs/admin/?group_id=4359>Admin</a></strong></p><p>Below is a list of all files of the project. Before downloading, you may want to read Release Notes and ChangeLog (accessible by clicking on release version).
+</p>
+
+<table width="100%" border="0" cellspacing="1" cellpadding="1">
+		<!-- multiTableRow -->
+		<tr class="files-header" align="center" ><td rowspan="2" ><span class="titlebar">Package</span></td><td rowspan="2" ><span class="titlebar">Release &amp; Notes</span></td><td rowspan="2" ><span class="titlebar">Filename</span></td><td colspan="4" ><span class="titlebar">Date</span></td></tr>
+		<!-- end multiTableRow -->
+		
+		<!-- multiTableRow -->
+		<tr  align="center" ><td ><span class="titlebar">Size</span></td><td ><span class="titlebar">D/L</span></td><td ><span class="titlebar">Arch</span></td><td ><span class="titlebar">Type</span></td></tr>
+		<!-- end multiTableRow -->
+		<tr bgcolor="#FFFFFF"><td colspan="3"><h3>ironruby
+	<a href="/frs/monitor.php?filemodule_id=5356&group_id=4359&start=1"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/ic/mail16w.png" alt="Monitor this package" border="0" width="20" height="20" /></a></h3></td><td colspan="4">&nbsp;</td></tr>
+		<!-- multiTableRow -->
+		<tr bgcolor="#FFFFFF"><td colspan="3" >&nbsp;<strong>
+				<a href="shownotes.php?release_id=39609">0.9.1</a></strong></td><td colspan="4" align="middle" >&nbsp;<strong>
+				2009-09-29 01:48</strong></td></tr>
+		<!-- end multiTableRow -->
+		
+		<!-- multiTableRow -->
+		<tr bgcolor="#FFFFFF"><td colspan=3 ><dd>
+						<a href="/frs/download.php/64509/ironruby-0.9.1-ipy.zip">ironruby-0.9.1-ipy.zip</a></td><td align="right" >655 KB</td><td align="right" >46</td><td >Any</td><td >.zip</td></tr>
+		<!-- end multiTableRow -->
+		
+		<!-- multiTableRow -->
+		<tr bgcolor="#FFFFFF"><td colspan=3 ><dd>
+						<a href="/frs/download.php/64504/ironruby-0.9.1.zip">ironruby-0.9.1.zip</a></td><td align="right" >4.51 MB</td><td align="right" >182</td><td >Any</td><td >.zip</td></tr>
+		<!-- end multiTableRow -->
+		
+		<!-- multiTableRow -->
+		<tr bgcolor="#FFFFFF"><td colspan="3" >&nbsp;<strong>
+				<a href="shownotes.php?release_id=37484">0.9.0</a></strong></td><td colspan="4" align="middle" >&nbsp;<strong>
+				2009-08-01 13:04</strong></td></tr>
+		<!-- end multiTableRow -->
+		
+		<!-- multiTableRow -->
+		<tr bgcolor="#FFFFFF"><td colspan=3 ><dd>
+						<a href="/frs/download.php/61383/ironruby-0.9.0-ipy.zip">ironruby-0.9.0-ipy.zip</a></td><td align="right" >692 KB</td><td align="right" >90</td><td >Any</td><td >.zip</td></tr>
+		<!-- end multiTableRow -->
+		
+		<!-- multiTableRow -->
+		<tr bgcolor="#FFFFFF"><td colspan=3 ><dd>
+						<a href="/frs/download.php/61382/ironruby-0.9.0.zip">ironruby-0.9.0.zip</a></td><td align="right" >4.16 MB</td><td align="right" >251</td><td >Any</td><td >.zip</td></tr>
+		<!-- end multiTableRow -->
+		
+		<!-- multiTableRow -->
+		<tr bgcolor="#FFFFFF"><td colspan="3" >&nbsp;<strong>
+				<a href="shownotes.php?release_id=36423">0.6.0</a></strong></td><td colspan="4" align="middle" >&nbsp;<strong>
+				2009-07-02 14:46</strong></td></tr>
+		<!-- end multiTableRow -->
+		
+		<!-- multiTableRow -->
+		<tr bgcolor="#FFFFFF"><td colspan=3 ><dd>
+						<a href="/frs/download.php/59718/ironruby-0.6.0-ipy.zip">ironruby-0.6.0-ipy.zip</a></td><td align="right" >668 KB</td><td align="right" >55</td><td >i386</td><td >.zip</td></tr>
+		<!-- end multiTableRow -->
+		
+		<!-- multiTableRow -->
+		<tr bgcolor="#FFFFFF"><td colspan=3 ><dd>
+						<a href="/frs/download.php/59717/ironruby-0.6.0.zip">ironruby-0.6.0.zip</a></td><td align="right" >3.99 MB</td><td align="right" >146</td><td >i386</td><td >.zip</td></tr>
+		<!-- end multiTableRow -->
+		
+		<!-- multiTableRow -->
+		<tr bgcolor="#FFFFFF"><td colspan="3" >&nbsp;<strong>
+				<a href="shownotes.php?release_id=34684">0.5.0</a></strong></td><td colspan="4" align="middle" >&nbsp;<strong>
+				2009-05-20 21:55</strong></td></tr>
+		<!-- end multiTableRow -->
+		
+		<!-- multiTableRow -->
+		<tr bgcolor="#FFFFFF"><td colspan=3 ><dd>
+						<a href="/frs/download.php/57126/ironruby-0.5.0.zip">ironruby-0.5.0.zip</a></td><td align="right" >2.15 MB</td><td align="right" >243</td><td >i386</td><td >.zip</td></tr>
+		<!-- end multiTableRow -->
+		
+		<!-- multiTableRow -->
+		<tr bgcolor="#FFFFFF"><td colspan="3" >&nbsp;<strong>
+				<a href="shownotes.php?release_id=32447">0.3.0</a></strong></td><td colspan="4" align="middle" >&nbsp;<strong>
+				2009-03-20 19:47</strong></td></tr>
+		<!-- end multiTableRow -->
+		
+		<!-- multiTableRow -->
+		<tr bgcolor="#FFFFFF"><td colspan=3 ><dd>
+						<a href="/frs/download.php/53552/ironruby-0.3.0.zip">ironruby-0.3.0.zip</a></td><td align="right" >5.04 MB</td><td align="right" >1,185</td><td >i386</td><td >.zip</td></tr>
+		<!-- end multiTableRow -->
+		
+		<!-- multiTableRow -->
+		<tr bgcolor="#FFFFFF"><td colspan="3" >&nbsp;<strong>
+				<a href="shownotes.php?release_id=29587">0.2.5-dlr0.9</a></strong></td><td colspan="4" align="middle" >&nbsp;<strong>
+				2008-12-16 15:48</strong></td></tr>
+		<!-- end multiTableRow -->
+		
+		<!-- multiTableRow -->
+		<tr bgcolor="#FFFFFF"><td colspan=3 ><dd>
+						<a href="/frs/download.php/48748/dlr_release.zip">dlr_release.zip</a></td><td align="right" >885 KB</td><td align="right" >719</td><td >i386</td><td >.zip</td></tr>
+		<!-- end multiTableRow -->
+		
+		<!-- multiTableRow -->
+		<tr bgcolor="#FFFFFF"><td colspan="3" >&nbsp;<strong>
+				<a href="shownotes.php?release_id=28422">0.2.0</a></strong></td><td colspan="4" align="middle" >&nbsp;<strong>
+				2008-11-19 17:22</strong></td></tr>
+		<!-- end multiTableRow -->
+		
+		<!-- multiTableRow -->
+		<tr bgcolor="#FFFFFF"><td colspan=3 ><dd>
+						<a href="/frs/download.php/47077/ironruby1a2.7z">ironruby1a2.7z</a></td><td align="right" >1.39 MB</td><td align="right" >276</td><td >i386</td><td >Other</td></tr>
+		<!-- end multiTableRow -->
+		
+		<!-- multiTableRow -->
+		<tr bgcolor="#FFFFFF"><td colspan=3 ><dd>
+						<a href="/frs/download.php/47076/ironruby1a2.zip">ironruby1a2.zip</a></td><td align="right" >2.07 MB</td><td align="right" >2,360</td><td >i386</td><td >.zip</td></tr>
+		<!-- end multiTableRow -->
+		
+		<!-- multiTableRow -->
+		<tr bgcolor="#FFFFFF"><td colspan="3" >&nbsp;<strong>
+				<a href="shownotes.php?release_id=24193">0.1.0</a></strong></td><td colspan="4" align="middle" >&nbsp;<strong>
+				2008-07-24 19:30</strong></td></tr>
+		<!-- end multiTableRow -->
+		
+		<!-- multiTableRow -->
+		<tr bgcolor="#FFFFFF"><td colspan=3 ><dd>
+						<a href="/frs/download.php/40306/ironruby.zip">ironruby.zip</a></td><td align="right" >1.92 MB</td><td align="right" >2,379</td><td >i386</td><td >.zip</td></tr>
+		<!-- end multiTableRow -->
+		<tr><td colspan="8">&nbsp;</tr>
+<tr><td><strong>Project totals</strong></td><td align="right"><strong><em>8</em></strong></td><td align="right"><strong><em>12</em></strong></td><td align="right"><strong><em>28.06 MB</em></strong></td><td align="right"><strong><em>7932</em></strong></td><td colspan="3">&nbsp;</td></tr>
+</table>
+
+<hr/><a name='gem_namespace_ownership'></a><h3>Gem namespace ownership</h3>
+			&nbsp;<p>
+			<!-- end main body row -->
+
+
+				</td>
+				<td width="10"><img
+					src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/clear.png" width="2" height="1" alt="" /></td>
+			</tr>
+			<tr>
+				<td><img
+					src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/clear.png" width="1" height="1" alt="" /></td>
+			</tr>
+			</table>
+
+		<!-- end inner body row -->
+
+		</td>
+		<td width="10"><img src="http://static.rubyforge.vm.bytemark.co.uk/themes/rubyforge/images/clear.png" width="2" height="1" alt="" /></td>
+	</tr>
+	<tr>
+		<!-- some extra space to make it look nicer -->
+		<td height="100">&nbsp;</td>
+    
+	</tr>
+</table>
+
+    </div>
+  </body>
+</html>

@@ -14,7 +14,7 @@ Feature: switch command
     Examples:
       | version                                                   | patterns  |
       | IronRuby 0.9.1.0 on .NET 2.0.0.0                          | Ir 91     |
-      | jruby 1.4.0RC1 (ruby 1.8.7 patchlevel 174)                | jruby 1.4 |
+      | jruby 1.4.0RC2 (ruby 1.8.7 patchlevel 174)                | jruby 1.4 |
       | ruby 1.8.6 (2009-08-04 patchlevel 383) [i386-mingw32]     | 186 383   |
       | ruby 1.9.1p243 (2009-07-16 revision 24175) [i386-mingw32] | 191 p2    |
       
@@ -27,7 +27,7 @@ Feature: switch command
     Examples:
       | version                                                   | patterns  |
       | IronRuby 0.9.1.0 on .NET 2.0.0.0                          | Ir 91     |
-      | jruby 1.4.0RC1 (ruby 1.8.7 patchlevel 174)                | jruby 1.4 |
+      | jruby 1.4.0RC2 (ruby 1.8.7 patchlevel 174)                | jruby 1.4 |
       | ruby 1.8.6 (2009-08-04 patchlevel 383) [i386-mingw32]     | 186 383   |
       | ruby 1.9.1p243 (2009-07-16 revision 24175) [i386-mingw32] | 191 p2    |
       

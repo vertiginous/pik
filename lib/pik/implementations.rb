@@ -75,7 +75,7 @@ module Pik
       def initialize
         super
         @path = "/frs/?group_id=167"
-        @re  = /\"(.+ruby\-(.+)\.7z)\"/
+        @re  = /\"(.+ruby\-(.+)\-i386\-mingw32\.7z)\"/
       end
     
     end
