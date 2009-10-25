@@ -34,7 +34,7 @@ class SearchPath
 
 	def add(new_path)
     new_path = Pathname(new_path)
-		@path << new_path.to_windows.to_s
+		@path.unshift new_path.to_windows.to_s
 		self
 	end
 

@@ -29,8 +29,8 @@ Feature: add command
     
   Scenario: add a version with spaces in the path.
     Given I have an empty config.yml
-    When I run "pik add "C:\temp\more spaces in path\ruby\jruby_140RC1\bin""
-    Then I should see "Adding:  140: jruby 1.4.0RC1 (ruby 1.8.7 patchlevel 174)"
-    And I should see "Located at:  C:\temp\more spaces in path\ruby\jruby_140RC1\bin"
+    When I run "pik add "C:\temp\more spaces in path\ruby\jruby-140RC2\bin""
+    Then I should see "Adding:  140: jruby 1.4.0RC2 (ruby 1.8.7 patchlevel 174)"
+    And I should see "Located at:  C:\temp\more spaces in path\ruby\jruby-140RC2\bin"
     
     

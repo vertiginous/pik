@@ -8,13 +8,14 @@ module Pik
       
     def initialize
       @file = File.join(PIK_HOME, 'config.yml')
+      @global = {}
       super
       if File.exists? @file
         contents = File.read( @file )
         unless contents.empty?
           documents = YAML.load_stream( contents )  
           self.update( documents[0] )
-          @global =  documents[1] || {}
+          @global.update( documents[1] ) if documents[1]
         end
       end
     end

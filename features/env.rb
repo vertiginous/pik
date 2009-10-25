@@ -2,19 +2,19 @@ config=<<CONFIG
 --- 
 "091: IronRuby 0.9.1.0 on .NET 2.0.0.0": 
   :path: !ruby/object:Pathname 
-    path: c:/temp/more spaces in path/ruby/ironruby_091/bin
-"140: jruby 1.4.0RC1 (ruby 1.8.7 patchlevel 174) (2009-09-30 80c263b) (Java HotSpot(TM) Client VM 1.6.0_14) [x86-java]": 
+    path: c:/temp/more spaces in path/ruby/ironruby-091/bin
+"140: jruby 1.4.0RC2 (ruby 1.8.7 patchlevel 174) (2009-10-21 7e77f32) (Java HotSpot(TM) Client VM 1.6.0_14) [x86-java]": 
   :path: !ruby/object:Pathname 
-    path: C:/temp/more spaces in path/ruby/jruby_140RC1/bin
+    path: C:/temp/more spaces in path/ruby/jruby-140RC2/bin
 "186: ruby 1.8.6 (2009-03-31 patchlevel 368) [i386-mingw32]": 
   :path: !ruby/object:Pathname 
     path: c:/ruby/186-p368-mingw32/bin
 "186: ruby 1.8.6 (2009-08-04 patchlevel 383) [i386-mingw32]": 
   :path: !ruby/object:Pathname 
-    path: c:/temp/more spaces in path/ruby/ruby_186-p383/bin
+    path: c:/temp/more spaces in path/ruby/ruby-186-p383/bin
 "191: ruby 1.9.1p243 (2009-07-16 revision 24175) [i386-mingw32]": 
   :path: !ruby/object:Pathname 
-    path: c:/temp/more spaces in path/ruby/ruby_191-p243/bin
+    path: c:/temp/more spaces in path/ruby/ruby-191-p243/bin
 --- 
 :download_dir: !ruby/object:Pathname 
   path: C:\\temp\\path with spaces\\downloads
