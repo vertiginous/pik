@@ -60,23 +60,18 @@ Windows, more than one version of Ruby (otherwise, what's the point?) and Rubyge
 
 == INSTALL:
 
-1. If you've used a version previous to this one, you'll need to uninstall them.
-   Don't worry, this will leave your pik config intact.
+*  If you're upgrading from a version <= 0.1.1, you'll want to delete the pik.bat file
+   from all of your ruby versions. Gem uninstall should do the trick.
     
-    pik run "gem uninstall pik"
-    
-2. Install the pik gem
-
-    gem install pik
-    
-3. You need to install pik to a location that's in your path, but someplace other than your ruby\bin dir
-
+*  Install pik to a location that's in your path, but someplace other than your ruby\bin dir
+   If you're upgrading from a more recent version, pik_install will overwrite the older files as needed.
+   
     >path
       PATH=C:\tools\;C:\ruby\186-p368-mingw32\bin;C:\WINDOWS\system32;C:\WINDOWS
 
     >pik_install C:\tools
   
-4. Add all the versions of ruby that you want to use with pik
+*  If this is a first-time install, add all the versions of ruby that you want to use with pik
 
     >pik add
     Adding:  186: ruby 1.8.6 (2009-03-31 patchlevel 368) [i386-mingw32]
@@ -96,6 +91,11 @@ Note:
   inside of the IronRuby lib:
     
     pik config gem_home=C:\ruby\ironruby-091\lib\ironruby\gems\1.8
+    
+  Also, if you're using a version of JRuby older than 1.4.0RC2, you'll probably need to set the JAVA_HOME env
+  variable.
+  
+   set JAVA_HOME=C:\Program Files\Java\jre6
 
 == EXAMPLES:
 

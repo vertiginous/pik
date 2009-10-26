@@ -51,20 +51,31 @@ Hoe.spec('pik') do
 
 ----------------------------------------------------------------------------
 
-1. If you've used a version previous to this one, you'll need to uninstall them.
-   Don't worry, this will leave your pik config intact.
+*  If you're upgrading from a version <= 0.1.1, you'll want to delete the pik.bat file
+   from all of your ruby versions. Gem uninstall should do the trick.
     
-    pik run "gem uninstall pik"
-    
-2. Install the pik gem
+*  Install pik to a location that's in your path, but someplace other than your ruby\\bin dir
+   If you're upgrading from a more recent version, pik_install will overwrite the older files as needed.
+   
+    >path
+      PATH=C:\\tools\\;C:\\ruby\\186-p368-mingw32\\bin;C:\\WINDOWS\\system32;C:\\WINDOWS
 
-    gem install pik
-    
-3. You need to install pik to a location that's in your path, but someplace other than your ruby\\bin dir
-
-    pik_install C:\\some\\other\\path
+    >pik_install C:\\tools
   
-4. Add all the versions of ruby that you want to use with pik
+*  If this is a first-time install, add all the versions of ruby that you want to use with pik
+
+    >pik add
+    Adding:  186: ruby 1.8.6 (2009-03-31 patchlevel 368) [i386-mingw32]
+     Located at:  c:/ruby/186-p368-mingw32/bin
+    
+    >pik add C:\\ruby\\IronRuby-091\\bin
+    Adding:  091: IronRuby 0.9.1.0 on .NET 2.0.0.0
+     Located at:  C:/ruby/IronRuby-091/bin
+    
+    >pik add C:\\ruby\\jruby-1.4.0RC1\\bin
+    Adding:  140: jruby 1.4.0RC1 (ruby 1.8.7 patchlevel 174) (2009-09-30 80c263b) (Java HotSpot(TM) Client VM 1.6.0_14) [x86-java]
+     Located at:  C:/ruby/jruby-1.4.0RC1/bin
+     
 
 ----------------------------------------------------------------------------  
 
