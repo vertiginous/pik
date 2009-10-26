@@ -1,11 +1,11 @@
 === 0.2.3 / 2009-10-25
 
-* install improvements - better error message on unrecognized implementation, better version picking, better directory naming, renamed some variables to be more concise (not everything is a version - implementations have versions, and versions have packages)
+* install command improvements - better error message on unrecognized implementation, better version picking, better directory naming, renamed some variables to be more concise (not everything is a version - implementations have versions, and versions have packages)
 * added remote option to list command
-* better error message when a version was deleted, but not removed from the config
-* bugfix: run/gem/ruby command hangs when waiting for input
-* renamed tools/pik.exe to pik_runner.exe to minimize confusion/conflicts
-* Upgraded to exerb 0.4.4
+* better error message when a version was deleted, but not removed from the config.  Thanks Roger Pack
+* bugfix: run/gem/ruby command hangs when waiting for input. Thanks Roger Pack
+* renamed tools/pik.exe to pik_runner.exe to minimize confusion/conflicts. Thanks Luis Lavena
+* Upgraded to exerb 0.4.4.  Thanks Alexey Borzenkov
 * Added documentation for tags commands. Thanks Luis Lavena
 * 'pik tags' with no options will display the help docs, instead of throwing a cryptic error.  
 * Added docs for ruby and gem command. Improved docs for run command
