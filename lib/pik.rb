@@ -1,5 +1,5 @@
 module Pik
-  VERSION = '0.2.2'
+  VERSION = '0.2.3'
 end
 
 $LOAD_PATH.unshift(File.dirname(__FILE__))
@@ -29,7 +29,6 @@ require 'pik/commands/default_command'
 require 'pik/commands/implode_command'
 require 'pik/commands/tag_command'
 require 'pik/config_file'
-require 'pik/implementations'
 require 'pik/windows_env'
 require 'pik/which'
 

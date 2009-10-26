@@ -51,7 +51,7 @@ lib/pik/contrib/zip/zipfilesystem.rb
 lib/pik/contrib/zip/ziprequire.rb
 lib/pik/core_ext/pathname.rb
 lib/pik/options.rb
-lib/pik/runner.rb
+lib/pik/pik.rb
 lib/pik/search_path.rb
 lib/pik/which.rb
 lib/pik/windows_env.rb
@@ -71,6 +71,6 @@ spec/spec.opts
 spec/switch_command_spec.rb
 spec/which_spec.rb
 tools/pik.bat
-tools/pik/pik
-tools/pik/pik.exe
-tools/pik/pik.exy
+tools/pik/pik_runner
+tools/pik/pik_runner.exe
+tools/pik/pik_runner.exy
