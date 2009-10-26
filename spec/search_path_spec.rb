@@ -48,9 +48,10 @@ describe SearchPath do
 	end
 
 	describe '#add' do
-		it "should add an element to the end" do
+		it "should add an element to the beginning" do
 			path =	'C:/ruby/191/bin'
-			new_path =  'C:\Program Files\Common Files\Shoes\0.r1134\..;'
+			new_path =  'C:\ruby\191\bin;'
+			new_path <<	'C:\Program Files\Common Files\Shoes\0.r1134\..;'
 			new_path <<	'C:\bin;'
 			new_path <<	'C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727;'
 			new_path <<	'C:\Program Files\Common Files\Shoes\0.r395\..;'
@@ -64,8 +65,8 @@ describe SearchPath do
 			new_path <<	'C:\Program Files\jEdit;'
 			new_path <<	'C:\WINDOWS\system32\WindowsPowerShell\v1.0\;'
 			new_path <<	'C:\ruby\186-mswin32\bin;'
-			new_path <<	'C:\Program Files\Putty;'
-			new_path <<	'C:\ruby\191\bin'
+			new_path <<	'C:\Program Files\Putty'
+			
 			@path.add(path)
 			@path.join.should == new_path
 		end
@@ -94,9 +95,10 @@ describe SearchPath do
 			@path.join.should == new_path
 		end
 
-		it "should add an element to the end if it doesn't already exist" do
+		it "should add an element to the beginning if it doesn't already exist" do
 			path =	'C:/xray/yankee/zebra'
-			new_path =  'C:\Program Files\Common Files\Shoes\0.r1134\..;'
+			new_path =  'C:\xray\yankee\zebra;'
+			new_path <<	'C:\Program Files\Common Files\Shoes\0.r1134\..;'
 			new_path <<	'C:\bin;'
 			new_path <<	'C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727;'
 			new_path <<	'C:\Program Files\Common Files\Shoes\0.r395\..;'
@@ -110,8 +112,8 @@ describe SearchPath do
 			new_path <<	'C:\Program Files\jEdit;'
 			new_path <<	'C:\WINDOWS\system32\WindowsPowerShell\v1.0\;'
 			new_path <<	'C:\ruby\186-mswin32\bin;'
-			new_path <<	'C:\Program Files\Putty;'
-			new_path <<	'C:\xray\yankee\zebra'
+			new_path <<	'C:\Program Files\Putty'
+			
 			@path.replace_or_add('C:/xray/yankee/alpha', path)
 			@path.join.should == new_path
 		end

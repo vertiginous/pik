@@ -25,7 +25,7 @@ describe Pik::Implementations do
     
     it "should raise an exception if the implementation isn't recognized" do
       err = lambda { Pik::Implementations['unicornruby'] }
-      err.should raise_error(StandardError, "The implementation 'unicornruby' wasn't found")
+      err.should raise_error(StandardError, "Pik isn't aware of an implementation called 'unicornruby' for Windows.")
     end
   end
 
@@ -67,8 +67,8 @@ describe Pik::Implementations::Ruby do
      it "should return a hash contain each package" do
        versions = @ruby.versions
        versions.should be_a(Hash)
-       versions.should include('1.8.6-p383-i386-mingw32')
-       versions.should include('1.9.1-p243-i386-mingw32')
+       versions.should include('1.8.6-p383')
+       versions.should include('1.9.1-p243')
      end
   
   end
@@ -76,13 +76,13 @@ describe Pik::Implementations::Ruby do
 	describe 'find' do
   
     it 'should find the most recent version if no argument is given' do
-      v = '1.9.1-p243-i386-mingw32'
+      v = '1.9.1-p243'
       u = "http://rubyforge.org/frs/download.php/62269/ruby-1.9.1-p243-i386-mingw32.7z"
       @ruby.find.should eql( [v, u] )
     end
     
     it 'should find a specific version if arguments are given' do
-      v = '1.8.6-p383-i386-mingw32'
+      v = '1.8.6-p383'
       u = "http://rubyforge.org/frs/download.php/62267/ruby-1.8.6-p383-i386-mingw32.7z"
       @ruby.find('1.8').should eql( [v, u] )
     end

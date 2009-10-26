@@ -29,6 +29,7 @@ require 'pik/commands/default_command'
 require 'pik/commands/implode_command'
 require 'pik/commands/tag_command'
 require 'pik/config_file'
+require 'pik/implementations'
 require 'pik/windows_env'
 require 'pik/which'
 
