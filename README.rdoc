@@ -1,6 +1,6 @@
 = pik
 
-Homepage:  http://github.com/vertiginous/pik
+http://github.com/vertiginous/pik
 
 Mailing List:  http://groups.google.com/group/discuss_pik
 
