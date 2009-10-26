@@ -5,56 +5,24 @@ require 'pik/contrib/progressbar'
 module Pik
 
   class  Install < Command
-  
+   
     aka :in
     it "Downloads and installs different ruby versions."
     
-    def versions
-       {
-        'ruby' => {
-          '1.8.6-p383' =>
-          'http://rubyforge.org/frs/download.php/62267/ruby-1.8.6-p383-i386-mingw32.7z',
-          '1.9.1-p243' =>
-          'http://rubyforge.org/frs/download.php/62269/ruby-1.9.1-p243-i386-mingw32.7z'
-          },
-        'ironruby' => {
-          '0.9.1' =>
-          'http://rubyforge.org/frs/download.php/64504/ironruby-0.9.1.zip',
-          '0.9.0' =>
-          'http://rubyforge.org/frs/download.php/61382/ironruby-0.9.0.zip'
-        },
-        'jruby' => {
-          '1.4.0RC1' =>
-          'http://dist.codehaus.org/jruby/1.4.0RC1/jruby-bin-1.4.0RC1.zip'
-        }
-      }
+    def initialize(args=ARGV, config_=nil)
+      super
+      @download_dir = config.global[:download_dir] || PIK_HOME + 'downloads'
+      @install_root = config.global[:install_dir]  || PIK_BATCH.dirname + 'pik'
+      FileUtils.mkdir_p @download_dir.to_s
     end
     
     def execute
-      target = ''
-      @download_dir = config.global[:download_dir] || PIK_HOME + 'downloads'
-      FileUtils.mkdir_p @download_dir.to_s
-      version = @args.shift
-      if versions[version]
-        target += version
-        version = versions[version]
-        @args.each{ |i| version = version.select{|k,v| k =~ Regexp.new(Regexp.escape(i)) } }
-        t, version = most_recent(version)
-        target += "_#{t}"
-      elsif URI.parse(version.to_s) === URI::HTTP
-        version = URI.parse(version.to_s)
-        target  = @args.shift
-      else
-        raise VersionUnknown
-      end
-      install_root = config.global[:install_dir] || PIK_BATCH.dirname + 'pik'
-      target =  install_root + target.gsub('.','')
-      FileUtils.mkdir_p target
-      file = download(version)
+      implementation  = Implementations[@args.shift]
+      target, package = implementation.find(*@args)
+      target          =  @install_root + "#{implementation.subclass}-#{target.gsub('.','')}"
+      file            = download(package)
       extract(target, file)
       add( Pathname(target) + 'bin' )
-    rescue VersionUnknown
-      puts 'unknown'   
     end
     
     def command_options
@@ -77,20 +45,17 @@ SEP
       options.separator sep  
     end
     
-    def most_recent(version)
-      version.sort.last
-    end
-    
-    def download(version, download_dir=@download_dir)   
-      target = download_dir + version.split('/').last
-      puts "** Downloading:  #{version}\n   to:  #{target.windows}\n\n"
-      URI.download(version,target.to_s, {:progress => true})
+    def download(package, download_dir=@download_dir)   
+      target = download_dir + package. split('/').last
+      puts "** Downloading:  #{package} \n   to:  #{target.windows}\n\n"
+      URI.download(package, target.to_s, {:progress => true})
       puts
       return target
     end
     
     def extract(target, file)
       if Which::SevenZip.exe
+        FileUtils.mkdir_p target
         extract_(file, target)
       else
         file = download_seven_zip

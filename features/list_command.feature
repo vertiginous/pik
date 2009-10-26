@@ -16,3 +16,12 @@ Feature: list command
     When I run "pik list -v"
     Then I should find "^\d+\: .+\*$"
     And I should find "path\: C\:[\\\/].+"
+    
+  Scenario: list remote packages
+    When I run "pik list -r"
+    And I should see "IronRuby:"
+    And I should see "0.9.1:"
+    And I should see "JRuby:"
+    And I should see "1.4.0RC2:"
+    Then I should see "Ruby:"
+    And I should see " 1.8.6-p383"
