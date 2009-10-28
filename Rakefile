@@ -3,13 +3,20 @@
 require 'rubygems'
 require 'win32/process'
 
-file 'tools/pik/pik.exy' do
+file 'tools/pik/pik_runner.exy' do
   Dir.chdir 'tools/pik' do
     sh('ruby -rexerb/mkexy pik_runner')
   end
+  exy = YAML.load(File.read('tools/pik/pik_runner.exy'))
+  zlib1 = {
+    'file' => 'c:/ruby/186-p368-mingw32/bin/zlib1.dll',
+    'type' => 'extension-library'
+  }
+  exy['file']['zlib1.dll']  = zlib1
+  File.open('tools/pik/pik_runner.exy', 'w+'){ |f| f.puts YAML.dump(exy) }
 end
 
-file 'tools/pik/pik.exe', :needs => 'tools/pik/pik.exy' do
+file 'tools/pik/pik.exe', :needs => ['tools/pik/pik_runner.exy'] do
   Dir.chdir 'tools/pik' do
     sh('ruby -S exerb pik_runner.exy')
   end
@@ -26,7 +33,7 @@ task :clobber_exe do
 end
 
 task :clobber_exy, :needs => :clobber_exe do
-  rm_rf 'tools/pik/pik.exy'
+  rm_rf 'tools/pik/pik_runner.exy'
 end
 
 task :rebuild, :needs => [:clobber_exy, :build]
