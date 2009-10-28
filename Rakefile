@@ -54,6 +54,7 @@ Hoe.spec('pik') do
 
   developer('Gordon Thiesfeld', 'gthiesfeld@gmail.com')
   
+  self.need_tar = false
   self.extra_deps = {'highline' =>  '>= 0.0.0'}
   self.readme_file = 'README.rdoc'
   self.post_install_message =<<-PIM
