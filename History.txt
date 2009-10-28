@@ -1,3 +1,10 @@
+=== 0.2.4 / 2009-10-28
+
+* added rake command
+* added cucumber story for rake command, refactor of run path switching, added irake.bat as a rake executable for ironruby
+* fix to compile zlib1.dll into pik_runner.exe.  closes gh-29 Thanks, Luis Lavena and, Roger Pack
+* fixed homepage in gemspec for gemcutter.org
+
 === 0.2.3 / 2009-10-25
 
 * install command improvements - better error message on unrecognized implementation, better version picking, better directory naming, renamed some variables to be more concise (not everything is a version - implementations have versions, and versions have packages)

@@ -26,6 +26,7 @@ It also supports running commands/code with all versions configured.
   pik run  #  Runs commands on the command line
   pik ruby #  Runs using the ruby interpreter for each version (ruby.exe, jruby.bat, ir.exe)
   pik gem  #  Runs using the gem command for each version  (gem.bat, igem.bat)
+  pik rake #  Runs using the rake command for each version  (rake.bat, irake.bat)
    
 
 == FEATURES/PROBLEMS:
@@ -45,15 +46,16 @@ It also supports running commands/code with all versions configured.
     implode         Removes your pik configuration.
     install|in      Downloads and installs different ruby versions.
     list|ls         Lists ruby versions that pik is aware of.
+    rake            Runs the rake command with all versions that pik is aware of.
     remove|rm       Removes a ruby location from pik.
     ruby|rb         Runs ruby with all versions that pik is aware of.
     run             Runs command with all versions of ruby that pik is aware of.
     switch|sw|use   Switches ruby versions based on patterns.
     tag             Adds the given tag to the current version.
     tags            Runs the pik command against the given tags.
-
+  
   For help on a particular command, use 'pik help COMMAND'.
-
+  
 == REQUIREMENTS:
 
 Windows, more than one version of Ruby (otherwise, what's the point?) and Rubygems
