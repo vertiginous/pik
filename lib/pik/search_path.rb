@@ -8,7 +8,7 @@ class SearchPath
 	end
 
 	def remove(old_path)
-    old = Pathname(old_path).expand_path.to_windows
+    old = Pathname(old_path).expand_path
     @path = @path.reject{|dir| Pathname(dir) == old }
     @path = @path.uniq
 		self

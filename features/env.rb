@@ -1,6 +1,8 @@
 config=<<CONFIG
 --- 
 "091: IronRuby 0.9.1.0 on .NET 2.0.0.0": 
+  :gem_home: !ruby/object:Pathname 
+    path: c:/temp/more spaces in path/ruby/IronRuby-091/lib/ironruby/gems/1.8
   :path: !ruby/object:Pathname 
     path: c:/temp/more spaces in path/ruby/ironruby-091/bin
 "140: jruby 1.4.0RC2 (ruby 1.8.7 patchlevel 174) (2009-10-21 7e77f32) (Java HotSpot(TM) Client VM 1.6.0_14) [x86-java]": 

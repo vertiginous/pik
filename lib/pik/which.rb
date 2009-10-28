@@ -43,6 +43,12 @@ module Which
   
   end
   
+  class Rake < Base
+    def self.executables
+      ['rake.bat', 'irake.bat']
+    end
+  end
+  
   class SevenZip < Base
     def self.executables
       ['7za.exe']

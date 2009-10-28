@@ -156,6 +156,10 @@ module Pik
         File.delete(f) if File.ctime(f) < cutoff 
       end
     end
+    
+    def cmd_name
+      self.class.cmd_name
+    end
 
     # Installs a sigint handler.
   

@@ -3,6 +3,8 @@
 require 'rubygems'
 require 'win32/process'
 
+ENV['SPEC_OPTS']= '-O spec/spec.opts'
+
 file 'tools/pik/pik_runner.exy' do
   Dir.chdir 'tools/pik' do
     sh('ruby -rexerb/mkexy pik_runner')
@@ -105,6 +107,7 @@ namespace :cucumber do
     sh "pik install ironruby"
     sh "pik install ruby"
     sh "pik install ruby 1.8"
+    sh "pik gem in rake"
   end
   
   namespace :phonyweb do

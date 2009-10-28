@@ -20,3 +20,8 @@ Feature: run command
     Then I should find "\n\d\.\d\.\d\n" 5 times
     And I should see each version listed.
     
+  Scenario: rake command
+    When I run "pik rake -V"
+    Then I should find "rake, version \d\.\d\.\d\n" 5 times
+    And I should see each version listed.
+    
