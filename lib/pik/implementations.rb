@@ -1,4 +1,3 @@
-require 'open-uri'
 
 module Pik
   
@@ -54,14 +53,19 @@ module Pik
       end
       
       def versions
-        vers = read.scan(@re).map{|v| v.reverse}
-        vers.map!{ |name, path| [name, @url + path] }.flatten!
-        Hash[*vers]
+        h = {}
+        Hpricot(read).search("a") do |a|
+          if a_href = a.attributes['href']
+            href, link, version = *a_href.match(@re)
+            h[version] =  @url + link  if version
+          end
+        end
+        h
       end
   
       def read
         uri = URI.parse(@url+@path)
-        uri.read
+        uri.read rescue ''
       end    
   
       def subclass
@@ -75,7 +79,7 @@ module Pik
       def initialize
         super
         @path = "/frs/?group_id=167"
-        @re  = /\"(.+ruby\-(.+)\-i386\-mingw32\.7z)\"/
+        @re  = /(.+ruby\-(.+)\-i386\-mingw32\.7z)/
       end
     
     end
@@ -85,17 +89,18 @@ module Pik
       def initialize
         super
         @path = "/frs/?group_id=4359"
-        @re  = /\"(.+ironruby\-(\d\.\d\.\d)\.zip)\"/
+        @re  = /(.+ironruby\-(\d\.\d\.\d)\.zip)/
       end
     
     end
     
     class JRuby < Base
     
+      # <a href='http://jruby.kenai.com/downloads/1.4.0RC3/jruby-bin-1.4.0RC3.zip'>
       def initialize
         @url  = ''
         @path = "http://www.jruby.org/download"
-        @re   = /\<p.*\>\<a .*href\=\"(.+ruby-bin\-(.+)\.zip)\"/
+        @re   = /(.+\-bin\-(.+)\.zip)/
       end
     end
   

@@ -3,10 +3,18 @@ module Pik
 end
 
 $LOAD_PATH.unshift(File.dirname(__FILE__))
+
+ENV['GEM_HOME'] = nil
+ENV['GEM_PATH'] = nil
+
 require 'yaml'
 require 'pathname'
 require 'fileutils'
+require 'open-uri'
 require 'rbconfig'
+require 'rubygems'
+require 'hpricot'
+require 'highline'
 
 require 'pik/pik'
 require 'pik/batch_file'
@@ -30,12 +38,10 @@ require 'pik/commands/implode_command'
 require 'pik/commands/tag_command'
 require 'pik/config_file'
 require 'pik/implementations'
+require 'pik/search_path'
 require 'pik/windows_env'
 require 'pik/which'
 
-require 'pik/search_path'
-
-require 'highline'
 
 PIK_HOME  = Pathname.new( ENV['HOME'] || ENV['USERPROFILE'] ) + '.pik'
 

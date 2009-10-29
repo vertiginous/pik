@@ -116,8 +116,8 @@ describe Pik::Implementations::JRuby do
        versions = @jruby.versions
        versions.should be_a(Hash)
        versions.should include('1.3.0')
-       versions.should include('1.4.0RC2')
-       versions['1.4.0RC2'].should eql( "http://jruby.kenai.com/downloads/1.4.0RC2/jruby-bin-1.4.0RC2.zip" )
+       versions.should include('1.4.0RC3')
+       versions['1.4.0RC3'].should eql( "http://jruby.kenai.com/downloads/1.4.0RC3/jruby-bin-1.4.0RC3.zip" )
      end
   
   end
