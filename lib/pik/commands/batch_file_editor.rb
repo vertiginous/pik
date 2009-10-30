@@ -23,35 +23,25 @@ module Pik
       end
     end  
       
-    def switch_path_to(new_ver)
-      dir = Which::Ruby.find
-      current_config = config[ find_config_from_path(dir) ]
+    def switch_path_to(other)
+      current = Which::Ruby.find
       
-      new_path = SearchPath.new(ENV['PATH']).replace_or_add(dir, new_ver[:path])
-      if new_gem_home = new_ver[:gem_home]
-        
-        new_gem_bin = Pathname.new(new_gem_home) + 'bin'
-        
-        if current_gem_home = current_config[:gem_home]
-          current_gem_bin = Pathname.new(current_gem_home) + 'bin'
-          new_path.replace(current_gem_bin, new_gem_bin)
-        else
-          new_path.add(new_gem_bin)
-        end
-      else
-        if current_gem_home = current_config[:gem_home]
-          current_gem_bin = Pathname.new(current_gem_home) + 'bin'
-          new_path.remove(current_gem_bin)
-        end
-      end
+      new_path = SearchPath.new(ENV['PATH'])
+      new_path.replace_or_add(current, other[:path])
+      
+      # if there is currently a GEM_HOME, remove it's bin dir from the path
+      new_path.remove(Pathname.new(ENV['GEM_HOME']) + 'bin') if ENV['GEM_HOME']
+      
+      # if the new version has a GEM_HOME, add it's bin dir to the path
+      new_path.add(Pathname.new(other[:gem_home]) + 'bin') if other[:gem_home]
+      
       @batch.set('PATH' => new_path.join )
     end
-
-    def switch_gem_home_to(gem_home_dir)
-      gem_home_dir ||= ''
-      gem_path = Pathname.new(gem_home_dir).to_windows 
-      @batch.set('GEM_PATH' => gem_path )
-      @batch.set('GEM_HOME' => gem_path )
+    
+    def switch_gem_home_to(gem_home)
+      gem_home = Pathname(gem_home).to_windows rescue nil
+      @batch.set('GEM_PATH' => gem_home )
+      @batch.set('GEM_HOME' => gem_home )
     end
   
     def echo_ruby_version(path, verb='')

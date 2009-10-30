@@ -39,6 +39,10 @@ Given /^I have an empty config\.yml/ do
   File.open(TEST_PIK_HOME + 'config.yml','w'){|f| }
 end
 
+Given /^there is no ruby version in the path$/ do
+  ENV['PATH'] = SearchPath.new(REAL_PATH).remove(Which::Ruby.find).join
+end
+
 Given /^I have not installed pik to (.+)$/ do |path|
   FileUtils.rm_rf path if File.exist? path
   FileUtils.mkdir_p path
