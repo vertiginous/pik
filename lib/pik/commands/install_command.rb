@@ -58,7 +58,7 @@ SEP
         FileUtils.mkdir_p target
         extract_(file, target)
       else
-        file = download_seven_zip
+        download_seven_zip
         extract(target, file)
       end  
     end
