@@ -1,17 +1,18 @@
 # -*- ruby -*-
 
 require 'rubygems'
+require 'rbconfig'
 require 'win32/process'
 
 ENV['SPEC_OPTS']= '-O spec/spec.opts'
 
 file 'tools/pik/pik_runner.exy' do
   Dir.chdir 'tools/pik' do
-    sh('ruby -rexerb/mkexy pik_runner')
+    sh('ruby -rexerb/mkexy pik_runner -v')
   end
   exy = YAML.load(File.read('tools/pik/pik_runner.exy'))
   zlib1 = {
-    'file' => 'c:/ruby/186-p368-mingw32/bin/zlib1.dll',
+    'file' =>  File.join(RbConfig::CONFIG['bindir'], 'zlib1.dll'),
     'type' => 'extension-library'
   }
   exy['file']['zlib1.dll']  = zlib1
