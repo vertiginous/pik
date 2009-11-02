@@ -11,7 +11,7 @@ module Pik
     def execute
       to_remove = self.class.choose_from(@args, @config)
       raise QuitError unless to_remove
-      if force || @hl.agree("Are you sure you'd like to remove '#{to_remove}'? [Yn] ")  
+      if force || @hl.agree("Are you sure you'd like to remove '#{to_remove}'?"){|answer| answer.default = 'yes' }
         @config.delete(to_remove)
         @hl.say("#{to_remove} removed.") unless quiet
       end

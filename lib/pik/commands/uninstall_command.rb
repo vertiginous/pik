@@ -11,7 +11,8 @@ module Pik
     def execute
       to_remove = self.class.choose_from(@args, @config)
       raise QuitError unless to_remove
-      if force || @hl.agree("Are you sure you'd like to uninstall '#{to_remove}'? [Yn] ")  
+          add_interactive
+      if force || @hl.agree("Are you sure you'd like to uninstall '#{to_remove}'?"){|answer| answer.default = 'yes' }
         puts "** Deleting #{config[to_remove][:path].dirname}"
         path = config[to_remove][:path].dirname
         FileUtils.rm_rf(path) if path.exist?

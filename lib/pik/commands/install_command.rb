@@ -80,9 +80,9 @@ SEP
     
     def download_seven_zip
       question = "You need the 7zip utility to extract this file.\n"
-      question << "Would you like me to download it? [Yn]"
-      if @hl.agree question
-        uri    = 'http://downloads.sourceforge.net/sevenzip/7za465.zip'
+      question << "Would you like me to download it? (yes/no)"
+      if @hl.agree(question){|answer| answer.default = 'yes' }
+        uri  = 'http://downloads.sourceforge.net/sevenzip/7za465.zip'
         file = download(uri)
         Zip.fake_unzip(file.to_s, /\.exe|\.dll$/, PIK_BATCH.dirname.to_s)
       else

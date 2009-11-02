@@ -43,20 +43,20 @@ module Pik
     def add_interactive
       @hl.choose do |menu|  
         menu.prompt = ""
-        menu.choice('e]nter a path'){
+        menu.choice('e]nter a path') do
           dir = @hl.ask("Enter a path to a ruby/bin dir (enter to quit)")
-          execute(dir) unless dir.empty? || !@hl.agree("Add '#{dir}'? [Yn] ")
+          execute(dir) unless dir.empty? || !@hl.agree("Add '#{dir}'?"){|answer| answer.default = 'yes' }
           add_interactive
-        }
-        menu.choice('s]earch'){
+        end
+        menu.choice('s]earch') do
           search_dir = @hl.ask("Enter a search path")
           files = Which::Ruby.glob(search_dir + '**')
-          files.each{|file| 
+          files.uniq.each do |file| 
             dir = File.dirname(file)
-            add(dir) if @hl.agree("Add '#{dir}'? [Yn] ")
-          }
+            add(dir) if @hl.agree("Add '#{dir}'?"){|answer| answer.default = 'yes' }
+          end
           add_interactive
-        }
+        end
         menu.choice('q]uit'){raise QuitError}
       end        
     
