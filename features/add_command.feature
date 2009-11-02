@@ -18,8 +18,8 @@ Feature: add command
     And I should see "Located at:  C:\ruby\186-p368-mingw32\bin"
 
   Scenario: add a version that has already been added
-    Given I have already added "ruby 1.8.6 (2009-03-31 patchlevel 368) [i386-mingw32]"
-    When I run "pik add C:\ruby\186-p368-mingw32\bin"
+    Given I have already added "ruby 1.8.6 (2009-08-04 patchlevel 383) [i386-mingw32]"
+    When I run "pik add "C:\temp\more spaces in path\ruby\Ruby-186-p383\bin""
     Then I should see "This version has already been added."    
     And nothing should be added to the config file.
         

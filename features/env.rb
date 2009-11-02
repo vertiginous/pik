@@ -8,9 +8,6 @@ config=<<CONFIG
 "140: jruby 1.4.0RC2 (ruby 1.8.7 patchlevel 174) (2009-10-21 7e77f32) (Java HotSpot(TM) Client VM 1.6.0_14) [x86-java]": 
   :path: !ruby/object:Pathname 
     path: C:/temp/more spaces in path/ruby/jruby-140RC2/bin
-"186: ruby 1.8.6 (2009-03-31 patchlevel 368) [i386-mingw32]": 
-  :path: !ruby/object:Pathname 
-    path: c:/ruby/186-p368-mingw32/bin
 "186: ruby 1.8.6 (2009-08-04 patchlevel 383) [i386-mingw32]": 
   :path: !ruby/object:Pathname 
     path: c:/temp/more spaces in path/ruby/ruby-186-p383/bin
@@ -28,8 +25,9 @@ require 'yaml'
 require 'pathname'
 require 'fileutils'
 require 'lib/pik'
+require 'rbconfig'
 
-REAL_PATH  = ENV['PATH']
+REAL_PATH  = SearchPath.new(ENV['PATH']).replace(RbConfig::CONFIG['bindir'], 'c:/temp/more spaces in path/ruby/ruby-186-p383/bin').join
 
 ENV['HOME'] = "C:\\temp\\path with spaces"
 ENV['JAVA_HOME'] = "C:\\Program Files\\Java\\jre6"
