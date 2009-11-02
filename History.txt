@@ -1,6 +1,13 @@
 
 === 0.2.5 / 2009-10-29
 
+* use upx (http://upx.sf.net/) to compress pik_runner.exe
+* fixes uninstall story so it doesn't conflict with other stories
+* bugfix in uninstall command
+* made all prompts default to 'yes'.  bugfix:interactive add would prompt for jruby\bin dirs twice because of the existence of jruby.exe and jruby.bat
+* fixed downloading of seven_zip error
+* uninstall command
+* fixes bug in BatchFileEditor#switch_path_to
 * switched to HPricot for package searches, requires rubygems and exerb-mingw - closes gh-30
 
 === 0.2.4 / 2009-10-28

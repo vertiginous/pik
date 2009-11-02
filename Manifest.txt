@@ -18,6 +18,7 @@ features/run_command.feature
 features/step_definitions/pik_commands.rb
 features/switch_command.feature
 features/tag_command.feature
+features/uninstall_command.feature
 features/version.feature
 lib/pik.rb
 lib/pik/batch_file.rb
@@ -39,6 +40,7 @@ lib/pik/commands/remove_command.rb
 lib/pik/commands/run_command.rb
 lib/pik/commands/switch_command.rb
 lib/pik/commands/tag_command.rb
+lib/pik/commands/uninstall_command.rb
 lib/pik/config_file.rb
 lib/pik/contrib/progressbar.rb
 lib/pik/contrib/unzip.rb
