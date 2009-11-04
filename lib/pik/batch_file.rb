@@ -49,7 +49,7 @@ class BatchFile
     self
   end
 
-  def echo(string)
+  def echo(string='.')
     string = ' ' + string unless string == '.'
     @file_data << "ECHO#{string}"
     self
