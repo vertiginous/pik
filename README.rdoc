@@ -24,7 +24,7 @@ You have to tell it where your different ruby versions live using
 It also supports running commands/code with all versions configured.
 
   pik run  #  Runs commands on the command line
-  pik ruby #  Runs using the ruby interpreter for each version (ruby.exe, jruby.bat, ir.exe)
+  pik ruby #  Runs using the ruby interpreter for each version (ruby.exe, jruby.exe, jruby.bat, ir.exe)
   pik gem  #  Runs using the gem command for each version  (gem.bat, igem.bat)
   pik rake #  Runs using the rake command for each version  (rake.bat, irake.bat)
    
