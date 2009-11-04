@@ -25,7 +25,7 @@ module Pik
     end
 
     def home
-      if WindowsEnv.user['home'].empty?
+      if WindowsEnv.user['home'].nil?
         fail('home')        
       else
         pass('home')

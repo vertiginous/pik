@@ -5,13 +5,13 @@ require 'Win32API'
 class WindowsEnv
 
   def self.system
-    key     = :HKEY_LOCAL_MACHINE
+    key    = :HKEY_LOCAL_MACHINE
     subkey = 'SYSTEM\CurrentControlSet\Control\Session Manager\Environment'
     new(key, subkey)
   end
 
   def self.user
-    key = :HKEY_CURRENT_USER
+    key    = :HKEY_CURRENT_USER
     subkey = 'Environment'
     new(key, subkey)
   end
