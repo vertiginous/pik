@@ -10,9 +10,6 @@ module Pik
     include BatchFileEditor
   
     def execute
-      unless User.new.admin?
-        raise "You must have admin rights for the default command"
-      end
       sys = WindowsEnv.system
       usr = WindowsEnv.user
       new_path = [sys['PATH'],usr['PATH']].compact.join(';')
