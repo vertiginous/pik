@@ -40,4 +40,3 @@ rescue => e
 ensure
   cmd.close if cmd
 end 
-

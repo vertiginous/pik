@@ -10,6 +10,7 @@ ENV['GEM_PATH'] = nil
 require 'yaml'
 require 'pathname'
 require 'fileutils'
+require 'find'
 require 'open-uri'
 require 'rbconfig'
 require 'rubygems'

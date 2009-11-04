@@ -18,6 +18,8 @@ module Pik
     
     attr_accessor :version
     
+    attr_accessor :debug
+    
     def self.cmd_name
       name.split('::').last.downcase.to_sym
     end
@@ -109,6 +111,9 @@ module Pik
         puts "pik " + Pik::VERSION
         @version = true
       end
+      options.on("--debug", "-d", "Outputs debug information") do |value|
+        @debug = true
+      end
       options.parse! @args 
     end
    
@@ -123,11 +128,6 @@ module Pik
       major    = $1.gsub('.','')
       "#{major}: #{ruby_ver.strip}"
     end
-    
-    # def current_path?(config_path)
-    #   @path ||= SearchPath.new(ENV['PATH'])
-    #   @path.find{|dir| Pathname(dir) == Pathname(config_path) }
-    # end
     
     def find_config_from_path(path=Which::Ruby.find)
       config.find{|k,v| 
