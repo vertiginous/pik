@@ -1,6 +1,4 @@
 
-# todo: write a version parser class
-
 module Pik
 
   class  Info < Command
