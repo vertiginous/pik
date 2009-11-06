@@ -25,7 +25,6 @@ lib/pik/batch_file.rb
 lib/pik/commands.rb
 lib/pik/commands/add_command.rb
 lib/pik/commands/batch_file_editor.rb
-lib/pik/commands/checkup_command.rb
 lib/pik/commands/command.rb
 lib/pik/commands/config_command.rb
 lib/pik/commands/config_file_editor.rb

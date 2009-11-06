@@ -32,7 +32,6 @@ require 'pik/commands/info_command'
 require 'pik/commands/switch_command'
 require 'pik/commands/run_command'
 require 'pik/commands/remove_command'
-require 'pik/commands/checkup_command'
 require 'pik/commands/config_command'
 require 'pik/commands/gemsync_command'
 require 'pik/commands/default_command'
@@ -56,3 +55,6 @@ else
   pik_exe = Pathname.new($0).expand_path + '..' 
   PIK_BATCH = pik_exe.dirname + "#{pik_exe.basename}.bat"
 end
+
+Pik::Commands.deprecate(:checkup => "The checkup command is deprecated, using the info command instead.")
+Pik::Commands.deprecate(:cu => "The cu command is deprecated, using the info command instead.")
