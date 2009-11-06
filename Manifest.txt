@@ -22,7 +22,6 @@ features/uninstall_command.feature
 features/version.feature
 lib/pik.rb
 lib/pik/batch_file.rb
-lib/pik/checkup.rb
 lib/pik/commands.rb
 lib/pik/commands/add_command.rb
 lib/pik/commands/batch_file_editor.rb
@@ -34,6 +33,7 @@ lib/pik/commands/default_command.rb
 lib/pik/commands/gemsync_command.rb
 lib/pik/commands/help_command.rb
 lib/pik/commands/implode_command.rb
+lib/pik/commands/info_command.rb
 lib/pik/commands/install_command.rb
 lib/pik/commands/list_command.rb
 lib/pik/commands/remove_command.rb
@@ -41,6 +41,7 @@ lib/pik/commands/run_command.rb
 lib/pik/commands/switch_command.rb
 lib/pik/commands/tag_command.rb
 lib/pik/commands/uninstall_command.rb
+lib/pik/commands/update_command.rb
 lib/pik/config_file.rb
 lib/pik/contrib/progressbar.rb
 lib/pik/contrib/unzip.rb
@@ -56,6 +57,7 @@ lib/pik/implementations.rb
 lib/pik/options.rb
 lib/pik/pik.rb
 lib/pik/search_path.rb
+lib/pik/version_parser.rb
 lib/pik/which.rb
 lib/pik/windows_env.rb
 spec/add_command_spec.rb
@@ -76,6 +78,7 @@ spec/run_command_spec.rb
 spec/search_path_spec.rb
 spec/spec.opts
 spec/switch_command_spec.rb
+spec/version_parser_spec.rb
 spec/which_spec.rb
 tools/pik.bat
 tools/pik/pik_runner

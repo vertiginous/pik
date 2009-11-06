@@ -1,3 +1,14 @@
+=== 0.2.6 / 2009-11-06
+
+* added gemsync scenarios, caught a few gemsync bugs in the process
+* added info command
+* added benchmark command
+* fixes to gemsync command
+* fixes to checkup command
+* don't need to be run pik default
+* added update command
+* gemsync command - platform aware - remote option - quiet option
+
 
 === 0.2.5 / 2009-10-29
 

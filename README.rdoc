@@ -12,49 +12,33 @@ Gordon Thiesfeld
 
 == DESCRIPTION:
 
-Pik is a tool to switch between multiple versions of ruby on Windows.  
+Pik is a tool to manage multiple versions of ruby on Windows.  
 
-Or to put it another way
-
-  doskey rvm=pik $*  # (sort of)
-  
-You have to tell it where your different ruby versions live using 
-'pik add'.  Then you can change to one by using 'pik switch'.
-
-It also supports running commands/code with all versions configured.
-
-  pik run  #  Runs commands on the command line
-  pik ruby #  Runs using the ruby interpreter for each version (ruby.exe, jruby.exe, jruby.bat, ir.exe)
-  pik gem  #  Runs using the gem command for each version  (gem.bat, igem.bat)
-  pik rake #  Runs using the rake command for each version  (rake.bat, irake.bat)
-   
-
-== FEATURES/PROBLEMS:
-
-
-== SYNOPSIS:
-
-  >pik help commands
-
-    add             Adds another ruby location to pik.
-    checkup|cu      Checks your environment for current Ruby best practices.
-    config          Adds/modifies configuration options.
-    default         Switches back to the default settings.
-    gem             Runs the gem command with all versions that pik is aware of.
-    gemsync         Duplicates gems from the current version to the one specified.
-    help            Displays help information.
-    implode         Removes your pik configuration.
-    install|in      Downloads and installs different ruby versions.
-    list|ls         Lists ruby versions that pik is aware of.
-    rake            Runs the rake command with all versions that pik is aware of.
-    remove|rm       Removes a ruby location from pik.
-    ruby|rb         Runs ruby with all versions that pik is aware of.
-    run             Runs command with all versions of ruby that pik is aware of.
-    switch|sw|use   Switches ruby versions based on patterns.
-    tag             Adds the given tag to the current version.
-    tags            Runs the pik command against the given tags.
-  
-  For help on a particular command, use 'pik help COMMAND'.
+    >pik help commands
+    
+      add             Adds another ruby location to pik.
+      benchmark|bench Runs bencmarks with all versions that pik is aware of.
+      checkup|cu      Checks your environment for current Ruby best practices.
+      config          Adds/modifies configuration options.
+      default         Switches back to the default settings.
+      gem             Runs the gem command with all versions that pik is aware of.
+      gemsync         Synchronizes gems from the version specified to the current version.
+      help            Displays help information.
+      implode         Removes your pik configuration.
+      info            Displays information about the current ruby version.
+      install|in      Downloads and installs different ruby versions.
+      list|ls         Lists ruby versions that pik is aware of.
+      rake            Runs the rake command with all versions that pik is aware of.
+      remove|rm       Removes a ruby location from pik.
+      ruby|rb         Runs ruby with all versions that pik is aware of.
+      run             Runs command with all versions of ruby that pik is aware of.
+      switch|sw|use   Switches ruby versions based on patterns.
+      tag             Adds the given tag to the current version.
+      tags            Runs the pik command against the given tags.
+      uninstall|unin  Deletes a ruby version from the filesystem and removes it from Pik.
+      update|up       updates pik.
+    
+    For help on a particular command, use 'pik help COMMAND'.
   
 == REQUIREMENTS:
 
