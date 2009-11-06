@@ -7,6 +7,17 @@ Given /^I have.+added "(.+)"/ do |version|
   @ver.size.should eql(1)
 end
 
+Given /^I only have the rake gem installed to version 1\.9\.1\.$/ do
+  x = `pik 191 & gem list`.split("\n").map{|gem_| gem_.split(' ') }
+  x.map! do |name, version|
+    unless name == 'rake'
+      `pik 191 & gem unin #{name} -x -I`
+      name
+    end
+  end
+  x.should_not include('rake')
+end
+
 Given /^I am currently using it\.$/ do
   unless `ruby -v` =~ @version_reg
     k,v = `pik switch #{@version} & path`.split('=')

@@ -47,7 +47,8 @@ MSG
             puts "** Gem #{file.basename('.gem')} already installed"
           else
             puts "** Installing #{file.basename('.gem')}"
-            cmd = "#{Which::Gem.exe} install -q --no-rdoc --no-ri #{gem_file(file)}"
+            gem_opts = "install -q --no-rdoc --no-ri"
+            cmd = "#{Which::Gem.exe.basename} #{gem_opts} #{gem_file(file)}"
             puts cmd if debug
             system(cmd)
           end
@@ -59,9 +60,10 @@ MSG
       if remote
         gem_re = /(.+)\-(\d+\.\d+\.\d+).+/
         file, gem_name, version = file.basename.to_s.match(gem_re).to_a
-        "#{gem_name} --version \"=#{version}\""
+        "#{gem_name} --version \"=#{version}\" --remote"
       else
-        file
+        # deal with spaces in path
+        file.sub(/.*\s.*/m, '"\&"')
       end
     end
     
