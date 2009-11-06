@@ -38,14 +38,7 @@ MSG
       @hl.agree(msg + "Are you sure you'd like to continue?"){|answer| answer.default = 'no'}
     end
     
-    def platform(version)
-      md = version.match(/\[(.+)\]|(\.NET.+)/) 
-      md[0]
-    rescue
-      raise "Platform couldn't be detected for #{version}"
-    end
-    
-    def install_gems(current, source)
+   def install_gems(current, source)
       target_cache = gem_cache(current)
       
       gem_cache(source).find do |file|

@@ -60,5 +60,11 @@ module Which
       ['7za.exe']
     end 
   end
+  
+  class Irb < Base
+    def self.executables
+      ['irb.bat', 'ir.exe']
+    end
+  end
 
 end
