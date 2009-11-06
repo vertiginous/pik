@@ -1,7 +1,7 @@
 
 describe Pik::VersionParser do
 
-  test_data = {
+  {
   "091: IronRuby 0.9.1.0 on .NET 2.0.0.0" => OpenStruct.new(
      :interpreter  => "IronRuby",
      :version      => "0.9.1.0",
@@ -82,18 +82,14 @@ describe Pik::VersionParser do
      :patchlevel   => "243",
      :full_version => "ruby 1.9.1p243 (2009-07-16 revision 24175) [i386-mingw32]"
     )
-  }
-  
-  @versions = test_data.map{|k, v| [Pik::VersionParser.parse(k), v, k] }
-  
-  @versions.each do |ruby_version, data, string|
+  }.each do |string, data| 
+
+    ruby_version = Pik::VersionParser.parse(string)
   
     describe '#parse' do
-    
       it 'should return a VersionParser object' do
         ruby_version.should be_a(Pik::VersionParser)
       end
-      
     end
 
     it "should have an interpreter for #{string}" do
