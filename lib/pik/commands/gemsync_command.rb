@@ -21,7 +21,9 @@ module Pik
     end
     
     def platform_consistent?(source, current)
-      return true if platform(source) == platform(current) || remote
+      s_platform = VersionParser.parse(source).platform
+      c_platform = VersionParser.parse(current).platform
+      return true if s_platform == c_platform || remote
       msg =<<MSG
   You appear to be attempting a gemsync from a different platform.  
   
@@ -52,7 +54,7 @@ MSG
             puts "** Gem #{file.basename('.gem')} already installed"
           else
             puts "** Installing #{file.basename('.gem')}"
-            cmd = "gem install -q --no-rdoc --no-ri #{gem_file(file)}"
+            cmd = "#{Which::Gem.exe} install -q --no-rdoc --no-ri #{gem_file(file)}"
             puts cmd if debug
             system(cmd)
           end
