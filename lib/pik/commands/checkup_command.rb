@@ -1,70 +1,83 @@
+require 'ostruct'
+require 'win32console'
+require 'term/ansicolor'
+
 module Pik
 
-  class  Checkup < Command  
+  class  Checkup < Command
+    include Term::ANSIColor
+    
+    attr_reader :output
+    
+    HOME    = OpenStruct.new(
+        :pass => 'The HOME environment varible is set.',
+        :fail => 'The HOME environment varible is not set.'
+      )
+    RUBYOPT = OpenStruct.new(
+        :pass => "The RUBYOPT environment varible is empty.",
+        :fail => "The RUBYOPT environment varible contains '-rubygems'"
+      )
+    PATH    = OpenStruct.new(
+        :pass => "There is only one version of Ruby in the system PATH.",
+        :fail => "There is more than one version of Ruby in the system PATH."        
+      )
+    PATHEXT = OpenStruct.new(
+        :pass => 'The .rb and .rbw extension are in the PATHEXT environment variable.',
+        :fail => 'The .rb and .rbw extension are not in the PATHEXT environment variable.'
+      )
     
     aka :cu
     it "Checks your environment for current Ruby best practices."
     
     def execute
-      home
-      rubyopt
-      path
-      pathext
+      checks = [:home, :rubyopt, :path, :pathext].map{|item| check(item) }
+      puts
+      checks.each_with_index{|check, i| puts "\n#{i+1})  #{check}" }
     end
 
-    def to_s
-      ERB.new(@output.join("\n\n")).result
+    def check(item)
+      send(item) ? pass(item) : fail(item)
     end
 
     def rubyopt
-      unless WindowsEnv.user['rubyopt'].nil? && WindowsEnv.system['rubyopt'].nil?
-        fail('rubyopt')        
-      else
-        pass('rubyopt')
-      end
+      syst_opt = WindowsEnv.user['rubyopt'] || '' 
+      user_opt = WindowsEnv.system['rubyopt'] || ''
+      !(user_opt + syst_opt).downcase.include?('-rubygems')
     end
 
     def home
-      if WindowsEnv.user['home'].nil?
-        fail('home')        
-      else
-        pass('home')
-      end
+      WindowsEnv.user['home']
     end
 
     def path
-      user_path = WindowsEnv.user['path']    || ''
+      user_path = WindowsEnv.user['path']    || '' 
       syst_path = WindowsEnv.system['path']  || ''
-      dirs = (user_path + syst_path).split(';')
-      dirs = dirs.select{|dir| File.exist?( File.join(dir,'ruby.exe') ) }
-      unless dirs.size == 1
-        fail('path')        
-      else
-        pass('path')
-      end
+      full_path = [user_path + syst_path].join(';')
+      dirs = Which::Ruby.find_all( full_path )
+      dirs.size == 1
     end
 
     def pathext
       p_ext = WindowsEnv.system['pathext'].downcase
-      unless p_ext.include?('.rb') && p_ext.include?('.rbw')
-        fail('pathext')        
-      else
-        pass('pathext')
-      end
+      p_ext.include?('.rb') && p_ext.include?('.rbw')
     end
 
     def pass(test)
-      print '.'
+      print green, '.', reset
       $stdout.flush
-      # @output << @text[test][:pass]
+      [green, text(test).pass, reset]
     end
 
     def fail(test)
-      print 'F'
+      print red, 'F', reset
       $stdout.flush
-      # @output << @text[test][:fail]
+      [red, text(test).fail, reset]
     end
-
-  end
+    
+    def text(test)
+      self.class.const_get(test.to_s.upcase)
+    end
   
+  end
+
 end

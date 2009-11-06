@@ -9,7 +9,13 @@ module Which
         path = path.find{|dir| exist?(dir)}
         Pathname(path) rescue nil
       end
-  
+      
+      def find_all(search_path=ENV['PATH'])
+        path = SearchPath.new(search_path)
+        path = path.find_all{|dir| exist?(dir)}
+        path.map{|i| Pathname(i) }
+      end
+      
       def exist?(path)
         !!exe(path)
       end
