@@ -42,6 +42,7 @@ require 'pik/commands/update_command'
 require 'pik/config_file'
 require 'pik/implementations'
 require 'pik/search_path'
+require 'pik/version_parser'
 require 'pik/windows_env'
 require 'pik/which'
 

@@ -71,6 +71,7 @@ SEP
       rb = Which::Ruby.exe(path)
       raise "Unable to find a Ruby executable at #{path}" unless rb
       puts `"#{rb}" -v `
+      puts
     end
     
     def check_args
@@ -147,6 +148,44 @@ SEP
     
     def args_required?
       false
+    end
+    
+  end
+  
+  class Benchmark < Ruby
+    
+    it "Runs bencmarks with all versions that pik is aware of."
+    aka :bench
+    
+    def execute
+      file_name = @args.first
+      file_data = File.read(file_name)
+        
+      Tempfile.open('pik_bench') do |temp|
+        @args = [temp.path]
+        temp.write benchmark(file_name, file_data)
+      end
+      super
+    end   
+  
+    def benchmark(name, data)
+    bench =<<BM
+require "benchmark" 
+Benchmark.bmbm do |benchmark| 
+  benchmark.report("** benchmarking '#{File.basename(name)}'") do 
+    #{data}
+  end
+end
+BM
+    end
+    
+    def help_message
+      sep =<<SEP
+  Examples:
+
+    C:\\>pik benchmark hello.rb
+
+SEP
     end
     
   end
