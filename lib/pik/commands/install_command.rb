@@ -19,7 +19,7 @@ module Pik
     def execute
       implementation  = Implementations[@args.shift]
       target, package = implementation.find(*@args)
-      target          =  @install_root + "#{implementation.subclass}-#{target.gsub('.','')}"
+      target          = @install_root + implementation.name + target.gsub('.','')
       file            = download(package)
       extract(target, file)
       add( Pathname(target) + 'bin' )

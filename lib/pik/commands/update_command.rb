@@ -7,15 +7,8 @@ module Pik
     include BatchFileEditor
     
     def execute
-      default
-      results = `#{Which::Gem.exe} update pik`
-      puts results
-      update_re = /Nothing to update/
-      @batch.call("pik_install #{PIK_BATCH.dirname}") unless results.match(update_re)
-    end
-    
-    def default
-      # should move to default implementation before attemping an update
+      sh "#{Which::Gem.exe} install pik"
+      @batch.call("pik_install #{PIK_BATCH.dirname}")
     end
      
   end

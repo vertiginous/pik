@@ -168,6 +168,11 @@ module Pik
       end
     end
     
+    def sh(cmd)
+      puts cmd if debug
+      system(cmd)
+    end
+    
     def cmd_name
       self.class.cmd_name
     end

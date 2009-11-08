@@ -46,15 +46,14 @@ RUBYOPT:      "#{ENV['RUBYOPT']}"
 
 file associations:
 .rb:           #{file_associations('.rb')}
-.rbw:          #{file_associations('.rbw')}
-#{check_path}
+.rbw:          #{file_associations('.rbw')}#{check_path} 
 INFO
     end
     
     def check_path
       dirs = Which::Ruby.find_all
       unless dirs.size == 1
-        dirs.unshift("\nwarning: There is more than one version of ruby in the system path")
+        dirs.unshift("\n\nwarning: There is more than one version of ruby in the system path")
         dirs.join("\n")
       end
     end

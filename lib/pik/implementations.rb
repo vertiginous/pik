@@ -71,6 +71,7 @@ module Pik
       def subclass
         self.class.to_s.split('::').last
       end
+      alias :name :subclass
   
     end
     
