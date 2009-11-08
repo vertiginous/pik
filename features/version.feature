@@ -8,3 +8,4 @@ Feature: display pik version
     When I run "pik -V"
     Then I should see "pik "
     And I should see the Pik::VERSION
+    And I should not see "Usage: pik command [options]"

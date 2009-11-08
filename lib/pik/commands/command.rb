@@ -108,6 +108,7 @@ module Pik
     
     def parse_options
       options.on("--version", "-V", "Pik version") do |value|
+        @version = true
         puts pik_version
       end
       options.on("--debug", "-d", "Outputs debug information") do |value|
