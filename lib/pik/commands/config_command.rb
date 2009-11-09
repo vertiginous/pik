@@ -19,9 +19,9 @@ module Pik
         end
       when 'gem_home'
         config[find_config_from_path][:gem_home] = if @args.include?('default') 
-          Pathname.new(default_gem_home)
+          Pathname(default_gem_home)
         else
-          Pathname.new(value)
+          Pathname(value)
         end
       when 'downloads', 'download_dir'
         config.global[:download_dir] = Pathname.new(value)
