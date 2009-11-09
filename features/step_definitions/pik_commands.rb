@@ -94,7 +94,12 @@ Then /^I should see the Pik::VERSION$/ do
   stdout = File.read(PIK_LOG)
   stdout.should match(Regexp.new(Regexp.escape(Pik::VERSION)))
 end
- 
+
+Then /^I should not see "([^\"]*)"$/ do |arg1|
+  stdout = File.read(PIK_LOG)
+  stdout.should_not match(Regexp.new(Regexp.escape(arg1)))
+end
+
 Then /^I should find "(.*)"$/ do |regexp|
   stdout = File.read(PIK_LOG)
   stdout.should match(Regexp.new(regexp))

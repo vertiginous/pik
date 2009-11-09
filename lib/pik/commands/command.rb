@@ -108,6 +108,7 @@ module Pik
     
     def parse_options
       options.on("--version", "-V", "Pik version") do |value|
+        @version = true
         puts pik_version
       end
       options.on("--debug", "-d", "Outputs debug information") do |value|
@@ -145,16 +146,15 @@ module Pik
     end
 
     def default_gem_home
-      get_gem_home(:first)
+      gem_path.first
     end
     
     def actual_gem_home
-      get_gem_home(:last)
+      gem_path.last
     end
     
-    def get_gem_home(position)
-      path = `#{Which::Ruby.exe} -rubygems -e\"require 'rubygems' ; puts Gem.default_path.#{position}\"`
-      Pathname.new(path.chomp).to_windows    
+    def gem_path
+      `\"#{Which::Gem.exe}\" env gempath`.chomp.split(';').map{|p| Pathname(p).to_windows }
     end
     
     def create(home)
