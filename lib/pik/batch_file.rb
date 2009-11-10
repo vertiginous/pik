@@ -45,7 +45,7 @@ class BatchFile
   end
 
   def set(items)
-    items.each{|k,v|   @file_data << "SET #{k}=#{v}" }
+    items.each{|k,v| @file_data << "SET #{k}=#{v}" }
     self
   end
 

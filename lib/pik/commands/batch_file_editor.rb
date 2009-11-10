@@ -35,11 +35,16 @@ module Pik
       # if the new version has a GEM_HOME, add it's bin dir to the path
       new_path.add(Pathname.new(other[:gem_home]) + 'bin') if other[:gem_home]
       
+      puts "PATH=#{new_path}" if debug
       @batch.set('PATH' => new_path.join )
     end
     
     def switch_gem_home_to(gem_home)
-      gem_home = Pathname(gem_home).to_windows rescue nil
+      gem_home = Pathname(gem_home).to_s.gsub('%', '%%') if gem_home
+      if debug
+        puts "GEM_PATH=#{gem_home}"
+        puts "GEM_HOME=#{gem_home}"
+      end
       @batch.set('GEM_PATH' => gem_home )
       @batch.set('GEM_HOME' => gem_home )
     end

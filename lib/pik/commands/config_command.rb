@@ -24,9 +24,9 @@ module Pik
           Pathname(value)
         end
       when 'downloads', 'download_dir'
-        config.global[:download_dir] = Pathname.new(value)
+        config.global[:download_dir] = Pathname(value)
       when 'installs', 'install_dir'
-        config.global[:install_dir] = Pathname.new(value)
+        config.global[:install_dir] = Pathname(value)
       when 'list'
         list
       else

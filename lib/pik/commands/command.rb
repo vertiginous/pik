@@ -80,10 +80,13 @@ module Pik
     end
   
     def initialize(args=ARGV, config_=nil)
-      @args    = args
-      @options = OptionParser.new
-      @config  = config_ || ConfigFile.new
-      @hl      = HighLine.new
+      @args         = args
+      @options      = OptionParser.new
+      @config       = config_ || ConfigFile.new
+      @hl           = HighLine.new
+      @download_dir = config.global[:download_dir] || PIK_HOME + 'downloads'
+      @install_root = config.global[:install_dir]  || PIK_BATCH.dirname + 'pik'
+      @gemset_root  = @install_root + 'gems'
       add_sigint_handler
       options.program_name = "#{PIK_BATCH.basename('.*')} #{self.class.names.join('|')}"
       command_options
@@ -157,6 +160,16 @@ module Pik
       `\"#{Which::Gem.exe}\" env gempath`.chomp.split(';').map{|p| Pathname(p).to_windows }
     end
     
+    def gemset_gem_home(version, gemset)
+      ver = VersionParser.parse(version)
+      gemset_home(version) + "#{ver.version}%#{gemset}"
+    end
+    
+    def gemset_home(version)
+      ver = VersionParser.parse(version)
+      @gemset_root + ver.interpreter 
+    end
+        
     def create(home)
       puts "creating #{home}"
       home.mkpath

@@ -9,11 +9,15 @@ module Pik
     attr_accessor :global
     attr_accessor :gem_home
     attr_accessor :verbose
+    attr_accessor :gemset
     
     def execute
       abort('Nothing matches:') unless new_ver = self.class.choose_from(@args, @config)
       switch_path_to(@config[new_ver])
-      switch_gem_home_to(@config[new_ver][:gem_home])
+      
+      gem_home = gemset ? gemset_gem_home(new_ver, gemset) : @config[new_ver][:gem_home]
+      
+      switch_gem_home_to(gem_home)
       echo_ruby_version(@config[new_ver][:path]) if verbose
     end
     
@@ -24,6 +28,12 @@ module Pik
          "Display verbose output"
          ) do |value|
         @verbose = true
+      end
+      
+      options.on("--gemset=gemset", "-m gemset",
+         "Use gem set"
+         ) do |value|
+        @gemset = value
       end
 
       sep =<<SEP

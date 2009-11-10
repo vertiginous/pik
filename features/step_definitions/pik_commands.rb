@@ -76,9 +76,15 @@ When /^I run "pik (.+?)"$/ do |args|
   %x[tools\\pik.bat #{args} > #{PIK_LOG} 2>&1 ]
 end
 
-When /^I run "pik (.*)" and check the path$/ do |args|
-  %x[tools\\pik.bat #{args} > #{PIK_LOG} 2>&1 & PATH >> #{PIK_LOG} ]
+When /^I run "pik (.*)" and check the environment$/ do |args|
+  system("echo > #{PIK_LOG}")
+  cmds = ["tools\\pik.bat #{args}", "PATH", "SET G"].map{|cmd| "#{cmd } >> #{PIK_LOG} 2>&1"}
+  %x[#{cmds.join(' & ')}]
 end
+
+# When /^I run "(.*)"$/ do |args|
+#   @cmds ||= []
+# end
 
 And /^then I run "(.*)"$/ do |args|
   %x[#{args} >> #{PIK_LOG} 2>&1 ]
@@ -121,6 +127,11 @@ end
 Then /^the path should point to "(.+)"$/ do |path|
   stdout = File.read(PIK_LOG)
   stdout.should match( Regexp.new(Regexp.escape(path)) )
+end
+
+Then /^the "([^\"]*)" variable will include "([^\"]*)"\.$/ do |var, string|
+  stdout = File.read(PIK_LOG)
+  stdout.should match( Regexp.new("#{var}=.+#{Regexp.escape(string)}") )
 end
 
 

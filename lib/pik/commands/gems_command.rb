@@ -4,6 +4,7 @@ module Pik
   class  Gems < Command
   
     it "Manages gem sets"
+    include BatchFileEditor
     
     def execute
       case @args.first
@@ -17,10 +18,14 @@ module Pik
     # gems subcommands  
   
     def select
+      gem_home = gemset_gem_home(find_config_from_path, @args.shift)
+      switch_gem_home_to(gem_home)
     end
     
     # selects default GEM_HOME
     def clear
+      gem_home = @config[find_config_from_path][:gem_home]
+      switch_gem_home_to(gem_home)
     end
       
     def dump
@@ -45,6 +50,10 @@ module Pik
     end
     
     def list
+      x = gemset_home(find_config_from_path) + '*'
+      Pathname.glob(x.to_ruby).each do |gemset|
+        puts gemset.basename.to_s.split('%').last if gemset.directory?
+      end
     end
     
     def dir

@@ -154,10 +154,11 @@ SEP
   
   class Benchmark < Ruby
     
-    it "Runs bencmarks with all versions that pik is aware of."
+    it "Bencmarks the given script with all versions that pik is aware of."
     aka :bench
     
     def execute
+            abort self.class.description if @args.empty?
       file_name = @args.first
       file_data = File.read(file_name)
         

@@ -11,8 +11,6 @@ module Pik
     
     def initialize(args=ARGV, config_=nil)
       super
-      @download_dir = config.global[:download_dir] || PIK_HOME + 'downloads'
-      @install_root = config.global[:install_dir]  || PIK_BATCH.dirname + 'pik'
       FileUtils.mkdir_p @download_dir.to_s
     end
     
