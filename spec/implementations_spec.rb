@@ -76,14 +76,14 @@ describe Pik::Implementations::Ruby do
 	describe 'find' do
   
     it 'should find the most recent version if no argument is given' do
-      v = '1.9.1-p243'
-      u = "http://rubyforge.org/frs/download.php/62269/ruby-1.9.1-p243-i386-mingw32.7z"
+      v = '1.9.1-p243-rc1'
+      u = "http://rubyforge.org/frs/download.php/66874/ruby-1.9.1-p243-i386-mingw32-rc1.7z"
       @ruby.find.should eql( [v, u] )
     end
     
     it 'should find a specific version if arguments are given' do
-      v = '1.8.6-p383'
-      u = "http://rubyforge.org/frs/download.php/62267/ruby-1.8.6-p383-i386-mingw32.7z"
+      v = '1.8.6-p383-rc1'
+      u = "http://rubyforge.org/frs/download.php/66873/ruby-1.8.6-p383-i386-mingw32-rc1.7z"
       @ruby.find('1.8').should eql( [v, u] )
     end
 	

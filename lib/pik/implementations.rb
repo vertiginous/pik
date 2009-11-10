@@ -56,8 +56,8 @@ module Pik
         h = {}
         Hpricot(read).search("a") do |a|
           if a_href = a.attributes['href']
-            href, link, version = *a_href.match(@re)
-            h[version] =  @url + link  if version
+            href, link, version, rc = *a_href.match(@re)
+            h["#{version}#{rc}"] =  @url + link  if version
           end
         end
         h
@@ -77,10 +77,12 @@ module Pik
     
     class Ruby < Base
     
+      # <a href="/frs/download.php/66874/ruby-1.9.1-p243-i386-mingw32-rc1.7z">
+      # <a href="/frs/download.php/62269/ruby-1.9.1-p243-i386-mingw32.7z">
       def initialize
         super
         @path = "/frs/?group_id=167"
-        @re  = /(.+ruby\-(.+)\-i386\-mingw32\.7z)/
+        @re   = /(.+ruby\-(.+)\-i386\-mingw32(.*)\.7z)/
       end
     
     end
@@ -90,7 +92,7 @@ module Pik
       def initialize
         super
         @path = "/frs/?group_id=4359"
-        @re  = /(.+ironruby\-(\d\.\d\.\d)\.zip)/
+        @re   = /(.+ironruby\-(\d\.\d\.\d)\.zip)/
       end
     
     end
