@@ -1,3 +1,9 @@
+
+=== 0.2.7 / 2009-11-10
+
+* fixed Implementations::Ruby to catch RC1 7z files
+* fixed regression in version option
+
 === 0.2.6 / 2009-11-08
 
 * deprecated checkup command in favor of info command
