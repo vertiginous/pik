@@ -9,8 +9,8 @@ Usage:  pik_install path\\to\\install
 
 You should install to a directory that is in your system path,
 or add the directory to your system path.  Do not install to 
-your ruby's bin directory because pik will remove it when 
-switching versions.
+your ruby's bin directory because pik will remove it from the
+path when switching versions.
 
   Example: 
   C:\\>path
@@ -27,19 +27,30 @@ puts "Thank you for using pik.\n\n"
 install_dir = ARGV.first
 tools_dir   = File.join(File.dirname(__FILE__), '..', 'tools')
 
-if File.directory?(install_dir)
-  puts "Installing to #{install_dir}\n\n"
-  cp File.join(tools_dir, 'pik.bat'), install_dir , 
-    :verbose => true
-  mkdir_p File.join(install_dir, 'pik'), :verbose => true
-  cp File.join(tools_dir, 'pik', 'pik_runner.exe'), 
-    File.join(install_dir, 'pik') ,
-    :verbose => true
-    
-  old_exe = File.join(install_dir, 'pik', 'pik.exe')
-  rm(old_exe, :verbose => true) if File.exist?(old_exe)
+puts "Installing to #{install_dir}\n\n"
+cp File.join(tools_dir, 'pik.bat'), install_dir , 
+  :verbose => true
+mkdir_p File.join(install_dir, 'pik'), :verbose => true
+cp File.join(tools_dir, 'pik', 'pik_runner.exe'), 
+  File.join(install_dir, 'pik') ,
+  :verbose => true
+  
+old_exe = File.join(install_dir, 'pik', 'pik.exe')
+rm(old_exe, :verbose => true) if File.exist?(old_exe)
 
-  puts "\npik is installed"
-else
-  puts "#{install_dir} is not a directory.  pik was not installed."
+puts "\npik is installed"
+
+unless ENV['PATH'].downcase.include?( install_dir.downcase.gsub('/',"\\") )
+  
+  system_path_msg =<<SYSTEM_PATH_MSG
+  
+The directory you installed to is not in the sytem path.
+#{install_dir}
+
+You will need to add it.
+
+SYSTEM_PATH_MSG
+  
+  puts system_path_msg
+  
 end

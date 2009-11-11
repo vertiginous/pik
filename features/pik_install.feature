@@ -31,8 +31,8 @@ Feature: pik_install binary script
 
     You should install to a directory that is in your system path,
     or add the directory to your system path.  Do not install to 
-    your ruby's bin directory because pik will remove it when 
-    switching versions.
+    your ruby's bin directory because pik will remove it from the
+    path when switching versions.
     
       Example: 
       C:\>path
@@ -41,4 +41,15 @@ Feature: pik_install binary script
       
     C:\>pik_install C:\tools
     
+    """
+    
+  Scenario: pik_install to dir not in system path
+    Given I have not installed pik to C:\temp\path with spaces\bin
+    When I run "pik_install "C:\temp\path with spaces\bin""
+    Then I should see
+    """
+    The directory you installed to is not in the sytem path.
+    C:\temp\path with spaces\bin
+    
+    You will need to add it.
     """
