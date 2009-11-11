@@ -28,6 +28,7 @@ require 'lib/pik'
 require 'rbconfig'
 
 REAL_PATH  = SearchPath.new(ENV['PATH']).replace(RbConfig::CONFIG['bindir'], 'c:/temp/more spaces in path/ruby/ruby-186-p383/bin').join
+OTHER_RUBY  = 'c:\\temp\\more spaces in path\\ruby\\ruby-191-p243\\bin'
 
 ENV['HOME'] = "C:\\temp\\path with spaces"
 ENV['JAVA_HOME'] = "C:\\Program Files\\Java\\jre6"

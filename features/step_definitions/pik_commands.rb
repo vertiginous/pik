@@ -54,14 +54,18 @@ Given /^there is no ruby version in the path$/ do
   ENV['PATH'] = SearchPath.new(REAL_PATH).remove(Which::Ruby.find).join
 end
 
-Given /^I have not installed pik to (.+)$/ do |path|
-  FileUtils.rm_rf path if File.exist? path
-  FileUtils.mkdir_p path
-  Dir[path + "\\pik.bat"].should be_empty
+Given /^there is more than one ruby version in the path$/ do
+  Given "\"#{OTHER_RUBY}\" is in the system path"
 end
 
 Given /^"(.*)" is in the system path$/ do |arg1|
   ENV['PATH'] = [arg1, ENV['PATH']].join(';')
+end
+
+Given /^I have not installed pik to (.+)$/ do |path|
+  FileUtils.rm_rf path if File.exist? path
+  FileUtils.mkdir_p path
+  Dir[path + "\\pik.bat"].should be_empty
 end
 
 When /^I run "pik_install (.+)"$/ do |args|
@@ -173,4 +177,9 @@ Then /^a gem_home option should be added to the config\.$/ do
   @current_config = YAML.load(File.read(@config_file))
   @ver = @current_config.keys.grep(@version_reg){|k| @current_config[k] }
   @ver[0][:gem_home].should_not be_nil
+end
+
+Then /^I should see$/ do |string|
+  stdout = File.read(PIK_LOG)
+  stdout.should include(string)
 end
