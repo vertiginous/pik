@@ -13,7 +13,6 @@ Feature: pik_install binary script
     And I should see "pik is installed"
     And I should see "To get help with a command"
     
-    
   Scenario: pik_install to path with spaces
     Given I have not installed pik to C:\temp\path with spaces\bin
     And "C:\temp\path with spaces\bin" is in the system path
@@ -22,3 +21,24 @@ Feature: pik_install binary script
     Then I should see "Installing to C:\temp\path with spaces\bin"
     And I should see "pik is installed"
     And I should see "To get help with a command"
+    
+  Scenario: pik_install with no arguments
+    Given I have not installed pik to C:\temp\path with spaces\bin
+    When I run "pik_install"
+    Then I should see
+    """
+    Usage:  pik_install path\to\install
+
+    You should install to a directory that is in your system path,
+    or add the directory to your system path.  Do not install to 
+    your ruby's bin directory because pik will remove it when 
+    switching versions.
+    
+      Example: 
+      C:\>path
+    
+    PATH=C:\tools;C:\ruby\Ruby-186-p383\bin;C:\WINDOWS\system32;...
+      
+    C:\>pik_install C:\tools
+    
+    """

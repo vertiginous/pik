@@ -68,8 +68,8 @@ Given /^I have not installed pik to (.+)$/ do |path|
   Dir[path + "\\pik.bat"].should be_empty
 end
 
-When /^I run "pik_install (.+)"$/ do |args|
-  %x[ruby bin/pik_install #{args} > #{PIK_LOG} 2>&1 ]
+When /^I run "pik_install(.*)"$/ do |args|
+  %x[ruby bin/pik_install#{args} > #{PIK_LOG} 2>&1 ]
 end
 
 When /^I run "pik (.+?)" and "pik (.+)",$/ do |args1, args2|

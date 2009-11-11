@@ -4,6 +4,24 @@ require 'fileutils'
 
 include FileUtils
 
+usage =<<USAGE
+Usage:  pik_install path\\to\\install
+
+You should install to a directory that is in your system path,
+or add the directory to your system path.  Do not install to 
+your ruby's bin directory because pik will remove it when 
+switching versions.
+
+  Example: 
+  C:\\>path
+
+PATH=C:\\tools;C:\\ruby\\Ruby-186-p383\\bin;C:\\WINDOWS\\system32;...
+  
+C:\\>pik_install C:\\tools
+
+USAGE
+abort usage unless ARGV.first
+
 puts "Thank you for using pik.\n\n"
 
 install_dir = ARGV.first
