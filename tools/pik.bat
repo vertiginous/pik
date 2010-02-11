@@ -1,2 +1,2 @@
 @ECHO OFF
-"%~dpn0\%~n0_runner.exe" "%~dpf0" %*
+"%~dpn0\%~n0_runner.exe" "%~f0" %*
