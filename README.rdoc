@@ -70,7 +70,7 @@ So I run:
      
     pik is installed
     
-If you install to a directory that's not in your path, you'll need to add it to the path yourself.  Microsoft has good instructions[http://support.microsoft.com/kb/310519] on that.  After that, you should be ready to run pik.  If you have any problems, let me know.
+If you install to a directory that's not in your path, you'll need to add it to the path yourself.  Microsoft has good instructions[http://support.microsoft.com/kb/310519] on that.  After that, you should be ready to run pik. 
 
 *  If this is a first-time install, look at pik add, and pik install to set up your environment.
  
