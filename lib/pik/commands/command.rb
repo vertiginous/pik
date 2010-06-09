@@ -60,7 +60,7 @@ module Pik
       if patterns.empty?
         possibles = config.keys  
       else
-        possibles = patterns.map{|p| config.keys.grep(Regexp.new(Regexp.escape(p.to_s))) }
+        possibles = patterns.map{|p| config.keys.grep(Regexp.new(Regexp.escape(p.to_s),Regexp::IGNORECASE) ) }
         possibles = possibles.inject{|m,v| m & v }.flatten.uniq
       end
       case possibles.size
