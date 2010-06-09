@@ -8,7 +8,7 @@
 require 'cgi'
 require 'uri'
 require 'net/http'
-require 'net/https'
+# require 'net/https'
 require 'tempfile'
 require 'fileutils'
 
