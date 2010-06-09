@@ -72,6 +72,10 @@ module Pik
         self.class.to_s.split('::').last
       end
       alias :name :subclass
+      
+      def add?
+        true
+      end
   
     end
     
@@ -87,12 +91,25 @@ module Pik
     
     end
     
+    class DevKit
+      def initialize
+        super
+        @path = "/frs/?group_id=167"
+        @re   = /(.+ruby\-(.+)\-i386\-mingw32(.*)\.7z)/
+      end
+      
+      def add?
+        false
+      end
+      
+    end
+    
     class IronRuby < Base
     
       def initialize
         super
         @path = "/frs/?group_id=4359"
-        @re   = /(.+ironruby\-(\d\.\d\.\d)\.zip)/
+        @re   = /(.+ironruby\-(.*)\.zip)/
       end
     
     end
