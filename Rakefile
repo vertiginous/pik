@@ -6,7 +6,9 @@ require 'win32/process'
 
 ENV['SPEC_OPTS']= '-O spec/spec.opts'
 
-file 'tools/pik/pik_runner.exy' do
+lib = FileList["lib/**/*.rb"]
+
+file 'tools/pik/pik_runner.exy', :needs => ['tools/pik/pik_runner'] + lib do
   Dir.chdir 'tools/pik' do
     sh('ruby -rexerb/mkexy pik_runner -v')
   end
@@ -16,24 +18,25 @@ file 'tools/pik/pik_runner.exy' do
     'type' => 'extension-library'
   }
   exy['file']['zlib1.dll']  = zlib1
+    
   File.open('tools/pik/pik_runner.exy', 'w+'){ |f| f.puts YAML.dump(exy) }
 end
 
-file 'tools/pik/pik.exe', :needs => ['tools/pik/pik_runner.exy'] do
+file 'tools/pik/pik_runner.exe', :needs => ['tools/pik/pik_runner.exy'] do
   Dir.chdir 'tools/pik' do
     sh('ruby -S exerb pik_runner.exy')
     sh('upx -9 pik_runner.exe') unless ENV['QUICK']
   end
 end
 
-task :build, :needs => 'tools/pik/pik.exe'
+task :build, :needs => 'tools/pik/pik_runner.exe'
 
 task :install, :needs => :build do
   sh('ruby bin/pik_install C:\\bin')
 end
 
 task :clobber_exe do
-  rm_rf 'tools/pik/pik.exe'
+  rm_rf 'tools/pik/pik_runner.exe'
 end
 
 task :clobber_exy, :needs => :clobber_exe do
