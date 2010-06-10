@@ -24,7 +24,7 @@ module Pik
     end
    
     def command_options
-      options.program_name = "#{PIK_BATCH.basename('.*')} command"
+      options.program_name = "pik command"
       sep = <<SEP
 
 To get help with a command

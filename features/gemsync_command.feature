@@ -12,7 +12,7 @@ Feature: gemsync command
     And I should see "Installing hoe"
 
   Scenario: attempt to sync to different platform
-    When I run "pik Ir 91" and "pik gemsync 186 mi -q -d",
+    When I run "pik iron" and "pik gemsync 186 mi -q -d",
     Then I should see "You appear to be attempting a gemsync from a different platform."
     
     

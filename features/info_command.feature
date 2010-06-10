@@ -1,4 +1,4 @@
-Feature: add command
+Feature: info command
   In order to add ruby versions to pik
   A developer
   Wants a command line interface
@@ -8,38 +8,37 @@ Scenario: Info command
     When I run "pik info"
     Then I should see 
       """    
-      
       ruby:
       interpreter:  "ruby"
       version:      "1.8.6"
-      date:         "2009-08-04"
+      date:         "2010-02-04"
       platform:     "i386-mingw32"
-      patchlevel:   "383"
-      full_version: "ruby 1.8.6 (2009-08-04 patchlevel 383) [i386-mingw32]"
+      patchlevel:   "398"
+      full_version: "ruby 1.8.6 (2010-02-04 patchlevel 398) [i386-mingw32]"
       
       homes:
-      gem:          "c:\temp\more spaces in path\ruby\Ruby-186-p383\lib\ruby\gems\1.8"
-      ruby:         "c:\temp\more spaces in path\ruby\ruby-186-p383"
+      gem:          "C:\temp\more spaces in path\ruby\Ruby-186-p398-2\lib\ruby\gems\1.8"
+      ruby:         "C:\temp\more spaces in path\ruby\Ruby-186-p398-2"
       
       binaries:
-      ruby:         "c:\temp\more spaces in path\ruby\ruby-186-p383\bin"
-      irb:          "c:\temp\more spaces in path\ruby\ruby-186-p383\bin\irb.bat"
-      gem:          "c:\temp\more spaces in path\ruby\ruby-186-p383\bin\gem.bat"
-      rake:         "c:\temp\more spaces in path\ruby\ruby-186-p383\bin\rake.bat"
+      ruby:         "C:\temp\more spaces in path\ruby\Ruby-186-p398-2\bin"
+      irb:          "C:\temp\more spaces in path\ruby\Ruby-186-p398-2\bin\irb.bat"
+      gem:          "C:\temp\more spaces in path\ruby\Ruby-186-p398-2\bin\gem.bat"
+      rake:         "C:\temp\more spaces in path\ruby\Ruby-186-p398-2\bin\rake.bat"
       
       environment:
       GEM_HOME:     ""
       HOME:         "C:\temp\path with spaces"
       IRBRC:        ""
-      RUBYOPT:      ""
+      RUBYOPT:      "-rubygems"
       
       file associations:
-      .rb:           "C:\ruby\Ruby-186-p383\bin\ruby.exe" "%1" %*
-      .rbw:          "C:\ruby\Ruby-186-p383\bin\rubyw.exe" "%1" %*
+      .rb:           "C:\Ruby\ruby-187-p249\bin\ruby.exe" "%1" %*
+      .rbw:          "C:\Ruby\ruby-187-p249\bin\rubyw.exe" "%1" %*
       """
 
   
-  Scenario: Info command - No ruby in path
+  Scenario: No ruby in path
     Given there is no ruby version in the path
     When I run "pik info"
     Then I should see 
@@ -51,13 +50,13 @@ Scenario: Info command
       
       """
    
-  Scenario: Info command - Multiple rubies in path
+  Scenario: Multiple rubies in path
     Given there is more than one ruby version in the path
     When I run "pik info"
     Then I should see     
       """    
       
       warning: There is more than one version of ruby in the system path
-      c:\temp\more spaces in path\ruby\ruby-191-p243\bin
-      c:\temp\more spaces in path\ruby\ruby-186-p383\bin
+      C:\temp\more spaces in path\ruby\Ruby-191-p378-1\bin
+      C:\temp\more spaces in path\ruby\Ruby-186-p398-2\bin
       """

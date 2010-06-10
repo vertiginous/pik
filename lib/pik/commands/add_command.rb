@@ -16,11 +16,12 @@ module Pik
     def add(path)
       path = Pathname.new(path)
       path = path.dirname if path.file?
-      if Which::Ruby.exist?(path) 
+      if Which::Ruby.exist?(path)
         if find_config_from_path(path)
           puts "This version has already been added."
         else
           version = get_version(path)
+          version = modify_version(version) if config[version]
           path    = Pathname(path.expand_path.to_ruby)
           puts "** Adding:  #{version}\n Located at:  #{path}\n"
           @config[version] = {}
@@ -61,6 +62,17 @@ module Pik
       end        
     
     end
+
+    def modify_version(version)
+      puts "This version appears to exist in another location."
+      puts "Path:  " + config[version][:path]
+      puts "If you'd still like to add this version, you can."
+      modifier = @hl.ask("Enter a unique name to modify the name of this version. (enter to quit)")
+      raise QuitError if modifier.empty?
+      ver = version.split(':')
+      ["#{ver.shift}-#{modifier}", ver].join(':')
+    end
+
   end
 
 end

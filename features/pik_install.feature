@@ -28,18 +28,19 @@ Feature: pik_install binary script
     Then I should see
     """
     Usage:  pik_install path\to\install
-
+    
     You should install to a directory that is in your system path,
     or add the directory to your system path.  Do not install to 
     your ruby's bin directory because pik will remove it from the
     path when switching versions.
     
-      Example: 
-      C:\>path
+    Example: 
     
-    PATH=C:\tools;C:\ruby\Ruby-186-p383\bin;C:\WINDOWS\system32;...
+      C:\>path
       
-    C:\>pik_install C:\tools
+      PATH=C:\tools;C:\ruby\Ruby-186-p383\bin;C:\WINDOWS\system32;...
+        
+      C:\>pik_install C:\tools
     
     """
     

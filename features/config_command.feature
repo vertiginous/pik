@@ -5,8 +5,7 @@ Feature: config command
   That allows her to configure pik's behavior.
   
   Scenario: config gem_home
-    Given I have already added "ruby 1.8.6 (2009-08-04 patchlevel 383) [i386-mingw32]"
-    And I am currently using it.
+    Given I am currently using "ruby 1.8.6 (2010-02-04 patchlevel 398) [i386-mingw32]"
     When I run "pik config gem_home default" 
     Then a gem_home option should be added to the config.
         

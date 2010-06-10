@@ -5,7 +5,7 @@ Feature: remove command
   So that she can remove versions.
 
   Scenario: remove a version from the config
-    Given I have already added "ruby 1.8.6 (2009-08-04 patchlevel 383) [i386-mingw32]"
-    When I run "pik remove 186 383 -f"
+    Given I have already added "ruby 1.8.6 (2010-02-04 patchlevel 398) [i386-mingw32]"
+    When I run "pik remove 186 398 -f"
     Then I should see "removed"    
     And the version should be removed.

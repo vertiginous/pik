@@ -1,19 +1,23 @@
 config=<<CONFIG
 --- 
-"091: IronRuby 0.9.1.0 on .NET 2.0.0.0": 
-  :gem_home: !ruby/object:Pathname 
-    path: c:/temp/more spaces in path/ruby/IronRuby-091/lib/ironruby/gems/1.8
+"092: IronRuby 0.9.2.0 on .NET 2.0.0.0": 
   :path: !ruby/object:Pathname 
-    path: c:/temp/more spaces in path/ruby/ironruby-091/bin
-"140: jruby 1.4.0RC2 (ruby 1.8.7 patchlevel 174) (2009-10-21 7e77f32) (Java HotSpot(TM) Client VM 1.6.0_14) [x86-java]": 
+    path: C:/temp/more spaces in path/ruby/IronRuby-092/bin
+"151: jruby 1.5.1 (ruby 1.8.7 patchlevel 249) (2010-06-06 f3a3480) (Java HotSpot(TM) Client VM 1.6.0_18) [x86-java]": 
   :path: !ruby/object:Pathname 
-    path: C:/temp/more spaces in path/ruby/jruby-140RC2/bin
-"186: ruby 1.8.6 (2009-08-04 patchlevel 383) [i386-mingw32]": 
+    path: C:/temp/more spaces in path/ruby/JRuby-151/bin
+"186: ruby 1.8.6 (2010-02-04 patchlevel 398) [i386-mingw32]": 
   :path: !ruby/object:Pathname 
-    path: c:/temp/more spaces in path/ruby/ruby-186-p383/bin
-"191: ruby 1.9.1p243 (2009-07-16 revision 24175) [i386-mingw32]": 
+    path: C:/temp/more spaces in path/ruby/Ruby-186-p398-2/bin
+"187-test: ruby 1.8.7 (2010-01-10 patchlevel 249) [i386-mingw32]": 
   :path: !ruby/object:Pathname 
-    path: c:/temp/more spaces in path/ruby/ruby-191-p243/bin
+    path: C:/temp/more spaces in path/ruby/Ruby-187-p249-1/bin
+"187: ruby 1.8.7 (2010-01-10 patchlevel 249) [i386-mingw32]": 
+  :path: !ruby/object:Pathname 
+    path: C:/Ruby/ruby-187-p249/bin
+"191: ruby 1.9.1p378 (2010-01-10 revision 26273) [i386-mingw32]": 
+  :path: !ruby/object:Pathname 
+    path: C:/temp/more spaces in path/ruby/Ruby-191-p378-1/bin
 --- 
 :download_dir: !ruby/object:Pathname 
   path: C:\\temp\\path with spaces\\downloads
@@ -27,11 +31,10 @@ require 'fileutils'
 require 'lib/pik'
 require 'rbconfig'
 
-REAL_PATH  = SearchPath.new(ENV['PATH']).replace(RbConfig::CONFIG['bindir'], 'c:/temp/more spaces in path/ruby/ruby-186-p383/bin').join
-OTHER_RUBY  = 'c:\\temp\\more spaces in path\\ruby\\ruby-191-p243\\bin'
+REAL_PATH  = SearchPath.new(ENV['PATH']).replace(RbConfig::CONFIG['bindir'], 'C:\temp\more spaces in path\ruby\Ruby-186-p398-2\bin').join
+OTHER_RUBY  = 'c:\\temp\\more spaces in path\\ruby\\Ruby-191-p378-1\\bin'
 
 ENV['HOME'] = "C:\\temp\\path with spaces"
-ENV['JAVA_HOME'] = "C:\\Program Files\\Java\\jre6"
 
 PIK_LOG = 'log\\output.log'
 TEST_PIK_HOME  = Pathname.new( ENV['HOME'] || ENV['USERPROFILE'] ) + '.pik'
