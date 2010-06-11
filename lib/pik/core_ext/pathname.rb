@@ -2,12 +2,12 @@
 class Pathname
 
   def to_s
-    @path.tr('/','\\')
+    @path.tr('/','\\').sub(/^.:/){|s| s.upcase }
   end
   alias to_windows to_s
   
   def to_ruby
-    @path.tr('\\','/')
+    @path.tr('\\','/').sub(/^.:/){|s| s.upcase }
   end
   
   def ruby
