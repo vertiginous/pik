@@ -101,6 +101,17 @@ end
 require 'cucumber'
 require 'cucumber/rake/task'
 
+@dir = Pathname(File.dirname(__FILE__)) 
+@test_versions = {
+  'JRuby'     => ['1.5.1'],
+  'IronRuby'  => ['0.9.2'],
+  'Ruby'      => [
+    '1.9.1-p378-1',
+    '1.8.6-p398-2',
+    '1.8.7-p249-1'
+  ]
+}
+
 namespace :cucumber do
 
   directory "C:/temp"
@@ -108,23 +119,42 @@ namespace :cucumber do
   desc "sets up C:\\temp for pik's cuke tests"
   task :setup => "C:/temp" do
     ENV['HOME'] = "C:\\temp"
+    Pik::Implementations.implementations.each{|i|
+      url = URI.parse(i.url)
+      query = url.query || ''
+      path = (Pathname('phony_web/public') + (url.path + query.gsub("group_id=","")).gsub(/^\//,''))
+      mkdir_p path
+      File.open(path + 'index.html', 'w+'){|f| f.puts i.read }
+    }
+
     sh "pik config installs=\"C:\\temp\\more spaces in path\\ruby\""
-    sh "pik install jruby"
-    sh "pik install ironruby"
-    sh "pik install ruby"
-    sh "pik install ruby 1.8"
+    list = Pik::Implementations.list
+    @test_versions.each{|k,v| 
+      v.each{|ver| 
+        path = File.dirname(URI.parse(list[k][ver]).path)
+        dir = @dir + 'phony_web/public' 
+        dir += path.sub(/^\//,'')
+        puts dir.to_windows
+        sh "pik config downloads=#{dir.to_windows}"
+        mkdir_p path
+        sh "pik install #{k} #{ver}"
+      }
+    }
     sh "pik gem in rake"
+    mv "c:/temp/.pik/config.yml", "c:/temp/.pik/config.bak" 
   end
   
   namespace :phonyweb do
-    
-    task :start => 'hosts:add' do
-      @web = Process.create(:app_name => "ruby C:\\scripts\\repo\\pik\\phony_web\\server.rb")
+
+    task :start do #=> 'hosts:add' do
+      dir = @dir + 'phony_web/server.rb'
+      @web = Process.create(:app_name => "ruby #{dir.to_windows}")
     end
     
     task :kill => 'hosts:remove' do
       Process.kill(3, @web.process_id)
     end
+    
   end
   
   # this is used with the phony web server for 
@@ -137,7 +167,7 @@ namespace :cucumber do
     desc "adds fake hosts to system's hosts file"
     task :add do
       File.open(HOSTS,'a+'){|f|
-       f.puts "127.0.0.1   www.jruby.org rubyforge.org www.rubyforge.org jruby.kenai.com dist.codehaus.org"
+       f.puts "127.0.0.1   www.jruby.org rubyforge.org www.rubyforge.org jruby.org.s3.amazonaws.com"
       }
     end
     
@@ -150,6 +180,7 @@ namespace :cucumber do
     task :rm => :remove
    
   end
+  
 end
 
 Cucumber::Rake::Task.new(:features) do |t|
@@ -158,4 +189,6 @@ end
 
 task :cuke => ['cucumber:phonyweb:start', :features, 'cucumber:phonyweb:kill']
 
+
 # vim: syntax=Ruby
+
