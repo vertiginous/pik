@@ -26,10 +26,14 @@ module Pik
     def self.method_missing(meth)
       raise "Pik isn't aware of an implementation called '#{meth}' for Windows."
     end
+    
+    def self.implementations
+      [ruby, jruby, ironruby, devkit]
+    end
   
     def self.list
       h = {}
-      [ruby, jruby, ironruby, devkit].each{|i| h[i.subclass] = i.versions  }
+      implementations.each{|i| h[i.subclass] = i.versions  }
       h
     end
     
@@ -38,9 +42,13 @@ module Pik
       def self.find(*args)
         new.find(*args)
       end
-    
+      
       def initialize
         @url = 'http://rubyforge.org'
+      end
+
+      def url
+        @url + @path
       end
       
       def find(*args)
