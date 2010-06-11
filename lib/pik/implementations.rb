@@ -103,7 +103,7 @@ module Pik
       def initialize
         super
         @path = "/frs/?group_id=4359"
-        @re   = /(.+ironruby\-(.*)\.zip)/
+        @re   = /(.+ironruby\-(.*[^ipy])\.zip)/
       end
     
     end
