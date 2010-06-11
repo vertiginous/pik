@@ -19,13 +19,17 @@ module Pik
       JRuby.new
     end
     
+    def self.devkit
+      DevKit.new
+    end
+    
     def self.method_missing(meth)
       raise "Pik isn't aware of an implementation called '#{meth}' for Windows."
     end
   
     def self.list
       h = {}
-      [ruby, jruby, ironruby].each{|i| h[i.subclass] = i.versions  }
+      [ruby, jruby, ironruby, devkit].each{|i| h[i.subclass] = i.versions  }
       h
     end
     
@@ -73,8 +77,11 @@ module Pik
       end
       alias :name :subclass
       
-      def add?
-        true
+      def after_install(install)
+        puts
+        p = Pik::Add.new([install.target + 'bin'], install.config)
+        p.execute
+        p.close
       end
   
     end
@@ -89,19 +96,6 @@ module Pik
         @re   = /(.+ruby\-(.+)\-i386\-mingw32(.*)\.7z)/
       end
     
-    end
-    
-    class DevKit
-      def initialize
-        super
-        @path = "/frs/?group_id=167"
-        @re   = /(.+ruby\-(.+)\-i386\-mingw32(.*)\.7z)/
-      end
-      
-      def add?
-        false
-      end
-      
     end
     
     class IronRuby < Base
@@ -122,8 +116,31 @@ module Pik
         @path = "http://www.jruby.org/download"
         @re   = /(.+\-bin\-(.+)\.zip)/
       end
+
     end
-  
+    
+    class DevKit < Base
+    
+      def initialize
+        super
+        @path = "/frs/?group_id=167"
+        @re   = /(.+devkit-(.*)-.*\.7z)/
+      end
+      
+      def after_install(install)
+        devkit = install.target + 'devkit'
+        p = Pik::Config.new(["devkit=#{devkit.to_windows}"], install.config)
+        p.execute
+        p.close
+
+        p = Pik::Devkit.new(["update"], install.config)
+        p.execute
+        p.close
+        puts
+      end
+        
+    end  
+
   end
   
 end

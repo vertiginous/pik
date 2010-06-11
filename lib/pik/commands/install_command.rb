@@ -9,6 +9,8 @@ module Pik
     aka :in
     it "Downloads and installs different ruby versions."
     
+    attr_reader :target
+    
     def initialize(args=ARGV, config_=nil)
       super
       @download_dir = config.global[:download_dir] || PIK_HOME + 'downloads'
@@ -18,11 +20,12 @@ module Pik
     
     def execute
       implementation  = Implementations[@args.shift]
-      target, package = implementation.find(*@args)
-      target          = @install_root + "#{implementation.name}-#{target.gsub('.','')}"
+      @target, package = implementation.find(*@args)
+      @target          = @install_root + "#{implementation.name}-#{@target.gsub('.','')}"
       file            = download(package)
-      extract(target, file)
-      add( Pathname(target) + 'bin' )
+      extract(@target, file)
+      # add( Pathname(target) + 'bin' ) if implementation.add?
+      implementation.after_install(self)
     end
     
     def command_options
@@ -63,12 +66,12 @@ SEP
       end  
     end
     
-    def add(path)
-      puts
-      p = Pik::Add.new([path], config)
-      p.execute
-      p.close
-    end
+    # def add(path)
+    #   puts
+    #   p = Pik::Add.new([path], config)
+    #   p.execute
+    #   p.close
+    # end
     
     def seven_zip(target, file)
       file = Pathname(file)

@@ -27,6 +27,8 @@ module Pik
         config.global[:download_dir] = Pathname.new(value)
       when 'installs', 'install_dir'
         config.global[:install_dir] = Pathname.new(value)
+      when 'devkit', 'devkit_dir'
+        config.global[:devkit] = Pathname.new(value)
       when 'list'
         list
       else
