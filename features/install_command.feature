@@ -24,7 +24,7 @@ Feature: install command
 
   Scenario: install Ruby 1.8.7
     When I run "pik rm 187-test -f -q"
-    When I run "pik rm 187 p-f -q"
+    When I run "pik rm 187 249  -f -q"
     When I run "pik in ruby 1.8"
     Then I should see "** Downloading:  http://rubyforge.org/frs/download.php/71081/ruby-1.8.7-p249-i386-mingw32-1.7z"
     And I should see "   to:  C:\temp\path with spaces\downloads\ruby-1.8.7-p249-i386-mingw32-1.7z"
