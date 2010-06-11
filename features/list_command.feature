@@ -6,15 +6,15 @@ Feature: list command
 
   Scenario: list versions
     When I run "pik list"
-    Then I should find "^\d+\: .+ruby"
+    Then I should find "^  \d+\: .+ruby"
 
   Scenario: Determining the current ruby version from the list
     When I run "pik list"
-    Then I should find "^\d+\: .+\*$"
+    Then I should find "^\* \d+\: .+$"
     
   Scenario: list verbose output
     When I run "pik list -v"
-    Then I should find "^\d+\: .+\*$"
+    Then I should find "^\* \d+\: .+$"
     And I should find "path\: C\:[\\\/].+"
     
   Scenario: list remote packages
