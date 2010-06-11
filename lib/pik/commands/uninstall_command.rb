@@ -15,21 +15,21 @@ module Pik
         puts "** Deleting #{config[to_remove][:path].dirname}"
         path = config[to_remove][:path].dirname
         FileUtils.rm_rf(path) if path.exist?
-        remove
+        remove(to_remove)
         puts
         @hl.say("#{to_remove} has been uninstalled.")
       end
     end
     
-    def remove
-      rm = Pik::Remove.new(@args + ['--force', '--quiet'], config)
+    def remove(to_remove)
+      rm = Pik::Remove.new([to_remove, '--force', '--quiet'], config)
       rm.execute
       rm.close
     end
     
     def command_options
       super
-      options.on("--force", "-f", "Remove without prompting") do |value|
+      options.on("--force", "-f", "Uninstall without prompting") do |value|
         @force = value
       end
     end
