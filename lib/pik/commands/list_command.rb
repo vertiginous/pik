@@ -22,7 +22,7 @@ module Pik
     def list
       current_path = Which::Ruby.find
       config.sort.each do |name, conf|
-        name += ' *' if current_path == conf[:path]
+        name = (current_path == conf[:path]) ? "* #{name}" : "  #{name}"
         puts name
         if verbose
           conf.each{|k,v| puts "     %s: %s" % [k, v]} 
