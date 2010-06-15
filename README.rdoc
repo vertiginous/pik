@@ -44,9 +44,9 @@ Pik is a tool to manage multiple versions of ruby on Windows.
 
 Windows, more than one version of Ruby (otherwise, what's the point?) and Rubygems
 
-*  Build dependencies: exerb-mingw, highline, hpricot, crown
+*  Build dependencies: exerb-mingw, highline, hpricot, crown, upx, wix
 
-*  Development dependencies: rake, mongrel, cucumber, rspec, hoe, hoe-git
+*  Development dependencies: rake, cucumber, rspec, hoe, hoe-git, rack, rack-cache
 
 == INSTALL:
 
@@ -230,7 +230,7 @@ pik run # there
 
 (The MIT License)
 
-Copyright (c) 2009 Gordon Thiesfeld
+Copyright (c) 2010 Gordon Thiesfeld
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
