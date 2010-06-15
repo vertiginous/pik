@@ -1,6 +1,10 @@
 
-=== 0.2.7 / 2009-11-10
-
+=== 0.2.7 / 2010-06-15
+* cleaner list output
+* created devkit implmentation (pik install devkit)
+* created devkit update command (pik devkit update) creates batch files if you install
+  a newer version of ruby after devkit.
+* fixed Implementations::IronRuby to catch newer versions, and ignore ipy packages
 * fixed Implementations::Ruby to catch RC1 7z files
 * fixed regression in version option
 
