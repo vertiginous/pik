@@ -56,10 +56,9 @@
       <Property Id="WIXUI_INSTALLDIR" Value="INSTALLDIR"/>   
       <UIRef Id="WixUI_MyInstallDir"/>
       <UIRef Id="WixUI_ErrorProgressText"/>
-<!--       
-      <WixVariable Id="WixUIBannerBmp" Value="..\..\install\Images\emdeon_logo_banner.bmp"/> 
-      <WixVariable Id="WixUIDialogBmp" Value="..\..\install\Images\emdeon_green_dialog.bmp"/>
- -->
+      
+      <WixVariable Id="WixUIBannerBmp" Value="pik_banner.bmp"/> 
+      <WixVariable Id="WixUIDialogBmp" Value="pik_dialog.bmp"/>
       <WixVariable Id="WixUILicenseRtf" Value="License.rtf" />
 
       <InstallExecuteSequence>
