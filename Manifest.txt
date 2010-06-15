@@ -6,16 +6,18 @@ bin/pik_install
 features/add_command.feature
 features/config_command.feature
 features/default_command.feature
-features/env.rb
 features/gemsync_command.feature
 features/help_command.feature
 features/implode_command.feature
+features/info_command.feature
 features/install_command.feature
 features/list_command.feature
 features/pik_install.feature
 features/remove_command.feature
 features/run_command.feature
 features/step_definitions/pik_commands.rb
+features/support/env.rb
+features/support/proxy.ru
 features/switch_command.feature
 features/tag_command.feature
 features/uninstall_command.feature
@@ -29,6 +31,7 @@ lib/pik/commands/command.rb
 lib/pik/commands/config_command.rb
 lib/pik/commands/config_file_editor.rb
 lib/pik/commands/default_command.rb
+lib/pik/commands/devkit_command.rb
 lib/pik/commands/gemsync_command.rb
 lib/pik/commands/help_command.rb
 lib/pik/commands/implode_command.rb
