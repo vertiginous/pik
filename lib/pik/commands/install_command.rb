@@ -24,7 +24,6 @@ module Pik
       @target          = @install_root + "#{implementation.name}-#{@target.gsub('.','')}"
       file            = download(package)
       extract(@target, file)
-      # add( Pathname(target) + 'bin' ) if implementation.add?
       implementation.after_install(self)
     end
     
@@ -65,13 +64,6 @@ SEP
         extract(target, file)
       end  
     end
-    
-    # def add(path)
-    #   puts
-    #   p = Pik::Add.new([path], config)
-    #   p.execute
-    #   p.close
-    # end
     
     def seven_zip(target, file)
       file = Pathname(file)

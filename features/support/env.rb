@@ -30,15 +30,41 @@ require 'pathname'
 require 'fileutils'
 require 'lib/pik'
 require 'rbconfig'
+require 'win32/process'
 
 REAL_PATH  = SearchPath.new(ENV['PATH']).replace(RbConfig::CONFIG['bindir'], 'C:\temp\more spaces in path\ruby\Ruby-186-p398-2\bin').join
 OTHER_RUBY  = 'c:\\temp\\more spaces in path\\ruby\\Ruby-191-p378-1\\bin'
 
 ENV['HOME'] = "C:\\temp\\path with spaces"
+ENV['http_proxy'] = "http://localhost:9292"
 
 PIK_LOG = 'log\\output.log'
 TEST_PIK_HOME  = Pathname.new( ENV['HOME'] || ENV['USERPROFILE'] ) + '.pik'
 FAKE_PIK_HOME = 'c:/temp/path with spaces/.pik'
+PID_FILE = 'c:/temp/proxy/proxy.pid'
+
+
+def start_proxy
+  proxy    = Pathname.new( File.dirname(__FILE__)) + 'proxy.ru'
+  log = File.new("c:/temp/proxy/proxy.log", 'w+')
+  Process.create(:app_name => "rackup.bat #{proxy} -s webrick --pid \"#{PID_FILE}\"", :startup_info => {:stdout =>  log.fileno, :stderr => log.fileno})
+end
+
+
+def stop_proxy
+  if File.exist?(PID_FILE)
+    pid = File.read(PID_FILE).to_i
+    Process.kill(3,pid)
+    FileUtils.rm(PID_FILE)
+  end
+end
+
+start_proxy
+
+at_exit do
+  stop_proxy
+end
+
 
 Before do
   ENV['PATH'] = REAL_PATH
