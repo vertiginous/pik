@@ -49,8 +49,10 @@ Windows, more than one version of Ruby (otherwise, what's the point?) and Rubyge
 *  Development dependencies: rake, cucumber, rspec, hoe, hoe-git, rack, rack-cache
 
 == INSTALL:
+  
+You can install pik via rubygems, or the Windows installer.
 
-*  install pik using rubygems.
+*  *install pik using rubygems*
 
     >gem install pik
     ...
@@ -58,22 +60,29 @@ Windows, more than one version of Ruby (otherwise, what's the point?) and Rubyge
     Successfully installed pik-0.2.6
     1 gem installed
 
-After the gem is installed, you can use the 'pik_install' script to install the pik executable.  Install pik to a location that's in your path, but someplace other than your ruby\bin dir.  For instance, the directory C:\bin is in my path:
+  After the gem is installed, you can use the 'pik_install' script to install the pik executable.  Install pik to a location that's in your path, but someplace other than your ruby\bin dir.  For instance, the directory C:\bin is in my path:
 
-    >path
-    PATH=c:\bin;C:\Program Files\Windows Resource Kits\Tools\;c:\ruby\Ruby-186-p383\bin;
-   
-So I run:
+      >path
+      PATH=c:\bin;C:\Program Files\Windows Resource Kits\Tools\;c:\ruby\Ruby-186-p383\bin;
+     
+  So I run:
 
-    >pik_install C:\bin
-    Thank you for using pik.
-   
-    Installing to C:\bin
+      >pik_install C:\bin
+      Thank you for using pik.
      
-    ...
-     
-    pik is installed
+      Installing to C:\bin
+       
+      ...
+       
+      pik is installed
+
+*  *install pik using rubygems*
+
+  If you want to install to a machine that doesn't have Ruby installed yet, you can download the latest msi file from github[http://github.com/vertiginous/pik/downloads].  Or, just run:
     
+    >msiexec /i http://github.com/downloads/vertiginous/pik/pik-n.n.n.msi    
+
+
 If you install to a directory that's not in your path, you'll need to add it to the path yourself.  Microsoft has good instructions[http://support.microsoft.com/kb/310519] on that.  After that, you should be ready to run pik. 
 
 *  If this is a first-time install, look at pik add, and pik install to set up your environment.
