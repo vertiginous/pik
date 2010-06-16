@@ -52,7 +52,7 @@ Windows, more than one version of Ruby (otherwise, what's the point?) and Rubyge
   
 You can install pik via rubygems, or the Windows installer.
 
-*  *install pik using rubygems*
+=== Install pik using rubygems
 
     >gem install pik
     ...
@@ -60,23 +60,23 @@ You can install pik via rubygems, or the Windows installer.
     Successfully installed pik-0.2.6
     1 gem installed
 
-  After the gem is installed, you can use the 'pik_install' script to install the pik executable.  Install pik to a location that's in your path, but someplace other than your ruby\bin dir.  For instance, the directory C:\bin is in my path:
+After the gem is installed, you can use the 'pik_install' script to install the pik executable.  Install pik to a location that's in your path, but someplace other than your ruby\bin dir.  For instance, the directory C:\bin is in my path:
 
-      >path
-      PATH=c:\bin;C:\Program Files\Windows Resource Kits\Tools\;c:\ruby\Ruby-186-p383\bin;
+    >path
+    PATH=c:\bin;C:\Program Files\Windows Resource Kits\Tools\;c:\ruby\Ruby-186-p383\bin;
+   
+So I run:
+
+    >pik_install C:\bin
+    Thank you for using pik.
+   
+    Installing to C:\bin
      
-  So I run:
-
-      >pik_install C:\bin
-      Thank you for using pik.
+    ...
      
-      Installing to C:\bin
-       
-      ...
-       
-      pik is installed
+    pik is installed
 
-*  *install pik using rubygems*
+=== Install pik using the installer
 
   If you want to install to a machine that doesn't have Ruby installed yet, you can download the latest msi file from github[http://github.com/vertiginous/pik/downloads].  Or, just run:
     
