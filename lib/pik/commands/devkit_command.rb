@@ -47,7 +47,7 @@ module Pik
     end
     
     def write_gcc(path)
-      BatchFile.new(path + 'sh.bat') do |b|
+      BatchFile.new(path + 'gcc.bat') do |b|
         b.file_data << 'setlocal'
         b.set(:DEVKIT => config.global[:devkit])
         b.set(:PATH => "%DEVKIT%\\gcc\\3.4.5\\bin;%PATH%")
