@@ -3,7 +3,6 @@ module Pik
   class  Config < Command
     
     it "Adds/modifies configuration options."
-    include BatchFileEditor
     include ConfigFileEditor
     
     attr_accessor :global

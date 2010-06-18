@@ -24,11 +24,11 @@ ENV['SPEC_OPTS']= '-O spec/spec.opts'
 
 lib = FileList["lib/**/*.rb"]
 
-file 'tools/pik/pik_runner.exy', :needs => ['tools/pik/pik_runner'] + lib do
-  Dir.chdir 'tools/pik' do
-    sh('ruby -rexerb/mkexy pik_runner -v')
+file 'tools/pik_runner.exy', :needs => ['tools/pik_runner'] + lib do
+  Dir.chdir 'tools' do
+    sh('ruby -rexerb/mkexy pik_runner pik.bat -v')
   end
-  exy = YAML.load(File.read('tools/pik/pik_runner.exy'))
+  exy = YAML.load(File.read('tools/pik_runner.exy'))
   zlib1 = {
     'file' =>  File.join(RbConfig::CONFIG['bindir'], 'zlib1.dll'),
     'type' => 'extension-library'
@@ -36,28 +36,28 @@ file 'tools/pik/pik_runner.exy', :needs => ['tools/pik/pik_runner'] + lib do
   exy['file']['zlib1.dll']  = zlib1
   exy['resource']  = EXE_VERSION
    
-  File.open('tools/pik/pik_runner.exy', 'w+'){ |f| f.puts YAML.dump(exy) }
+  File.open('tools/pik_runner.exy', 'w+'){ |f| f.puts YAML.dump(exy) }
 end
 
-file 'tools/pik/pik_runner.exe', :needs => ['tools/pik/pik_runner.exy'] do
-  Dir.chdir 'tools/pik' do
+file 'tools/pik_runner.exe', :needs => ['tools/pik_runner.exy'] do
+  Dir.chdir 'tools' do
     sh('ruby -S exerb pik_runner.exy')
     sh('upx -9 pik_runner.exe') unless ENV['QUICK']
   end
 end
 
-task :build, :needs => 'tools/pik/pik_runner.exe'
+task :build, :needs => 'tools/pik_runner.exe'
 
 task :install, :needs => :build do
   sh('ruby bin/pik_install C:\\bin')
 end
 
 task :clobber_exe do
-  rm_rf 'tools/pik/pik_runner.exe'
+  rm_rf 'tools/pik_runner.exe'
 end
 
 task :clobber_exy, :needs => :clobber_exe do
-  rm_rf 'tools/pik/pik_runner.exy'
+  rm_rf 'tools/pik_runner.exy'
 end
 
 task :rebuild, :needs => [:clobber_exy, :build]
@@ -130,6 +130,7 @@ Cucumber::Rake::Task.new(:features) do |t|
   t.cucumber_opts = "features  -f html -o ../pik_cucumber.html -f progress"
 end
 
+desc "generate a guid"
 task :guid do
   puts
   puts UUID.new.generate.upcase
@@ -140,7 +141,7 @@ directory 'pkg'
 @package = 'pik'
 
 msi_file = "pkg/#{@package}-#{Pik::VERSION}.msi"
-file msi_file, :needs => 'tools/pik/pik_runner.exe'
+file msi_file, :needs => 'tools/pik_runner.exe'
 
 task :installer, :needs => [msi_file, :light]
 

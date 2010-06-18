@@ -4,11 +4,11 @@ module Pik
    
     aka :up
     it "updates pik."
-    include BatchFileEditor
+    include ScriptFileEditor
     
     def execute
       sh "#{Which::Gem.exe} install pik"
-      @batch.call("pik_install #{PIK_BATCH.dirname}")
+      @batch.call("pik_install #{PIK_SCRIPT.dirname}")
     end
      
   end

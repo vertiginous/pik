@@ -78,7 +78,7 @@ So I run:
 
 === Install pik using the installer
 
-  If you want to install to a machine that doesn't have Ruby installed yet, you can download the latest msi file from github[http://github.com/vertiginous/pik/downloads].  Or, just run:
+If you want to install to a machine that doesn't have Ruby installed yet, you can download the latest msi file from github[http://github.com/vertiginous/pik/downloads].  Or, just run:
     
     >msiexec /i http://github.com/downloads/vertiginous/pik/pik-n.n.n.msi    
 

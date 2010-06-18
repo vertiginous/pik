@@ -1,7 +1,3 @@
-module Pik
-  VERSION = '0.2.7'
-end
-
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), 'vendor/lib'))
 
@@ -12,24 +8,16 @@ require 'find'
 require 'open-uri'
 require 'rbconfig'
 
-ENV['GEM_HOME'] = nil
-ENV['GEM_PATH'] = nil
-# real_home       = ENV['HOME']
-# ENV['HOME']     = "nul"
-
-# require 'rubygems'
-
-# ENV['HOME']    = real_home
-
 require 'hpricot'
 require 'highline'
 
-require 'pik/pik'
-require 'pik/batch_file'
 require 'pik/core_ext/pathname'
+require 'pik/scripts/script_file'
+require 'pik/scripts/batch_file'
+require 'pik/scripts/ps_file'
 require 'pik/commands'
 require 'pik/commands/config_file_editor'
-require 'pik/commands/batch_file_editor'
+require 'pik/commands/script_file_editor'
 require 'pik/commands/command'
 require 'pik/commands/devkit_command'
 require 'pik/commands/install_command'
@@ -37,7 +25,7 @@ require 'pik/commands/list_command'
 require 'pik/commands/add_command'
 require 'pik/commands/help_command'
 require 'pik/commands/info_command'
-require 'pik/commands/switch_command'
+require 'pik/commands/use_command'
 require 'pik/commands/run_command'
 require 'pik/commands/remove_command'
 require 'pik/commands/config_command'
@@ -54,14 +42,27 @@ require 'pik/version_parser'
 require 'pik/windows_env'
 require 'pik/which'
 
-PIK_HOME  = Pathname.new( ENV['HOME'] || ENV['USERPROFILE'] ) + '.pik'
+module Pik
+  VERSION = '0.2.7'
+  Scripts = {'.cmd' => BatchFile, '.bat' => BatchFile, '.ps1' => PsFile}
 
-if defined? ExerbRuntime
-  PIK_BATCH = Pathname.new(ARGV.shift).ruby
-else
-  pik_exe = Pathname.new($0).expand_path + '..' 
-  PIK_BATCH = pik_exe.dirname + "#{pik_exe.basename}.bat"
+  def self.print_error(error)
+    puts "\nThere was an error."
+    puts " Error: #{error.message}\n\n"
+    puts error.backtrace.map{|m| "  in: #{m}" }
+    puts
+  end
+  
 end
+
 
 Pik::Commands.deprecate(:checkup => "The checkup command is deprecated, using the info command instead.")
 Pik::Commands.deprecate(:cu => "The cu command is deprecated, using the info command instead.")
+
+PIK_HOME    = Pathname.new( ENV['USERPROFILE'] ) + '.pik'
+
+if defined?(ExerbRuntime) || $0 =~ /pik_runner/
+  PIK_SCRIPT  = Pathname.new(ARGV.shift).ruby
+  SCRIPT_LANG = Pik::Scripts[PIK_SCRIPT.extname]
+  SCRIPT_FILE = SCRIPT_LANG.new(PIK_HOME + 'pik')
+end

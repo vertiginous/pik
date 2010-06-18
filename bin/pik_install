@@ -29,13 +29,10 @@ install_dir = ARGV.first
 tools_dir   = File.join(File.dirname(__FILE__), '..', 'tools')
 
 puts "Installing to #{install_dir}\n\n"
-cp File.join(tools_dir, 'pik.bat'), install_dir , 
-  :verbose => true
-
-mkdir_p File.join(install_dir, 'pik'), :verbose => true
-cp File.join(tools_dir, 'pik', 'pik_runner.exe'), 
-  File.join(install_dir, 'pik') , 
-  :verbose => true
+cp File.join(tools_dir, 'pik.bat'),        install_dir, :verbose => true
+cp File.join(tools_dir, 'pik.ps1'),        install_dir, :verbose => true
+cp File.join(tools_dir, 'pik'),            install_dir, :verbose => true
+cp File.join(tools_dir, 'pik_runner.exe'), install_dir, :verbose => true
   
 puts "\npik is installed"
 

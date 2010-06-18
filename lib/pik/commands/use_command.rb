@@ -1,10 +1,10 @@
 module Pik
 
-  class  Switch < Command
+  class  Use < Command
    
-    aka :sw, :use
+    aka :switch, :sw
     it "Switches ruby versions based on patterns."
-    include BatchFileEditor
+    include ScriptFileEditor
     
     attr_accessor :global
     attr_accessor :gem_home

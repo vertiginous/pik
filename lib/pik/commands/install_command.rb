@@ -14,7 +14,7 @@ module Pik
     def initialize(args=ARGV, config_=nil)
       super
       @download_dir = config.global[:download_dir] || PIK_HOME + 'downloads'
-      @install_root = config.global[:install_dir]  || PIK_BATCH.dirname + 'pik'
+      @install_root = config.global[:install_dir]  || PIK_HOME + 'rubies'
       FileUtils.mkdir_p @download_dir.to_s
     end
     
@@ -79,7 +79,7 @@ SEP
       if @hl.agree(question){|answer| answer.default = 'yes' }
         uri  = 'http://downloads.sourceforge.net/sevenzip/7za465.zip'
         file = download(uri)
-        Zip.fake_unzip(file.to_s, /\.exe|\.dll$/, PIK_BATCH.dirname.to_s)
+        Zip.fake_unzip(file.to_s, /\.exe|\.dll$/, PIK_SCRIPT.dirname.to_s)
       else
         raise QuitError
       end
