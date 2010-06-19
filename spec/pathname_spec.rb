@@ -35,4 +35,11 @@ describe Pathname do
     end
   end
 
+  describe 'to_bash' do
+    it 'should change the file and disk separator' do
+      path   = Pathname("z:\\This\\is\\to\\test\\separators")
+      result = '/z/This/is/to/test/separators'
+      path.to_bash.should eql(result)
+    end
+  end
 end

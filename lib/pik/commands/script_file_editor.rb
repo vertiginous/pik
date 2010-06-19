@@ -28,8 +28,7 @@ module Pik
       
       # if the new version has a GEM_HOME, add it's bin dir to the path
       new_path.add(Pathname.new(other[:gem_home]) + 'bin') if other[:gem_home]
-      
-      @script.set('PATH' => new_path.join )
+      @script.set('PATH' => new_path )
     end
     
     def switch_gem_home_to(gem_home)

@@ -47,14 +47,6 @@ module Pik
     def self.names
       @names ||= [cmd_name]
     end
-  
-    # def self.clean_gem_batch
-    #   BatchFile.open(PIK_SCRIPT) do |gem_bat|
-    #     # remove old calls to .pik/pik batches
-    #     gem_bat.remove_line( /call.+pik.+bat/i )
-    #     gem_bat.write  
-    #   end
-    # end
 
     def self.choose_from(patterns, config)
       if patterns.empty?
@@ -85,7 +77,7 @@ module Pik
       @config  = config_ || ConfigFile.new
       @hl      = HighLine.new
       add_sigint_handler
-      options.program_name = "#{PIK_SCRIPT.basename('.*')} #{self.class.names.join('|')}"
+      options.program_name = "pik #{self.class.names.join('|')}"
       command_options
       parse_options
       create(PIK_HOME) unless PIK_HOME.exist?
@@ -162,10 +154,7 @@ module Pik
       home.mkpath
     end
    
-    def delete_old_pik_script #s ( cutoff=(Time.now - (2 * 60 * 60)) )
-      # Dir[(PIK_HOME + "*#{SCRIPT_FILE.extname}").to_ruby.to_s].each do |f|
-      #   File.delete(f) if File.ctime(f) < cutoff
-      # end
+    def delete_old_pik_script
       SCRIPT_FILE.path.delete if SCRIPT_FILE.path.exist?
     end
     

@@ -15,6 +15,7 @@ require 'pik/core_ext/pathname'
 require 'pik/scripts/script_file'
 require 'pik/scripts/batch_file'
 require 'pik/scripts/ps_file'
+require 'pik/scripts/bash_file'
 require 'pik/commands'
 require 'pik/commands/config_file_editor'
 require 'pik/commands/script_file_editor'
@@ -44,7 +45,12 @@ require 'pik/which'
 
 module Pik
   VERSION = '0.2.7'
-  Scripts = {'.cmd' => BatchFile, '.bat' => BatchFile, '.ps1' => PsFile}
+  Scripts = {
+    '.cmd' => BatchFile, 
+    '.bat' => BatchFile, 
+    '.ps1' => PsFile, 
+    '.sh'  => BashFile 
+  }
 
   def self.print_error(error)
     puts "\nThere was an error."
@@ -65,4 +71,6 @@ if defined?(ExerbRuntime) || $0 =~ /pik_runner/
   PIK_SCRIPT  = Pathname.new(ARGV.shift).ruby
   SCRIPT_LANG = Pik::Scripts[PIK_SCRIPT.extname]
   SCRIPT_FILE = SCRIPT_LANG.new(PIK_HOME + 'pik')
+else
+  SCRIPT_FILE = Pik::BatchFile.new(PIK_HOME + 'pik')
 end

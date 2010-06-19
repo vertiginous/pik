@@ -1,26 +1,26 @@
 require 'pathname'
 
-describe Pik::Switch do
+describe Pik::Use do
   
   it "should have a summary" do
-    Pik::Switch.summary.should eql("Switches ruby versions based on patterns.")
+    Pik::Use.summary.should eql("Switches ruby versions based on patterns.")
   end
   
   it "should have an alias of sw" do
-    Pik::Switch.names.should include(:sw)
+    Pik::Use.names.should include(:sw)
   end
   
   it "should have an alias of use" do
-    Pik::Switch.names.should include(:use)
+    Pik::Use.names.should include(:use)
   end
   
   it "should have a global option" #do
-  #   sw = Pik::Switch.new(['-g'])
+  #   sw = Pik::Use.new(['-g'])
   #   sw.global.should be_true
   # end
 
   it "should have a gem_home option" # do
-  #   sw = Pik::Switch.new(['-m', 'test'])
+  #   sw = Pik::Use.new(['-m', 'test'])
   #   sw.gem_home.should eql("test")
   # end
   
@@ -29,9 +29,9 @@ describe Pik::Switch do
       'spec ' => {:path => Pathname('C:/ruby/bin')},
       'real ' => {:path => Pathname.new(::RbConfig::CONFIG['bindir'] )}
     }
-    cmd = Pik::Switch.new(['spec'], conf)
+    cmd = Pik::Use.new(['spec'], conf)
     cmd.execute
-    batch = cmd.instance_variable_get('@batch').file_data
+    batch = cmd.instance_variable_get('@script').file_data
     batch.should include("SET GEM_PATH=")
     batch.should include("SET GEM_HOME=")
     set_path = batch.grep(/set/i).first
@@ -46,9 +46,9 @@ describe Pik::Switch do
         },
       'real ' => {:path => Pathname.new(::RbConfig::CONFIG['bindir'] )}
       }
-    cmd = Pik::Switch.new(['spec'], conf)
+    cmd = Pik::Use.new(['spec'], conf)
     cmd.execute
-    batch = cmd.instance_variable_get('@batch').file_data
+    batch = cmd.instance_variable_get('@script').file_data
     batch.should include("SET GEM_PATH=C:\\Users\\martin_blanke\\.gems")
     batch.should include("SET GEM_HOME=C:\\Users\\martin_blanke\\.gems")
   end

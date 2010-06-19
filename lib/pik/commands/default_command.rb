@@ -13,7 +13,7 @@ module Pik
       sys = WindowsEnv.system
       usr = WindowsEnv.user
       new_path = [sys['PATH'],usr['PATH']].compact.join(';')
-      @script.set('PATH' => new_path )
+      @script.set('PATH' => SearchPath.new(new_path) )
       @script.set('GEM_PATH' => usr['GEM_PATH'] || sys['GEM_PATH'] )
       @script.set('GEM_HOME' => usr['GEM_HOME'] || sys['GEM_HOME'] )
       echo_ruby_version(Which::Ruby.find(new_path)) if verbose
