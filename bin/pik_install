@@ -41,7 +41,7 @@ cp File.join(src_dir, 'pik_runner.exe'), install_dir, :verbose => true
 cp File.join(src_dir, 'pik.bat'),        install_dir, :verbose => true
 cp File.join(src_dir, 'pik.ps1'),        install_dir, :verbose => true
 
-pikrc_file = File.join(pik_home, '.bashrc')
+pikrc_file = File.join(pik_home, '.pikrc')
 pikrc_contents =<<PIKRC
 #!/bin/sh
 pik_path=#{bash_install_dir}
