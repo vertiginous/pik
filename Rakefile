@@ -136,11 +136,15 @@ task :guid do
   puts UUID.new.generate.upcase
 end
 
+require 'nokogiri'
 directory 'pkg'
+@package  = 'pik'
+@wix_file = "lib/installer/#{@package}.wxs"
+@wxs      = Nokogiri::XML(File.open(@wix_file))
+@product  = @wxs.at_css("Product")
 
-@package = 'pik'
+msi_file  = "pkg/#{@package}-#{Pik::VERSION}.msi"
 
-msi_file = "pkg/#{@package}-#{Pik::VERSION}.msi"
 file msi_file, :needs => 'tools/pik_runner.exe'
 
 task :installer, :needs => [msi_file, :light]
@@ -163,6 +167,23 @@ task :light, :needs => :candle do
     # wixobj_files = ["#{@package}.wixobj"].join(' ')
     sh("light -nologo -ext WixUtilExtension -ext WixUIExtension #{wixobj_files} -o ../../#{msi_file}")
   end
+end
+
+def version_string
+  @version.gsub(".","")
+end
+
+task :upgrade do
+  @product["Version"] = Pik::VERSION
+  
+  upgrade_max = @product.at_css("UpgradeVersion[Property = 'OLDAPPFOUND']")
+  upgrade_max["Maximum"] = Pik::VERSION
+
+  upgrade_min = @product.at_css("UpgradeVersion[Property = 'NEWAPPFOUND']")
+  upgrade_min["Minimum"] = Pik::VERSION
+
+  @product["Id"] = UUID.new.generate
+  File.open(@wix_file, 'w+'){|f| f.puts @wxs }
 end
 # vim: syntax=Ruby
 
