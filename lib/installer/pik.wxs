@@ -1,22 +1,21 @@
 <?xml version="1.0"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-   <Product Id="286D5900-5814-012D-9C5D-0022FA95C22F" Name="Pik" Language="1033" Version="0.2.7" Manufacturer="Gordon Thiesfeld" UpgradeCode="38BD2781-5814-012D-9C5E-0022FA95C22F">
+   <Product Id="6c339350-5fcb-012d-9c70-0022fa95c22f" Name="Pik" Language="1033" Version="0.2.8" Manufacturer="Gordon Thiesfeld" UpgradeCode="4729D701-5814-012D-9C5F-0022FA95C22F">
       <Package Description="The Ruby version manager for Windows." Manufacturer="Gordon Thiesfeld" InstallerVersion="301" Compressed="yes"/>
                
       <Media Id="1" Cabinet="pik.cab" EmbedCab="yes" CompressionLevel="high"/>
 
       <Upgrade Id="4729D701-5814-012D-9C5F-0022FA95C22F">
-          <UpgradeVersion Property="OLDAPPFOUND" IncludeMinimum="yes" Minimum="0.0.0.0" IncludeMaximum="no" Maximum="0.2.7"/>
-          <UpgradeVersion Property="NEWAPPFOUND" IncludeMinimum="no" Minimum="0.2.7" OnlyDetect="yes"/>
+          <UpgradeVersion Property="OLDAPPFOUND" IncludeMinimum="yes" Minimum="0.0.0.0" IncludeMaximum="no" Maximum="0.2.8"/>
+          <UpgradeVersion Property="NEWAPPFOUND" IncludeMinimum="no" Minimum="0.2.8" OnlyDetect="yes"/>
       </Upgrade>
       
-      <Property Id='ARPURLINFOABOUT'>http://github.com/vertiginous/pik</Property>
+      <Property Id="ARPURLINFOABOUT">http://github.com/vertiginous/pik</Property>
 
-      <Condition Message="You need to be an administrator to install this product.">
-        Privileged
-      </Condition>
-      <Property Id="ALLUSERS">1</Property>
-      <Property Id="APPENDSYSTEMPATH" Value="1" />
+      <!-- <Property Id="ALREADYINPATH"><![CDATA[ [%PATH] >< [INSTALLDIR] ]]></Property> -->
+      <!-- <Property Id="ALLUSERS">1</Property> -->
+      <Property Id="APPENDSYSTEMPATH" Value="1"/>
+      <Property Id='ROOTDRIVE' Value='$(env.SystemDrive)' />
 
       
       <Directory Id="TARGETDIR" Name="SourceDir">
@@ -26,20 +25,19 @@
             <Directory Id="INSTALLDIR" Name="pik">
             
                <Component Id="pik_bat" Guid="53BAE1B0-5814-012D-9C61-0022FA95C22F">
-                  <File Id="pikBAT" Name="pik.bat" Source="..\..\tools\pik.bat" KeyPath="yes" />
+                  <File Id="pikBAT" Name="pik.bat" Source="..\..\tools\pik.bat" KeyPath="yes"/>
                </Component>
-
-               <Directory Id="PIK_DIR" Name="pik">
-                  <Component Id="pik_runner" Guid="CAFBA430-5815-012D-9C63-0022FA95C22F">
-                     <File Id="pik_runnerEXE" Name="pik_runner.exe" Source="..\..\tools\pik\pik_runner.exe" KeyPath="yes" />
-                  </Component>            
-               </Directory>
-               
-              <Component Id="pik_path" Guid="DACACFC0-581B-012D-9C65-0022FA95C22F">
-                <Condition>APPENDSYSTEMPATH</Condition>
-                <Environment Id="Environment" Name="PATH" Action="set" Part="first" System="yes" Value="[INSTALLDIR]" />
-                <CreateFolder/>
-              </Component>
+               <Component Id="pik_ps1" Guid="E4A9B800-5FCE-012D-9C72-0022FA95C22F">
+                  <File Id="pikPS1" Name="pik.ps1" Source="..\..\tools\pik.bat" KeyPath="yes"/>
+               </Component>
+               <Component Id="pik_runner" Guid="CAFBA430-5815-012D-9C63-0022FA95C22F">
+                  <File Id="pik_runnerEXE" Name="pik_runner.exe" Source="..\..\tools\pik_runner.exe" KeyPath="yes"/>
+               </Component>
+               <Component Id="pik_path" Guid="DACACFC0-581B-012D-9C65-0022FA95C22F">
+                  <Condition>APPENDSYSTEMPATH</Condition>
+                  <Environment Id="Environment" Name="PATH" Action="set" Part="first" System="yes" Value="[INSTALLDIR]"/>
+                  <CreateFolder/>
+               </Component>
               
             </Directory>
          
@@ -50,6 +48,7 @@
 
       <Feature Id="pik" Title="pik" Level="1" Description="The Ruby version manager for Windows." Display="expand" ConfigurableDirectory="INSTALLDIR">
          <ComponentRef Id="pik_bat"/>
+         <ComponentRef Id="pik_ps1"/>
          <ComponentRef Id="pik_runner"/>
          <ComponentRef Id="pik_path"/>
       </Feature>
@@ -59,7 +58,7 @@
       
       <WixVariable Id="WixUIBannerBmp" Value="pik_banner.bmp"/> 
       <WixVariable Id="WixUIDialogBmp" Value="pik_dialog.bmp"/>
-      <WixVariable Id="WixUILicenseRtf" Value="License.rtf" />
+      <WixVariable Id="WixUILicenseRtf" Value="License.rtf"/>
 
       <InstallExecuteSequence>
          <RemoveExistingProducts After="InstallInitialize"/>

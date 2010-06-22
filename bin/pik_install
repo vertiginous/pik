@@ -36,6 +36,20 @@ bash_install_dir = install_dir.tr('\\','/').sub(/^(.):/){|s| "/#{s[0,1].downcase
 mkdir_p install_dir, :verbose => true
 mkdir_p pik_home,    :verbose => true
 
+old_dir = File.join(install_dir, 'pik')
+old_pik = File.join(old_dir, 'pik_runner.exe')
+if File.exist? old_pik
+  puts "cleaning up old files"
+  rm old_pik,    :verbose => true
+end
+
+begin
+  rmdir(old_dir, :verbose=> true) if File.exist? old_dir
+rescue Errno::ENOTEMPTY
+  puts "warning: can't delete #{old_dir}, directory not empty"
+  puts "continuing intall..."
+end
+
 puts "Installing to #{install_dir}\n\n"
 cp File.join(src_dir, 'pik_runner.exe'), install_dir, :verbose => true
 cp File.join(src_dir, 'pik.bat'),        install_dir, :verbose => true
