@@ -8,7 +8,7 @@ module Pik
     
     def execute
       sh "#{Which::Gem.exe} install pik"
-      @batch.call("pik_install #{PIK_SCRIPT.dirname}")
+      @script.call("pik_install #{PIK_SCRIPT.dirname}")
     end
      
   end
