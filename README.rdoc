@@ -42,7 +42,7 @@ Pik is a tool to manage multiple versions of ruby on Windows.  It can be used fr
   
 == REQUIREMENTS:
 
-Windows, more than one version of Ruby (otherwise, what's the point?) and Rubygems
+Windows
 
 *  Build dependencies: exerb-mingw, highline, hpricot, crown, upx, wix
 
@@ -50,7 +50,7 @@ Windows, more than one version of Ruby (otherwise, what's the point?) and Rubyge
 
 == INSTALL:
   
-You can install pik via rubygems, or the Windows installer.
+You can install pik via rubygems, or the Windows installer, or you can update pik with pik
 
 === Install pik using rubygems
 
@@ -78,10 +78,11 @@ So I run:
 
 === Install pik using the installer
 
-If you want to install to a machine that doesn't have Ruby installed yet, you can download the latest msi file from github[http://github.com/vertiginous/pik/downloads].  The MSI installer currently doesn't install the needed files to use Pik from Git Bash.  Or, just run:
+If you want to install to a machine that doesn't have Ruby installed yet, you can download the latest msi file from github[http://github.com/vertiginous/pik/downloads].  Or, just run:
     
     >msiexec /i http://github.com/downloads/vertiginous/pik/pik-n.n.n.msi    
 
+The MSI installer currently doesn't install the needed files to use Pik from Git Bash. Also, there was a bug in the upgrade code in 0.2.7, so you should uninstall the current version before installing the new one.
 
 If you install to a directory that's not in your path, you'll need to add it to the path yourself.  Microsoft has good instructions[http://support.microsoft.com/kb/310519] on that.  After that, you should be ready to run pik. 
 
