@@ -1,5 +1,4 @@
-
-describe Pik::VersionParser do
+  describe Pik::VersionParser do
 
   {
   "091: IronRuby 0.9.1.0 on .NET 2.0.0.0" => OpenStruct.new(
@@ -75,6 +74,14 @@ describe Pik::VersionParser do
      :full_version => "ruby 1.9.1p129 (2009-05-12 revision 23412) [i386-mingw32]"
     ), 
   "191: ruby 1.9.1p243 (2009-07-16 revision 24175) [i386-mingw32]" => OpenStruct.new(
+     :interpreter  => "ruby",
+     :version      => "1.9.1",
+     :date         => "2009-07-16",
+     :platform     => "i386-mingw32",
+     :patchlevel   => "243",
+     :full_version => "ruby 1.9.1p243 (2009-07-16 revision 24175) [i386-mingw32]"
+    ),
+  "191-rc1: ruby 1.9.1p243 (2009-07-16 revision 24175) [i386-mingw32]" => OpenStruct.new(
      :interpreter  => "ruby",
      :version      => "1.9.1",
      :date         => "2009-07-16",

@@ -1,3 +1,32 @@
+=== 0.2.8 / 2010-06-22
+** BACKWARD COMPATIBILITY CHANGE 
+  pik will now install new rubies to %USERPROFILE%\rubies\, instead of %PIK_BIN%\pik\  this was necessary to all for installation into %PROGRAMFILES% dir.  If you'd like to keep the old path, run:
+    >pik config install_dir=C:\path\to\pik
+**
+* fixed bug in 'devkit update' - gcc.bat file was writing to/overwriting sh.bat
+* added support for powershell
+* added support for Git Bash
+* it is now possible to install pik to %PROGRAMFILES%
+
+=== 0.2.7 / 2010-06-15
+* cleaner list output
+* pik switch/use is no longer case sensitive
+    '>pik iron' vice '>pik Iron'
+* created devkit implmentation (pik install devkit)
+* created devkit update command (pik devkit update) creates batch files if you install
+    a newer version of ruby after devkit.
+* added devkit config option, if you already have it installed:
+    >pik config devkit=c:\ruby\devkit
+    >pik devkit update
+* fixed Implementations::IronRuby to catch newer versions, and ignore ipy packages
+* improved pik_install instructions
+* pik_install displays usage message when no argument is given
+* fixed some bugs in info command
+* fixed pik.bat to run in tcc/le
+* removed RubyGems dependency ( the executable was causing weird errors with plugins)
+* fixed Implementations::Ruby to catch RC1 7z files
+* fixed regression in version option
+
 === 0.2.6 / 2009-11-08
 
 * deprecated checkup command in favor of info command

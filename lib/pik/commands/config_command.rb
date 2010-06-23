@@ -3,7 +3,6 @@ module Pik
   class  Config < Command
     
     it "Adds/modifies configuration options."
-    include BatchFileEditor
     include ConfigFileEditor
     
     attr_accessor :global
@@ -27,6 +26,8 @@ module Pik
         config.global[:download_dir] = Pathname(value)
       when 'installs', 'install_dir'
         config.global[:install_dir] = Pathname(value)
+      when 'devkit', 'devkit_dir'
+        config.global[:devkit] = Pathname(value)
       when 'list'
         list
       else

@@ -71,8 +71,10 @@ MSG
       conf = config[version]
       cmd = Which::Ruby.exe(conf[:path]).to_s + " -rubygems -e \"puts Gem.default_path.last\""
       
-      path = conf[:gem_home] ? Pathname( conf[:gem_home] ) : Pathname( `#{cmd}`.chomp ) 
-      path + "cache"
+      path = conf[:gem_home] ? Pathname( conf[:gem_home] ) : Pathname( `#{cmd}`.chomp )
+      cache = path + "cache"
+      puts "cache: #{cache}" if debug
+      cache      
     end
     
     def command_options

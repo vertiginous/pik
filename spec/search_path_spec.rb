@@ -117,16 +117,37 @@ describe SearchPath do
 			@path.replace_or_add('C:/xray/yankee/alpha', path)
 			@path.join.should == new_path
 		end
-
-		describe "find" do
-			it "should return the first path where block is not false" do
-				path = SearchPath.new(ENV['PATH'])
-				dir = path.find{|i| !!Dir[ File.join(i.gsub('\\','/'), '{ruby.exe, ir.exe}') ].first }
-				dir.should_not be_nil
-				dir.should be_a(String)
-			end
-		end
-
 	end
+
+	describe "#find" do
+		it "should return the first path where block is not false" do
+			path = SearchPath.new(ENV['PATH'])
+			dir = path.find{|i| !!Dir[ File.join(i.gsub('\\','/'), '{ruby.exe, ir.exe}') ].first }
+			dir.should_not be_nil
+			dir.should be_a(String)
+		end
+	end
+
+	describe '#to_bash' do
+    it 'should change the file and disk separator' do
+			new_path =  'C:\xray\yankee\zebra;'
+			new_path <<	'C:\Program Files\Common Files\Shoes\0.r1134\..;'
+			new_path <<	'C:\bin;'
+			new_path <<	'C:\WINDOWS\Microsoft.NET\Framework\v2.0.50727;'
+			new_path <<	'C:\Program Files\Common Files\Shoes\0.r395\..;'
+			new_path <<	'C:\windows\system32'
+
+			bash_path =  '/c/xray/yankee/zebra:'
+			bash_path <<	'/c/Program Files/Common Files/Shoes/0.r1134/..:'
+			bash_path <<	'/c/bin:'
+			bash_path <<	'/c/WINDOWS/Microsoft.NET/Framework/v2.0.50727:'
+			bash_path <<	'/c/Program Files/Common Files/Shoes/0.r395/..:'
+			bash_path <<	'/c/windows/system32'
+							
+      path = SearchPath.new(new_path)
+      path.should be_a SearchPath
+      path.to_bash.should eql(bash_path)
+    end
+  end
 
 end

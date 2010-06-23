@@ -4,24 +4,92 @@ require 'fileutils'
 
 include FileUtils
 
+usage =<<USAGE
+Usage:  pik_install path\\to\\install
+
+You should install to a directory that is in your system path,
+or add the directory to your system path.  Do not install to 
+your ruby's bin directory because pik will remove it from the
+path when switching versions.
+
+Example: 
+
+  C:\\>path
+  
+  PATH=C:\\tools;C:\\ruby\\Ruby-186-p383\\bin;C:\\WINDOWS\\system32;...
+    
+  C:\\>pik_install C:\\tools
+
+USAGE
+abort usage unless ARGV.first
+
 puts "Thank you for using pik.\n\n"
 
-install_dir = ARGV.first
-tools_dir   = File.join(File.dirname(__FILE__), '..', 'tools')
+install_dir      = ARGV.first
+     
+pik_home         = File.join(ENV['USERPROFILE'], '.pik')
 
-if File.directory?(install_dir)
-  puts "Installing to #{install_dir}\n\n"
-  cp File.join(tools_dir, 'pik.bat'), install_dir , 
-    :verbose => true
-  mkdir_p File.join(install_dir, 'pik'), :verbose => true
-  cp File.join(tools_dir, 'pik', 'pik_runner.exe'), 
-    File.join(install_dir, 'pik') ,
-    :verbose => true
-    
-  old_exe = File.join(install_dir, 'pik', 'pik.exe')
-  rm(old_exe, :verbose => true) if File.exist?(old_exe)
+src_dir          = File.join(File.dirname(File.dirname(__FILE__)), 'tools')
 
-  puts "\npik is installed"
-else
-  puts "#{install_dir} is not a directory.  pik was not installed."
+bash_install_dir = install_dir.tr('\\','/').sub(/^(.):/){|s| "/#{s[0,1].downcase}"}
+
+mkdir_p install_dir, :verbose => true
+mkdir_p pik_home,    :verbose => true
+
+old_dir = File.join(install_dir, 'pik')
+old_pik = File.join(old_dir, 'pik_runner.exe')
+if File.exist? old_pik
+  puts "cleaning up old files"
+  rm old_pik,    :verbose => true
 end
+
+begin
+  rmdir(old_dir, :verbose=> true) if File.exist? old_dir
+rescue Errno::ENOTEMPTY
+  puts "warning: can't delete #{old_dir}, directory not empty"
+  puts "continuing intall..."
+end
+
+puts "Installing to #{install_dir}\n\n"
+cp File.join(src_dir, 'pik_runner.exe'), install_dir, :verbose => true
+cp File.join(src_dir, 'pik.bat'),        install_dir, :verbose => true
+cp File.join(src_dir, 'pik.ps1'),        install_dir, :verbose => true
+
+pikrc_file = File.join(pik_home, '.pikrc')
+pikrc_contents =<<PIKRC
+#!/bin/sh
+pik_path=#{bash_install_dir}
+
+function pik  {
+  $pik_path/pik_runner.exe pik.sh $@
+  [[ -s $USERPROFILE/.pik/pik.sh ]] && source $USERPROFILE/.pik/pik.sh
+} 
+PIKRC
+puts
+puts "creating #{pikrc_file}"
+File.open(pikrc_file, 'w+'){|f| f.puts pikrc_contents }
+
+puts "\npik is installed"
+
+unless ENV['PATH'].downcase.include?( install_dir.downcase.gsub('/',"\\") )
+  
+  system_path_msg =<<SYSTEM_PATH_MSG
+  
+The directory you installed to is not in the sytem path.
+#{install_dir}
+
+You will need to add it.
+
+SYSTEM_PATH_MSG
+  
+  puts system_path_msg
+  
+end
+
+puts
+puts bash_msg =<<BASH_MSG
+if you want to use pik with git bash, add the following line to your ~/.bashrc:
+
+  [[ -s $USERPROFILE/.pik/.pikrc ]] && source $USERPROFILE/.pik/.pikrc
+
+BASH_MSG

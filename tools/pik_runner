@@ -1,13 +1,11 @@
 #!/usr/bin/env ruby
 
-lib = File.join(File.dirname(__FILE__), '..','..', 'lib')
+lib = File.join(File.dirname(__FILE__), '..', 'lib')
 require File.join(lib, 'pik')
 
 include Pik
 
 args = ARGV
-
-Command.clean_gem_batch
 
 begin
   config  = ConfigFile.new
@@ -21,7 +19,7 @@ begin
     c
   elsif (choice = Command.choose_from(args_minus_opts, config))
     args = [choice] + args
-    Switch
+    Use
   end
   
   if config.empty? && command != Pik::Add

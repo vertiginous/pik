@@ -1,8 +1,8 @@
 
-describe BatchFile do
+describe Pik::BatchFile do
 
   before do
-    @bf = BatchFile.new('pik.bat')
+    @bf = Pik::BatchFile.new('pik.bat')
   end
 
 	it "should have a header" do

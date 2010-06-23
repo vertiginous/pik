@@ -9,7 +9,7 @@ module Pik
   end
   
   class  Command
-    
+
     attr_reader :config
     
     attr_reader :options
@@ -47,20 +47,12 @@ module Pik
     def self.names
       @names ||= [cmd_name]
     end
-  
-    def self.clean_gem_batch
-      BatchFile.open(PIK_BATCH) do |gem_bat|
-        # remove old calls to .pik/pik batches
-        gem_bat.remove_line( /call.+pik.+bat/i )
-        gem_bat.write  
-      end
-    end
 
     def self.choose_from(patterns, config)
       if patterns.empty?
         possibles = config.keys  
       else
-        possibles = patterns.map{|p| config.keys.grep(Regexp.new(Regexp.escape(p.to_s))) }
+        possibles = patterns.map{|p| config.keys.grep(Regexp.new(Regexp.escape(p.to_s),Regexp::IGNORECASE) ) }
         possibles = possibles.inject{|m,v| m & v }.flatten.uniq
       end
       case possibles.size
@@ -85,14 +77,14 @@ module Pik
       @config       = config_ || ConfigFile.new
       @hl           = HighLine.new
       @download_dir = config.global[:download_dir] || PIK_HOME + 'downloads'
-      @install_root = config.global[:install_dir]  || PIK_BATCH.dirname + 'pik'
+      @install_root = config.global[:install_dir]  || PIK_HOME + 'rubies'
       @gemset_root  = @install_root + 'gems'
       add_sigint_handler
-      options.program_name = "#{PIK_BATCH.basename('.*')} #{self.class.names.join('|')}"
+      options.program_name = "pik #{self.class.names.join('|')}"
       command_options
       parse_options
       create(PIK_HOME) unless PIK_HOME.exist?
-      delete_old_pik_batches
+      delete_old_pik_script
     end
 
     def close
@@ -175,10 +167,8 @@ module Pik
       home.mkpath
     end
    
-    def delete_old_pik_batches( cutoff=(Time.now - (2 * 60 * 60)) )
-      Dir[(PIK_HOME + "*.bat").to_ruby.to_s].each do |f|
-        File.delete(f) if File.ctime(f) < cutoff 
-      end
+    def delete_old_pik_script
+      SCRIPT_FILE.path.delete if SCRIPT_FILE.path.exist?
     end
     
     def sh(cmd)

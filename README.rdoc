@@ -12,7 +12,7 @@ Gordon Thiesfeld
 
 == DESCRIPTION:
 
-Pik is a tool to manage multiple versions of ruby on Windows.  
+Pik is a tool to manage multiple versions of ruby on Windows.  It can be used from the Windows command line (cmd.exe), Windows PowerShell, or Git Bash.  I have yet to test on cygwin.  
 
     >pik help commands
     
@@ -42,34 +42,67 @@ Pik is a tool to manage multiple versions of ruby on Windows.
   
 == REQUIREMENTS:
 
-Windows, more than one version of Ruby (otherwise, what's the point?) and Rubygems
+Windows
+
+*  Build dependencies: exerb-mingw, highline, hpricot, crown, upx, wix
+
+*  Development dependencies: rake, cucumber, rspec, hoe, hoe-git, rack, rack-cache
 
 == INSTALL:
-
-*  If you're upgrading from a version <= 0.1.1, you'll want to delete the pik.bat file
-   from all of your ruby versions. Gem uninstall should do the trick.
-    
-*  Install pik to a location that's in your path, but someplace other than your ruby\bin dir
-   If you're upgrading from a more recent version, pik_install will overwrite the older files as needed.
-   
-    >path
-      PATH=C:\tools\;C:\ruby\186-p368-mingw32\bin;C:\WINDOWS\system32;C:\WINDOWS
-
-    >pik_install C:\tools
   
-*  If this is a first-time install, add all the versions of ruby that you want to use with pik
+You can install pik via rubygems, or the Windows installer, or you can update pik with pik
 
-    >pik add
-    Adding:  186: ruby 1.8.6 (2009-03-31 patchlevel 368) [i386-mingw32]
-     Located at:  c:/ruby/186-p368-mingw32/bin
+=== Install pik using rubygems
+
+    >gem install pik
+    ...
+   
+    Successfully installed pik-0.2.6
+    1 gem installed
+
+After the gem is installed, you can use the 'pik_install' script to install the pik executable.  Install pik to a location that's in your path, but someplace other than your ruby\bin dir.  For instance, the directory C:\bin is in my path:
+
+    >path
+    PATH=c:\bin;C:\Program Files\Windows Resource Kits\Tools\;c:\ruby\Ruby-186-p383\bin;
+   
+So I run:
+
+    >pik_install C:\bin
+    Thank you for using pik.
+   
+    Installing to C:\bin
+     
+    ...
+     
+    pik is installed
+
+=== Install pik using the installer
+
+If you want to install to a machine that doesn't have Ruby installed yet, you can download the latest msi file from github[http://github.com/vertiginous/pik/downloads].  Or, just run:
     
+    >msiexec /i http://github.com/downloads/vertiginous/pik/pik-n.n.n.msi    
+
+The MSI installer currently doesn't install the needed files to use Pik from Git Bash. Also, there was a bug in the upgrade code in 0.2.7, so you should uninstall the current version before installing the new one.
+
+If you install to a directory that's not in your path, you'll need to add it to the path yourself.  Microsoft has good instructions[http://support.microsoft.com/kb/310519] on that.  After that, you should be ready to run pik. 
+
+*  If this is a first-time install, look at pik add, and pik install to set up your environment.
+ 
     >pik add C:\ruby\IronRuby-091\bin
     Adding:  091: IronRuby 0.9.1.0 on .NET 2.0.0.0
      Located at:  C:/ruby/IronRuby-091/bin
     
-    >pik add C:\ruby\jruby-1.4.0RC1\bin
-    Adding:  140: jruby 1.4.0RC1 (ruby 1.8.7 patchlevel 174) (2009-09-30 80c263b) (Java HotSpot(TM) Client VM 1.6.0_14) [x86-java]
-     Located at:  C:/ruby/jruby-1.4.0RC1/bin
+    >pik install ruby
+    ** Downloading:  http://rubyforge.org/frs/download.php/66874/ruby-1.9.1-p243-i386-mingw32-rc1.7z
+       to:  c:\installs\ruby-1.9.1-p243-i386-mingw32-rc1.7z
+    
+    ...
+
+*  If you're upgrading from version 0.2.6, you should be able to upgrade with 'pik update'
+
+*  If you're upgrading from a version <= 0.1.1, you'll want to delete the pik.bat file
+   from all of your ruby versions. Gem uninstall should do the trick.
+
      
 Note:
   
@@ -207,7 +240,7 @@ pik run # there
 
 (The MIT License)
 
-Copyright (c) 2009 Gordon Thiesfeld
+Copyright (c) 2010 Gordon Thiesfeld
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

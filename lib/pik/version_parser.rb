@@ -31,17 +31,20 @@ module Pik
     end
     
     def platform
-      md = @version.match(/\[(.+)\]|(\.NET.+)/) 
-      md.to_a.compact.last if md
+      match(/\[(.+)\]|(\.NET.+)/) 
     end
     
     def patchlevel
-      md = @version.match(/patchlevel (\d+)|\dp(\d+)/) 
-      md.to_a.compact.last if md
+      match(/patchlevel (\d+)|\dp(\d+)/) 
     end
     
     def full_version
-      @version[5..-1]
+      match(/.+: (.+)/)
+    end
+    
+    def match(re)
+      md = @version.match(re) 
+      md.captures.compact[-1] if md
     end
     
   end

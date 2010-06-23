@@ -1,14 +1,14 @@
 
 module Pik
 
-  class  Gems < Command
+  class  Gemset < Command
   
     it "Manages gem sets"
-    include BatchFileEditor
+    include ScriptFileEditor
     
     def execute
       case @args.first
-      when 'select','clear','dump','load','name','list','dir','delete'
+      when 'create','select','clear','dump','load','name','list','dir','delete'
         send(@args.shift)
       else
         select
@@ -17,6 +17,11 @@ module Pik
     
     # gems subcommands  
   
+    def create
+      gem_home = gemset_gem_home(find_config_from_path, @args.shift)
+      FileUtils.mkdir = gem_home
+    end
+
     def select
       gem_home = gemset_gem_home(find_config_from_path, @args.shift)
       switch_gem_home_to(gem_home)

@@ -57,6 +57,10 @@ class SearchPath
 	end
 	alias :to_s :join
 
+  def to_bash
+    @path.map{|i| Pathname.new(i).to_bash }.join(':')
+  end
+
   def regex(string)
     Regexp.new(Regexp.escape(string.to_s), true)
   end

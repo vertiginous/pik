@@ -9,18 +9,22 @@ module Pik
     aka :in
     it "Downloads and installs different ruby versions."
     
+    attr_reader :target
+    
     def initialize(args=ARGV, config_=nil)
       super
+      @download_dir = config.global[:download_dir] || PIK_HOME + 'downloads'
+      @install_root = config.global[:install_dir]  || PIK_HOME + 'rubies'
       FileUtils.mkdir_p @download_dir.to_s
     end
     
     def execute
       implementation  = Implementations[@args.shift]
-      target, package = implementation.find(*@args)
-      target          = @install_root + "#{implementation.name}-#{target.gsub('.','')}"
+      @target, package = implementation.find(*@args)
+      @target          = @install_root + "#{implementation.name}-#{@target.gsub('.','')}"
       file            = download(package)
-      extract(target, file)
-      add( Pathname(target) + 'bin' )
+      extract(@target, file)
+      implementation.after_install(self)
     end
     
     def command_options
@@ -61,13 +65,6 @@ SEP
       end  
     end
     
-    def add(path)
-      puts
-      p = Pik::Add.new([path], config)
-      p.execute
-      p.close
-    end
-    
     def seven_zip(target, file)
       file = Pathname(file)
       seven_zip = Which::SevenZip.exe.basename 
@@ -82,7 +79,7 @@ SEP
       if @hl.agree(question){|answer| answer.default = 'yes' }
         uri  = 'http://downloads.sourceforge.net/sevenzip/7za465.zip'
         file = download(uri)
-        Zip.fake_unzip(file.to_s, /\.exe|\.dll$/, PIK_BATCH.dirname.to_s)
+        Zip.fake_unzip(file.to_s, /\.exe|\.dll$/, PIK_SCRIPT.dirname.to_s)
       else
         raise QuitError
       end

@@ -7,15 +7,15 @@ module Pik
   
     attr_accessor :verbose
   
-    include BatchFileEditor
+    include ScriptFileEditor
   
     def execute
       sys = WindowsEnv.system
       usr = WindowsEnv.user
       new_path = [sys['PATH'],usr['PATH']].compact.join(';')
-      @batch.set('PATH' => new_path )
-      @batch.set('GEM_PATH' => usr['GEM_PATH'] || sys['GEM_PATH'] )
-      @batch.set('GEM_HOME' => usr['GEM_HOME'] || sys['GEM_HOME'] )
+      @script.set('PATH' => SearchPath.new(new_path) )
+      @script.set('GEM_PATH' => usr['GEM_PATH'] || sys['GEM_PATH'] )
+      @script.set('GEM_HOME' => usr['GEM_HOME'] || sys['GEM_HOME'] )
       echo_ruby_version(Which::Ruby.find(new_path)) if verbose
     end
     

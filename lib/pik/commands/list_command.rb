@@ -20,18 +20,37 @@ module Pik
     end
     
     def list
-      current_path = Which::Ruby.find
+      
       config.sort.each do |name, conf|
-        name += ' *' if current_path == conf[:path]
-        puts name
-        if verbose
-          conf.each{|k,v| puts "     %s: %s" % [k, v]} 
-          puts
-        end
+        puts layout(name, conf)
+        puts conf.map{|k,v| "       %s: %s" % [k, v]} + ["\n"] if verbose
+        
       end
     end
     
     private
+    
+    def layout(name, conf)
+      name = current?(conf) ? "* #{name}" : "  #{name}"
+      if name.length > columns
+        remainder = -(name.length - columns + 5)
+        "#{name[0,columns-5]}...#{"         ...%s" % name[remainder..-1] if verbose}"
+      else
+        name
+      end
+    end
+    
+    def current?(conf)
+      current_path == conf[:path]
+    end
+
+    def current_path 
+      @current_path ||= Which::Ruby.find
+    end
+    
+    def columns
+      @hl.output_cols
+    end
     
     def command_options
       super

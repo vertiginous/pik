@@ -2,42 +2,62 @@
 
 require 'rubygems'
 require 'rbconfig'
-require 'win32/process'
+require 'uuid'
+require 'hoe'
+
+$LOAD_PATH.unshift('lib')
+require 'pik'
+
+
+EXE_VERSION = {
+  'version' => {
+    'file_version_number' => "#{Pik::VERSION}.0",
+    'comments' => 'The Ruby version manager for Windows',
+    'product_name' => 'Pik',
+    'file_description' => 'Pik Runner',
+    'original_filename' => 'pik_runner.exe'
+  }
+}
+
 
 ENV['SPEC_OPTS']= '-O spec/spec.opts'
 
-file 'tools/pik/pik_runner.exy' do
-  Dir.chdir 'tools/pik' do
-    sh('ruby -rexerb/mkexy pik_runner -v')
+lib = FileList["lib/**/*.rb"]
+
+file 'tools/pik_runner.exy', :needs => ['tools/pik_runner'] + lib do
+  Dir.chdir 'tools' do
+    sh('ruby -rexerb/mkexy pik_runner pik.bat -v')
   end
-  exy = YAML.load(File.read('tools/pik/pik_runner.exy'))
+  exy = YAML.load(File.read('tools/pik_runner.exy'))
   zlib1 = {
     'file' =>  File.join(RbConfig::CONFIG['bindir'], 'zlib1.dll'),
     'type' => 'extension-library'
   }
   exy['file']['zlib1.dll']  = zlib1
-  File.open('tools/pik/pik_runner.exy', 'w+'){ |f| f.puts YAML.dump(exy) }
+  exy['resource']  = EXE_VERSION
+   
+  File.open('tools/pik_runner.exy', 'w+'){ |f| f.puts YAML.dump(exy) }
 end
 
-file 'tools/pik/pik.exe', :needs => ['tools/pik/pik_runner.exy'] do
-  Dir.chdir 'tools/pik' do
+file 'tools/pik_runner.exe', :needs => ['tools/pik_runner.exy'] do
+  Dir.chdir 'tools' do
     sh('ruby -S exerb pik_runner.exy')
     sh('upx -9 pik_runner.exe') unless ENV['QUICK']
   end
 end
 
-task :build, :needs => 'tools/pik/pik.exe'
+task :build, :needs => 'tools/pik_runner.exe'
 
 task :install, :needs => :build do
   sh('ruby bin/pik_install C:\\bin')
 end
 
 task :clobber_exe do
-  rm_rf 'tools/pik/pik.exe'
+  rm_rf 'tools/pik_runner.exe'
 end
 
 task :clobber_exy, :needs => :clobber_exe do
-  rm_rf 'tools/pik/pik_runner.exy'
+  rm_rf 'tools/pik_runner.exy'
 end
 
 task :rebuild, :needs => [:clobber_exy, :build]
@@ -45,10 +65,6 @@ task :reinstall, :needs => [:clobber_exy, :install]
 
 task :package => :rebuild
 
-require 'hoe'
-
-$LOAD_PATH.unshift('lib')
-require 'pik'
 
 Hoe.plugin :git
 
@@ -57,7 +73,6 @@ Hoe.spec('pik') do
   developer('Gordon Thiesfeld', 'gthiesfeld@gmail.com')
   
   self.need_tar = false
-  self.extra_deps = {'highline' =>  '>= 0.0.0'}
   self.readme_file = 'README.rdoc'
   self.post_install_message =<<-PIM
 
@@ -98,61 +113,76 @@ end
 require 'cucumber'
 require 'cucumber/rake/task'
 
-namespace :cucumber do
+@dir = Pathname(File.dirname(__FILE__)) 
+@test_versions = {
+  'JRuby'     => ['1.5.1'],
+  'IronRuby'  => ['0.9.2'],
+  'Ruby'      => [
+    '1.9.1-p378-1',
+    '1.8.6-p398-2',
+    '1.8.7-p249-1'
+  ]
+}
 
-  directory "C:/temp"
-  
-  desc "sets up C:\\temp for pik's cuke tests"
-  task :setup => "C:/temp" do
-    ENV['HOME'] = "C:\\temp"
-    sh "pik config installs=\"C:\\temp\\more spaces in path\\ruby\""
-    sh "pik install jruby"
-    sh "pik install ironruby"
-    sh "pik install ruby"
-    sh "pik install ruby 1.8"
-    sh "pik gem in rake"
-  end
-  
-  namespace :phonyweb do
-    
-    task :start => 'hosts:add' do
-      @web = Process.create(:app_name => "ruby C:\\scripts\\repo\\pik\\phony_web\\server.rb")
-    end
-    
-    task :kill => 'hosts:remove' do
-      Process.kill(3, @web.process_id)
-    end
-  end
-  
-  # this is used with the phony web server for 
-  # testing the install and list command
-  # without sucking up bandwidth.  It also makes the
-  # tests run faster
-  namespace :hosts do
-   
-    HOSTS = File.join(ENV['SystemRoot'], 'System32','drivers','etc','hosts')
-    desc "adds fake hosts to system's hosts file"
-    task :add do
-      File.open(HOSTS,'a+'){|f|
-       f.puts "127.0.0.1   www.jruby.org rubyforge.org www.rubyforge.org jruby.kenai.com dist.codehaus.org"
-      }
-    end
-    
-    desc "remove fake hosts from system's hosts file"
-    task :remove do
-      new_hosts = File.open(HOSTS, 'r').readlines.reject{ |i| i =~ /^127\.0\.0\.1   www\.jruby\.org/ }
-      File.open(HOSTS, 'w+'){|f| f.puts new_hosts }
-    end
-   
-    task :rm => :remove
-   
-  end
-end
 
 Cucumber::Rake::Task.new(:features) do |t|
   t.cucumber_opts = "features  -f html -o ../pik_cucumber.html -f progress"
 end
 
-task :cuke => ['cucumber:phonyweb:start', :features, 'cucumber:phonyweb:kill']
+desc "generate a guid"
+task :guid do
+  puts
+  puts UUID.new.generate.upcase
+end
 
+require 'nokogiri'
+directory 'pkg'
+@package  = 'pik'
+@wix_file = "lib/installer/#{@package}.wxs"
+@wxs      = Nokogiri::XML(File.open(@wix_file))
+@product  = @wxs.at_css("Product")
+
+msi_file  = "pkg/#{@package}-#{Pik::VERSION}.msi"
+
+file msi_file, :needs => 'tools/pik_runner.exe'
+
+task :installer, :needs => [msi_file, :light]
+
+task :build_env do
+ ENV['PATH'] = "#{ENV['ProgramFiles(x86)']}\\Windows Installer XML v3.5\\bin;#{ENV['PATH']}"
+end
+
+task :candle, :needs => [:build_env] do
+  chdir 'lib/installer/' do
+    wxs_files = ["MyInstallDirDialog.wxs",'WixUI_MyInstallDir.wxs' , "#{@package}.wxs"].join(' ')
+    # wxs_files = ["#{@package}.wxs"].join(' ')
+    sh("candle -nologo #{wxs_files}")
+  end
+end
+
+task :light, :needs => :candle do
+  chdir 'lib/installer/' do
+    wixobj_files = ["MyInstallDirDialog.wixobj", 'WixUI_MyInstallDir.wixobj', "#{@package}.wixobj"].join(' ')
+    # wixobj_files = ["#{@package}.wixobj"].join(' ')
+    sh("light -nologo -ext WixUtilExtension -ext WixUIExtension #{wixobj_files} -o ../../#{msi_file}")
+  end
+end
+
+def version_string
+  @version.gsub(".","")
+end
+
+task :upgrade do
+  @product["Version"] = Pik::VERSION
+  
+  upgrade_max = @product.at_css("UpgradeVersion[Property = 'OLDAPPFOUND']")
+  upgrade_max["Maximum"] = Pik::VERSION
+
+  upgrade_min = @product.at_css("UpgradeVersion[Property = 'NEWAPPFOUND']")
+  upgrade_min["Minimum"] = Pik::VERSION
+
+  @product["Id"] = UUID.new.generate
+  File.open(@wix_file, 'w+'){|f| f.puts @wxs }
+end
 # vim: syntax=Ruby
+
