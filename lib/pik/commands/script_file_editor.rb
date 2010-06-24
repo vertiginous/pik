@@ -4,7 +4,7 @@ module Pik
     
     attr_reader :script
         
-    def initialize(args=ARGV,config=nil)
+    def initialize(args=ARGV,config=nil,log=Log.new)
       super
       @script = SCRIPT_FILE
       editors << @script

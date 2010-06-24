@@ -4,6 +4,7 @@ lib = File.join(File.dirname(__FILE__), '..', 'lib')
 require File.join(lib, 'pik')
 
 include Pik
+log = Log.new
 
 args = ARGV
 
@@ -29,12 +30,12 @@ begin
   end
   
   raise "The command '#{args.join(' ')}' is unknown." unless command
-  cmd = command.new(args, config)
+  cmd = command.new(args, config, log)
   cmd.execute
 rescue QuitError
   puts "\nQuitting..."
 rescue => e
-  Pik.print_error(e)
+  log.error(e.message, e.backtrace)
 ensure
   cmd.close if cmd
 end 
