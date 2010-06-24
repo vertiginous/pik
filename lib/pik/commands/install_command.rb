@@ -13,15 +13,14 @@ module Pik
     
     def initialize(args=ARGV, config_=nil)
       super
-      @download_dir = config.global[:download_dir] || PIK_HOME + 'downloads'
-      @install_root = config.global[:install_dir]  || PIK_HOME + 'rubies'
-      FileUtils.mkdir_p @download_dir.to_s
+      FileUtils.mkdir_p download_dir.to_s
     end
     
     def execute
+      #TODO: Should check for arguments.
       implementation  = Implementations[@args.shift]
       @target, package = implementation.find(*@args)
-      @target          = @install_root + "#{implementation.name}-#{@target.gsub('.','')}"
+      @target          = install_root + "#{implementation.name}-#{@target.gsub('.','')}"
       file            = download(package)
       extract(@target, file)
       implementation.after_install(self)
@@ -47,8 +46,8 @@ SEP
       options.separator sep  
     end
     
-    def download(package, download_dir=@download_dir)   
-      target = download_dir + package. split('/').last
+    def download(package, download_dir_=download_dir)   
+      target = download_dir_ + package. split('/').last
       puts "** Downloading:  #{package} \n   to:  #{target.windows}\n\n"
       URI.download(package, target.to_s, {:progress => true})
       puts

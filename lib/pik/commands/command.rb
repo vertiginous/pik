@@ -71,14 +71,13 @@ module Pik
       @hl ||= HighLine.new
     end
   
-    def initialize(args=ARGV, config_=nil)
+    def initialize(args=ARGV, config_=nil, log=Log.new)
       @args         = args
       @options      = OptionParser.new
       @config       = config_ || ConfigFile.new
+      @log          = log
       @hl           = HighLine.new
-      @download_dir = config.global[:download_dir] || PIK_HOME + 'downloads'
-      @install_root = config.global[:install_dir]  || PIK_HOME + 'rubies'
-      @gemset_root  = @install_root + 'gems'
+
       add_sigint_handler
       options.program_name = "pik #{self.class.names.join('|')}"
       command_options
@@ -133,7 +132,11 @@ module Pik
         Pathname(v[:path])== Pathname(path)
       }.first rescue nil
     end
-    
+
+    def current_ruby_short_version
+      VersionParser.parse(find_config_from_path).short_version
+    end
+  
     def current_gem_bin_path
       cfg = config[find_config_from_path]
       p = cfg[:gem_home] || default_gem_home 
@@ -148,20 +151,28 @@ module Pik
       gem_path.last
     end
     
+    def download_dir 
+      config.global[:download_dir] || PIK_HOME + 'downloads'
+    end
+
+    def install_root
+      config.global[:install_dir]  || PIK_HOME + 'rubies'
+    end
+
     def gem_path
       `\"#{Which::Gem.exe}\" env gempath`.chomp.split(';').map{|p| Pathname(p).to_windows }
+    end
+
+    def gemset_root  
+      PIK_HOME + 'gems'
     end
     
     def gemset_gem_home(version, gemset)
       ver = VersionParser.parse(version)
-      gemset_home(version) + "#{ver.version}%#{gemset}"
+      gs = "@#{gemset}" if gemset
+      gemset_root + "#{ver.short_version}#{gs}"
     end
-    
-    def gemset_home(version)
-      ver = VersionParser.parse(version)
-      @gemset_root + ver.interpreter 
-    end
-        
+            
     def create(home)
       puts "creating #{home}"
       home.mkpath

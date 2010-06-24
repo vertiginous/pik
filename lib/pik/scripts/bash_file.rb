@@ -20,14 +20,15 @@ module Pik
     end
 
     def set(items)
-      items.each{|k,v| 
-         v = v.to_bash if v.respond_to? 'to_bash'
-        @file_data << "export #{k}='#{v}'" }
+      items.each do |k,v| 
+        v = v.to_bash if v.respond_to? 'to_bash'
+        @file_data << "export #{k}='#{v}'" 
+      end
       self
     end
 
     def unset(items)
-      items.each{|k| @file_data << "export #{k}=" }
+      items.each{|k| @file_data << "unset #{k}=" }
       self
     end
 

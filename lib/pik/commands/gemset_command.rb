@@ -7,11 +7,15 @@ module Pik
     include ScriptFileEditor
     
     def execute
-      case @args.first
-      when 'create','select','clear','dump','load','name','list','dir','delete'
-        send(@args.shift)
+      actions = ['create','select','clear','dump','export','load','import','name','list','dir','delete']
+      action  = @args.shift
+      case action
+      when *actions
+        send(action)
       else
-        select
+        puts
+        puts "error: Unrecognized gemset action '#{action}'.\n\n"
+        puts "Valid gemset actions are: {#{actions.join(", ")}}\n\n"
       end
     end
     
@@ -19,7 +23,8 @@ module Pik
   
     def create
       gem_home = gemset_gem_home(find_config_from_path, @args.shift)
-      FileUtils.mkdir = gem_home
+      FileUtils.mkdir_p(gem_home.to_ruby)
+      puts "** Gemset #{gem_home} created"
     end
 
     def select
@@ -34,10 +39,11 @@ module Pik
     end
       
     def dump
-      gem_set_file = @args.first || "#{gem_set_name}.gems"
-      File.open(gem_set_file, 'w+'){ |f| f.puts gem_set_dump }
+      gemset_file = @args.first || "#{gem_set_name}.gems"
+      File.open(gemset_file, 'w+'){ |f| f.puts gem_set_dump }
     end
-    
+    alias export dump
+
     def load
       File.read(@args.first).split("\n").each do |gem_set_item|
         next if gem_set_item.match(/^\s*#/)
@@ -49,15 +55,19 @@ module Pik
         end
       end
     end
+    alias import load
     
     def name
       puts gem_set_name
     end
     
     def list
-      x = gemset_home(find_config_from_path) + '*'
+      short_version = current_ruby_short_version
+      puts
+      puts "** gemsets : for #{short_version} (found in #{gemset_root.to_windows})"
+      x = gemset_root + "#{short_version}*"
       Pathname.glob(x.to_ruby).each do |gemset|
-        puts gemset.basename.to_s.split('%').last if gemset.directory?
+        puts gemset.basename.to_s.split('@').last if gemset.directory?
       end
     end
     
