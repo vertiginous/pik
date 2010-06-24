@@ -35,18 +35,28 @@ module Pik
     end
     
     def patchlevel
-      match(/patchlevel (\d+)|\dp(\d+)/) 
+      match(/patchlevel (\d+)|\dp(\d+)/) if interpreter == 'ruby'
     end
     
     def full_version
       match(/.+: (.+)/)
     end
+
+    def short_version
+      pl = "-p#{patchlevel}" if patchlevel
+      diff = "-#{differentiator}" if differentiator
+      "#{interpreter.downcase}-#{version}#{pl}#{diff}"
+    end
     
+    def differentiator
+      match(/.+\-(.+): .+/)
+    end
+
     def match(re)
       md = @version.match(re) 
       md.captures.compact[-1] if md
     end
-    
+
   end
   
 end
