@@ -5,7 +5,9 @@ module Pik
     attr_accessor :file_data, :file_name, :ruby_dir
 
     def initialize(file) #, mode=:new)
-      @file = Pathname.new(file.to_s + extname) 
+      file = file.to_s
+      file += extname unless file =~ /#{extname}$/
+      @file = Pathname.new(file)
       @file_data = [header]
       yield self if block_given?
     end
