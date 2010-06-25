@@ -23,16 +23,16 @@ begin
     Use
   end
   
-  if config.empty? && command != Pik::Add
-    add = Pik::Add.new([], config)
-    add.execute
-    add.close
-  end
+  # if config.empty? && command != Pik::Add
+  #   add = Pik::Add.new([], config)
+  #   add.execute
+  #   add.close
+  # end
   
   raise "The command '#{args.join(' ')}' is unknown." unless command
   cmd = command.new(args, config, log)
   cmd.execute
-rescue QuitError
+rescue Pik::QuitError
   puts "\nQuitting..."
 rescue => e
   log.error(e.message, e.backtrace)

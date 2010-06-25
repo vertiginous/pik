@@ -23,7 +23,7 @@ module Pik
           version = get_version(path)
           version = modify_version(version) if config[version]
           path    = Pathname(path.expand_path.to_ruby)
-          puts "** Adding:  #{version}\n Located at:  #{path}\n"
+          @log.info "Adding:  #{version}\n Located at:  #{path}\n"
           @config[version] = {}
           @config[version][:path] = path
         end

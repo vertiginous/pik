@@ -11,17 +11,18 @@ module Pik
     
     attr_reader :target
     
-    def initialize(args=ARGV, config_=nil)
+    def initialize(args=ARGV, config_=nil, log=Log.new)
       super
       FileUtils.mkdir_p download_dir.to_s
     end
     
     def execute
       #TODO: Should check for arguments.
-      implementation  = Implementations[@args.shift]
+      implementation   = Implementations[@args.shift]
       @target, package = implementation.find(*@args)
       @target          = install_root + "#{implementation.name}-#{@target.gsub('.','')}"
-      file            = download(package)
+      file             = download(package)
+
       extract(@target, file)
       implementation.after_install(self)
     end
@@ -48,7 +49,7 @@ SEP
     
     def download(package, download_dir_=download_dir)   
       target = download_dir_ + package. split('/').last
-      puts "** Downloading:  #{package} \n   to:  #{target.windows}\n\n"
+      @log.info "Downloading:  #{package} \n   to:  #{target.windows}"
       URI.download(package, target.to_s, {:progress => true})
       puts
       return target
@@ -67,9 +68,8 @@ SEP
     def seven_zip(target, file)
       file = Pathname(file)
       seven_zip = Which::SevenZip.exe.basename 
-      puts "** Extracting:  #{file.windows}\n   to:  #{target}" #if verbose
+      @log.info "Extracting:  #{file.windows}\n   to:  #{target}" #if verbose
       system("#{seven_zip} x -y -o\"#{target}\" \"#{file.windows}\" > NUL")
-      puts 'done'
     end
     
     def download_seven_zip

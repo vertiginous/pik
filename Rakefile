@@ -74,6 +74,7 @@ Hoe.spec('pik') do
   
   self.need_tar = false
   self.readme_file = 'README.rdoc'
+  self.extra_dev_deps = ['highline','hpricot','win32-console','term-ansicolor']
   self.post_install_message =<<-PIM
 
 ----------------------------------------------------------------------------

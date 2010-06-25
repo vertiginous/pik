@@ -27,7 +27,7 @@ describe Pik::Use do
   it "should use a batch file to switch paths" do
     conf = {
       'spec ' => {:path => Pathname('C:/ruby/bin')},
-      'real ' => {:path => Pathname.new(::RbConfig::CONFIG['bindir'] )}
+      'real ' => {:path => Pathname(::RbConfig::CONFIG['bindir'] )}
     }
     cmd = Pik::Use.new(['spec'], conf)
     cmd.execute

@@ -33,7 +33,7 @@ module Pik
     end
     
     def switch_gem_home_to(gem_home)
-      gem_home = Pathname(gem_home).to_windows.gsub('%', '%%') rescue nil
+      gem_home = Pathname(gem_home).to_windows rescue nil
       if debug
         puts "GEM_PATH=#{gem_home}"
         puts "GEM_HOME=#{gem_home}"

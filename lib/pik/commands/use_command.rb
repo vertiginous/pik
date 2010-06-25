@@ -15,7 +15,11 @@ module Pik
       abort('Nothing matches:') unless new_ver = self.class.choose_from(@args, @config)
       switch_path_to(@config[new_ver])
       
-      gem_home = gemset ? gemset_gem_home(new_ver, gemset) : @config[new_ver][:gem_home]
+      if gemset 
+        gem_home = gemset_gem_home(new_ver, gemset)
+        raise GemSetMissingError.new(gemset) unless gem_home.exist?
+      end
+      gem_home ||= @config[new_ver][:gem_home]
       
       switch_gem_home_to(gem_home)
       echo_ruby_version(@config[new_ver][:path]) if verbose
@@ -30,7 +34,7 @@ module Pik
         @verbose = true
       end
       
-      options.on("--gemset=gemset", "-m gemset",
+      options.on("--gemset=gemset", "-@",
          "Use gem set"
          ) do |value|
         @gemset = value

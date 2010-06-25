@@ -2,10 +2,22 @@ require 'optparse'
 
 module Pik
 
+  class PrettyError < StandardError
+    def backtrace
+      []
+    end
+  end
+
   class QuitError < StandardError
   end
   
   class VersionUnknown < StandardError
+  end
+
+  class GemSetMissingError < PrettyError
+    def message
+      "Gemset '#{super}' does not exist, pik gemset create #{super} first."
+    end
   end
   
   class  Command
@@ -125,6 +137,12 @@ module Pik
       ruby_ver =~ /ruby (\d\.\d\.\d)/i
       major    = $1.gsub('.','')
       "#{major}: #{ruby_ver.strip}"
+    end
+
+    def get_version(path=Which::Ruby.find)
+      cmd = Which::Ruby.exe(path)
+      ruby_ver = `"#{cmd}" -v`
+      VersionParser.parse(ruby_ver).short_version
     end
     
     def find_config_from_path(path=Which::Ruby.find)
