@@ -14,7 +14,7 @@ require 'highline'
 require 'pik/core_ext/pathname'
 require 'pik/scripts/script_file'
 require 'pik/scripts/batch_file'
-require 'pik/scripts/ps_file'
+require 'pik/scripts/powershell_file'
 require 'pik/scripts/bash_file'
 require 'pik/commands'
 require 'pik/commands/config_file_editor'
@@ -48,7 +48,7 @@ module Pik
   Scripts = {
     '.cmd' => BatchFile, 
     '.bat' => BatchFile, 
-    '.ps1' => PsFile, 
+    '.ps1' => PowershellFile, 
     '.sh'  => BashFile 
   }
 

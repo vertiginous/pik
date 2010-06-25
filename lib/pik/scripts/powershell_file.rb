@@ -1,8 +1,6 @@
 module Pik
   
-  class PsFile < ScriptFile
-
-    attr_accessor :file_data, :file_name, :ruby_dir
+  class PowershellFile < ScriptFile
 
     def extname
       ".ps1"
@@ -14,17 +12,19 @@ module Pik
     end  
     
     def call(exe)
-      @file_data << "#{exe}\n"
+      @lines << "#{exe}\n"
       self
     end
 
     def set(items)
-      items.each{|k,v| @file_data << "$ENV:#{k}=\"#{v}\"" }
-      self
-    end
+      items.each do |k,v| 
+        @lines << if v
+          "$ENV:#{k}=\"#{v}\""
+        else
+          "Remove-Item ENV:#{k}"
+        end
+      end
 
-    def unset(items)
-      items.each{|k| @file_data << "Remove-Item ENV:#{k}" }
       self
     end
 

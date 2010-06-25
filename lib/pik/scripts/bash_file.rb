@@ -2,8 +2,6 @@ module Pik
 
   class BashFile < ScriptFile
 
-    attr_accessor :file_data, :file_name, :ruby_dir
-
     def extname
       ".sh"
     end
@@ -15,19 +13,19 @@ module Pik
     end  
     
     def call(exe)
-      @file_data << "#{exe}\n"
+      @lines << "#{exe}\n"
       self
     end
 
     def set(items)
-      items.each{|k,v| 
-         v = v.to_bash if v.respond_to? 'to_bash'
-        @file_data << "export #{k}='#{v}'" }
-      self
-    end
-
-    def unset(items)
-      items.each{|k| @file_data << "export #{k}=" }
+      items.each{|k,v|
+        @lines << if v
+          v = v.to_bash if v.respond_to? 'to_bash'
+          "export #{k}='#{v}'"
+        else
+          "unset #{k}"
+        end
+      }
       self
     end
 
