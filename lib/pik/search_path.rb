@@ -34,9 +34,15 @@ class SearchPath
 
 	def add(new_path)
     new_path = Pathname(new_path)
-		@path.unshift new_path.to_windows.to_s
-		self
+    @path.unshift new_path.to_windows.to_s
+    self
 	end
+
+  def push(new_path)
+    new_path = Pathname(new_path)
+    @path.push new_path.to_windows.to_s
+    self
+  end
 
 	def replace_or_add(old_path, new_path)
     if old_path.nil?

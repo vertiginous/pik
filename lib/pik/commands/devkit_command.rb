@@ -28,30 +28,30 @@ module Pik
     
     def write_make(path)
       Pik::BatchFile.new(path + 'make.bat') do |b|
-        b.file_data << 'setlocal'
+        b.lines << 'setlocal'
         b.set(:DEVKIT => config.global[:devkit])
         b.set(:PATH => "%DEVKIT%\\gcc\\3.4.5\\bin;%DEVKIT%\\msys\\1.0.11\\bin")
-        b.file_data << "bash.exe --login -i -c \"make %*\""
+        b.lines << "bash.exe --login -i -c \"make %*\""
         b.write
       end
     end
     
     def write_sh(path)
       Pik::BatchFile.new(path + 'sh.bat') do |b|
-        b.file_data << 'setlocal'
+        b.lines << 'setlocal'
         b.set(:DEVKIT => config.global[:devkit])
         b.set(:PATH => "%DEVKIT%\\gcc\\3.4.5\\bin;%DEVKIT%\\msys\\1.0.11\\bin")
-        b.file_data << "bash.exe --login -i -c \"sh %*\""
+        b.lines << "bash.exe --login -i -c \"sh %*\""
         b.write
       end
     end
     
     def write_gcc(path)
       Pik::BatchFile.new(path + 'gcc.bat') do |b|
-        b.file_data << 'setlocal'
+        b.lines << 'setlocal'
         b.set(:DEVKIT => config.global[:devkit])
         b.set(:PATH => "%DEVKIT%\\gcc\\3.4.5\\bin;%PATH%")
-        b.file_data << "gcc.exe %*"
+        b.lines << "gcc.exe %*"
         b.write
       end
     end
