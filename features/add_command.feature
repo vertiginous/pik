@@ -25,5 +25,3 @@ Feature: add command
     When I run "pik add "C:\temp\more spaces in path\ruby\JRuby-151\bin""
     Then I should see "Adding:  151: jruby 1.5.1 (ruby 1.8.7 patchlevel 249)"
     And I should see "Located at:  C:\temp\more spaces in path\ruby\JRuby-151\bin"
-    
-    

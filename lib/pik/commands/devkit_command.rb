@@ -27,7 +27,7 @@ module Pik
     end
     
     def write_make(path)
-      Pik::BatchFile.new(path + 'make.bat') do |b|
+      Pik::BatchFile.new(path + 'make') do |b|
         b.lines << 'setlocal'
         b.set(:DEVKIT => config.global[:devkit])
         b.set(:PATH => "%DEVKIT%\\gcc\\3.4.5\\bin;%DEVKIT%\\msys\\1.0.11\\bin")
@@ -37,7 +37,7 @@ module Pik
     end
     
     def write_sh(path)
-      Pik::BatchFile.new(path + 'sh.bat') do |b|
+      Pik::BatchFile.new(path + 'sh') do |b|
         b.lines << 'setlocal'
         b.set(:DEVKIT => config.global[:devkit])
         b.set(:PATH => "%DEVKIT%\\gcc\\3.4.5\\bin;%DEVKIT%\\msys\\1.0.11\\bin")
@@ -47,7 +47,7 @@ module Pik
     end
     
     def write_gcc(path)
-      Pik::BatchFile.new(path + 'gcc.bat') do |b|
+      Pik::BatchFile.new(path + 'gcc') do |b|
         b.lines << 'setlocal'
         b.set(:DEVKIT => config.global[:devkit])
         b.set(:PATH => "%DEVKIT%\\gcc\\3.4.5\\bin;%PATH%")
