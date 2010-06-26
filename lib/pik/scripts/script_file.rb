@@ -2,11 +2,13 @@ module Pik
 
   class ScriptFile
 
-    attr_accessor :file_data, :file_name, :ruby_dir
+    attr_accessor :lines, :file_name
 
-    def initialize(file) #, mode=:new)
-      @file = Pathname.new(file.to_s + extname) 
-      @file_data = [header]
+    def initialize(file)
+      file = file.to_s
+      file += extname unless file =~ /#{extname}$/
+      @file = Pathname.new(file)
+      @lines = [header]
       yield self if block_given?
     end
     
@@ -20,16 +22,16 @@ module Pik
 
     def echo(string='.')
       string = ' ' + string unless string == '.'
-      @file_data << "ECHO#{string}"
+      @lines << "ECHO#{string}"
       self
     end
 
     def remove_line(re)
-      @file_data.reject!{ |i| i =~ re }
+      @lines.reject!{ |i| i =~ re }
     end
 
     def to_s
-      @file_data.join("\n")
+      @lines.join("\n")
     end
 
     def write
@@ -37,7 +39,7 @@ module Pik
     end
 
     def << (cmd)
-      @file_data <<  cmd
+      @lines <<  cmd
     end
 
   end

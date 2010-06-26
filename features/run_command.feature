@@ -17,7 +17,7 @@ Feature: run command
   
   Scenario: gem command
     When I run "pik gem -v"
-    #Then I should find "\n\d\.\d\.\d\n" 6 times
+    Then I should find "\n\d\.\d\.\d\n" 6 times
     And I should see each version listed.
     
   Scenario: rake command

@@ -13,17 +13,17 @@ module Pik
     end  
 
     def call(bat)
-      @file_data << "CALL #{bat}\n"
+      @lines << "CALL #{bat}\n"
       self
     end
 
     def set(items)
-      items.each{|k,v| @file_data << "SET #{k}=#{v}" }
+      items.each{|k,v| @lines << "SET #{k}=#{v}" }
       self
     end
 
     def unset(*items)
-      items.flatten.each{|k| @file_data << "SET #{k}=" }
+      items.flatten.each{|k| @lines << "SET #{k}=" }
       self
     end
 

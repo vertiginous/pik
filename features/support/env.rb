@@ -3,7 +3,7 @@ config=<<CONFIG
 "092: IronRuby 0.9.2.0 on .NET 2.0.0.0": 
   :path: !ruby/object:Pathname 
     path: C:/temp/more spaces in path/ruby/IronRuby-092/bin
-"151: jruby 1.5.1 (ruby 1.8.7 patchlevel 249) (2010-06-06 f3a3480) (Java HotSpot(TM) Client VM 1.6.0_18) [x86-java]": 
+"151: jruby 1.5.1 (ruby 1.8.7 patchlevel 249) (2010-06-06 f3a3480) (Java HotSpot(TM) Client VM 1.6.0_20) [x86-java]": 
   :path: !ruby/object:Pathname 
     path: C:/temp/more spaces in path/ruby/JRuby-151/bin
 "186: ruby 1.8.6 (2010-02-04 patchlevel 398) [i386-mingw32]": 
@@ -36,6 +36,7 @@ REAL_PATH  = SearchPath.new(ENV['PATH']).replace(RbConfig::CONFIG['bindir'], 'C:
 OTHER_RUBY  = 'c:\\temp\\more spaces in path\\ruby\\Ruby-191-p378-1\\bin'
 
 ENV['USERPROFILE'] = "C:\\temp\\path with spaces"
+ENV['HOME'] = ENV['USERPROFILE']
 ENV['http_proxy'] = "http://localhost:9292"
 
 PIK_LOG = 'log\\output.log'

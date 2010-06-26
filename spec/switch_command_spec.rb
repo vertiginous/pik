@@ -31,7 +31,7 @@ describe Pik::Use do
     }
     cmd = Pik::Use.new(['spec'], conf)
     cmd.execute
-    batch = cmd.instance_variable_get('@script').file_data
+    batch = cmd.instance_variable_get('@script').lines
     batch.should include("SET GEM_PATH=")
     batch.should include("SET GEM_HOME=")
     set_path = batch.grep(/set/i).first
@@ -48,7 +48,7 @@ describe Pik::Use do
       }
     cmd = Pik::Use.new(['spec'], conf)
     cmd.execute
-    batch = cmd.instance_variable_get('@script').file_data
+    batch = cmd.instance_variable_get('@script').lines
     batch.should include("SET GEM_PATH=C:\\Users\\martin_blanke\\.gems")
     batch.should include("SET GEM_HOME=C:\\Users\\martin_blanke\\.gems")
   end

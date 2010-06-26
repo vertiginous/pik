@@ -194,3 +194,11 @@ Then /^I should see$/ do |string|
   stdout = File.read(PIK_LOG)
   stdout.should include(string)
 end
+
+Then /^each '(.+)' version should have a '(.+)'$/ do |ver, file|
+  current_config = YAML.load(File.read(TEST_PIK_HOME + 'config.yml'))
+  versions = current_config.keys.grep(/#{ver}/){|k| current_config[k] }
+  versions.each do |v| 
+    (v[:path] + file).should exist 
+  end
+end
