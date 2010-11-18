@@ -1,0 +1,53 @@
+TODO
+
+new directory structure
+.pik
+|-- config
+|-- downloads
+|-- gems
+|-- rubies
+`-- scripts
+
+Where should devkit get installed to?
+
+config.yml should be .pik/config/user.yml
+
+Change all instance vars to attrs (config, log, options, args)
+Change all output to use log
+Add stories for gemset command
+
+-v == --version
+-v != --verbose
+# Add --default to 'pik use'
+
+# Change 'pik default' to 'pik system' 
+#  'pik system' will return PATH, GEM_HOME, GEM_PATH to pre pik state
+# Add 'pik default' (default will switch to default ruby)
+
+install should only install to PIK_HOME
+
+remove 'pik add'  replace with 'pik install' [--some-switch=path]
+  where path is a package file (zip, 7z, tar) or path (C:\repo\rubyinstaller\sandbox\ruby19)
+
+change (or remove altogether) 'pik remove'. it won't be needed after 'pik add' is gone.
+
+# Change 'pik use pattern'/'pik pattern' to 'pik use selector'/'pik selector'
+# Add 'gemset select' to 'pik use' (version@gemset)
+# Add global gemset
+# make sure global gemset and default/specified gemset bin dir is added to path.
+
+GEM_HOME and GEM_PATH will always be used (except after 'pik system')
+
+# all gems will be installed to PIK_HOME\gems
+
+# Add pik list known
+# Add pik list default
+
+Add pik monitor
+#Add pik spec
+Add pik test
+
+remove pik config
+
+change 'pik install devkit' to 'pik package install devkit'
+#remove 'pik devkit update'  make this action an "after_install" action when the platform is mingw.
