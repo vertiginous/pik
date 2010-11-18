@@ -6,17 +6,26 @@ module Pik
 
     def execute
       check_args
-      @config.sort.each do |version,hash|
+      list = list?(args.first) ? build_args : config
+      list.each do |new_ver, cfg|
         begin
-          switch_path_to(hash)
-          switch_gem_home_to(hash[:gem_home])
-          echo_ruby_version(hash[:path])
+          gem_home = gemset_gem_home(new_ver, nil)
+          FileUtils.mkdir_p gem_home
+          global = gemset_global(new_ver)
+          FileUtils.mkdir_p global
+
+          gem_path = SearchPath.new(global).add(gem_home)
+          
+          switch_gem_home_to(gem_home)
+          switch_bundle_path_to(gem_home)
+          switch_gem_path_to(gem_path)
+          switch_path_to(cfg[:path],gem_path)
+          echo_ruby_version(cfg[:path])
+
           system command
           puts
         rescue => e
-          version = version.split(': ')[1..-1].join(': ')
-          puts version
-          Pik.print_error(e)
+          log.error e, e.backtrace
         end
       end
     end
@@ -46,27 +55,6 @@ SEP
     def parse_options
     end
 
-    def switch_path_to(other)
-      current = Which::Ruby.find
-      
-      new_path = SearchPath.new(ENV['PATH'])
-      new_path.replace_or_add(current, other[:path])
-      
-      # if there is currently a GEM_HOME, remove it's bin dir from the path
-      new_path.remove(Pathname.new(ENV['GEM_HOME']) + 'bin') if ENV['GEM_HOME']
-      
-      # if the new version has a GEM_HOME, add it's bin dir to the path
-      new_path.add(Pathname.new(other[:gem_home]) + 'bin') if other[:gem_home]
-      
-      ENV['PATH'] = new_path.join
-    end
-
-    def switch_gem_home_to(gem_home)
-      gem_home = Pathname(gem_home).to_windows rescue nil
-      ENV['GEM_PATH'] = gem_home
-      ENV['GEM_HOME'] = gem_home
-    end
-        
     def echo_ruby_version(path)
       rb = Which::Ruby.exe(path)
       raise "Unable to find a Ruby executable at #{path}" unless rb
@@ -82,6 +70,19 @@ SEP
     
     def args_required?
       true
+    end
+
+    def build_args
+      h = {}
+      args.shift.split(',').each do |imp|
+        ver = self.class.choose_from(imp, config.keys).first
+        h[ver] = config[ver]
+      end
+      h
+    end
+
+    def list?(str)
+      str =~ /.+,.+/
     end
 
   end

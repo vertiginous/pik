@@ -1,3 +1,4 @@
+require 'ostruct'
 
 module Pik
 
@@ -11,12 +12,13 @@ module Pik
       
       ruby = check_path
       
-      ruby_version = find_config_from_path(ruby)
-      current = config[ruby_version]
-      gem_home = current[:gem_home] || actual_gem_home
-      ruby_version = Pik::VersionParser.parse(ruby_version)
+      current = get_full_version_from_config(ruby) rescue get_full_version rescue nil
 
-      puts info =<<INFO
+      ruby_version = current ? Pik::VersionParser.parse(current) : OpenStruct.new
+
+      gemset = $1 if ENV['GEM_HOME'] =~ /.+@(.+)$/
+
+      @hl.say info =<<INFO
 
 ruby:
 interpreter:  "#{ruby_version.interpreter}"
@@ -27,33 +29,42 @@ patchlevel:   "#{ruby_version.patchlevel}"
 full_version: "#{ruby_version.full_version}"
 
 homes:
-gem:          "#{gem_home}"
-ruby:         "#{ruby.dirname}"
+gem:          "#{ENV['GEM_HOME']}"
+ruby:         "#{ruby.dirname rescue nil}"
 
 binaries:
-ruby:         "#{ruby}"
+ruby:         "#{ruby rescue nil}"
 irb:          "#{Which::Irb.exe}"
 gem:          "#{Which::Gem.exe}"
 rake:         "#{Which::Rake.exe}"
 
 environment:
+PATH:         "#{ENV['PATH']}"
 GEM_HOME:     "#{ENV['GEM_HOME']}"
+GEM_PATH:     "#{ENV['GEM_PATH']}"
+BUNDLE_PATH:  "#{ENV['BUNDLE_PATH']}"
 HOME:         "#{ENV['HOME']}"
 IRBRC:        "#{ENV['IRBRC']}"
 RUBYOPT:      "#{ENV['RUBYOPT']}"
+gemset:       "#{gemset}"
 
 file associations:
 .rb:           #{file_associations('.rb')}
 .rbw:          #{file_associations('.rbw')}
 INFO
     end
+
+    def get_full_version_from_config(ruby)
+      find_config_from_path(ruby)
+      current = config[current_version][:version]
+    end
     
     def check_path
       dirs = Which::Ruby.find_all
       case dirs.size 
       when 0
-        $stdout.flush
-        abort no_ruby
+      #   $stdout.flush
+      #   abort no_ruby
       when 1
         dirs.first
       else
@@ -70,17 +81,17 @@ warning: There is more than one version of ruby in the system path
 MSG
     end
 
-    def no_ruby
-      msg =<<MSG
+#     def no_ruby
+#       msg =<<MSG
 
-Pik info will not work unless there is a version of ruby in the path.
+# Pik info will not work unless there is a version of ruby in the path.
 
-You can use pik switch to add one.
-MSG
-    end
+# You can use pik switch to add one.
+# MSG
+#     end
     
     def file_associations(extension)
-      @reg = Reg.new
+      @reg  = Reg.new
       assoc = @reg.hkcr(extension) rescue nil
       ftype = @reg.hkcr("#{assoc}\\Shell\\open\\command") rescue nil
     end

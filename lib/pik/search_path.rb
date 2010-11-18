@@ -32,11 +32,25 @@ class SearchPath
     @path.each{|path| yield path }
   end
 
+  def reject! &block
+    @path.reject! &block
+  end
+
 	def add(new_path)
     new_path = Pathname(new_path)
     @path.unshift new_path.to_windows.to_s
     self
 	end
+
+  def add_after(path, path_to_add)
+    i = @path.index(path.to_windows)
+    @path.insert(i+1, path_to_add)
+  end
+
+  def add_before(path, path_to_add)
+    i = @path.index(path.to_windows)
+    @path.insert(i, path_to_add)
+  end
 
   def push(new_path)
     new_path = Pathname(new_path)
@@ -59,12 +73,12 @@ class SearchPath
 	end
 
 	def join
-		@path.join(';')
+    @path.uniq.join(';')
 	end
 	alias :to_s :join
 
   def to_bash
-    @path.map{|i| Pathname.new(i).to_bash }.join(':')
+    @path.uniq.map{|i| Pathname.new(i).to_bash }.join(':')
   end
 
   def regex(string)

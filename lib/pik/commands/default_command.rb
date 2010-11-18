@@ -1,33 +1,43 @@
 
-module Pik
+# module Pik
   
-  class Default < Command
+#   class Default < Command
   
-    it "Switches back to the default settings."
+#     it "Switches back to the default settings."
   
-    attr_accessor :verbose
+#     attr_accessor :verbose
   
-    include ScriptFileEditor
+#     include ScriptFileEditor
   
-    def execute
-      sys = WindowsEnv.system
-      usr = WindowsEnv.user
-      new_path = [sys['PATH'],usr['PATH']].compact.join(';')
-      @script.set('PATH' => SearchPath.new(new_path) )
-      @script.set('GEM_PATH' => usr['GEM_PATH'] || sys['GEM_PATH'] )
-      @script.set('GEM_HOME' => usr['GEM_HOME'] || sys['GEM_HOME'] )
-      echo_ruby_version(Which::Ruby.find(new_path)) if verbose
-    end
+#     def execute
+#       default = config.global[:default]
+#       raise PrettyError, "You have to configure the default" unless default
+#       switch_path_to(@config[default])
+      
+#       if gemset 
+#         gem_home = gemset_gem_home(default, gemset)
+#         raise GemSetMissingError.new(gemset) unless gem_home.exist?
+#       end
+#       gem_home ||= @config[default][:gem_home]
+      
+#       switch_gem_home_to(gem_home)
+#       echo_ruby_version(@config[default][:path]) if verbose
+#     end
     
-    def command_options
-      super
-      @options.on("--verbose", "-v",
-         "Verbose output"
-         ) do |value|
-        @verbose = value
-      end
-    end
+#     def command_options
+#       super
+#       options.on("--verbose", "-v",
+#          "Verbose output"
+#          ) do |value|
+#         @verbose = value
+#       end
+#       options.on("--gemset=gemset", "-@",
+#          "Use gem set"
+#          ) do |value|
+#         @gemset = value
+#       end
+#     end
   
-  end
+#   end
 
-end
+# end

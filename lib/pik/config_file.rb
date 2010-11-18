@@ -6,14 +6,14 @@ module Pik
   
     attr_reader :global
       
-    def initialize
-      @file = File.join(PIK_HOME, 'config.yml')
+    def initialize(file=File.join(PIK_HOME, 'config.yml'))
+      @file   = file
       @global = {}
       super
       if File.exists? @file
         contents = File.read( @file )
         unless contents.empty?
-          documents = YAML.load_stream( contents )  
+          documents = YAML.load_stream( contents )
           self.update( documents[0] )
           @global.update( documents[1] ) if documents[1]
         end
@@ -24,6 +24,27 @@ module Pik
       File.open(@file, 'w')do |f| 
         f.puts YAML::dump_stream( Hash[self]), YAML.dump(global) 
       end
+    end
+
+    def default
+      find{|ver,opts| opts.include? :default }.first
+    end
+
+    def default=(key)
+      self[key][:default] = true
+    end
+
+    def matches(str)
+      str = "ruby-#{str}" if version_only?(str)
+      keys.select{|ver| selector?(str) && ver.include?(str) }
+    end
+
+    def selector?(str)
+      !!(str =~ /^(jruby|ironruby|ruby-)/)
+    end
+
+    def version_only?(str)
+      !!(str =~ /^\d\.\d\.\d$/)
     end
 
   end

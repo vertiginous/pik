@@ -10,22 +10,24 @@ args = ARGV
 
 begin
   config  = ConfigFile.new
+
+  opts, args_minus_opts = args.partition{|p| p =~ /^-/}
   
-  args_minus_opts = args.reject{|p| p =~ /^-/}
-  
-  command = if args_minus_opts.empty?
-    Help
-  elsif (c = Commands.find(args.first))
-    args.shift
-    c
-  elsif (choice = Command.choose_from(args_minus_opts, config))
-    args = [choice] + args
-    Use
+  command, new_args = if args_minus_opts.empty?
+    [Help, opts]
+  elsif args.first == 'use'
+    [Use,Command.choose_from(args[1..-1], config)]
+  elsif (choice = Command.choose_from(args_minus_opts.first, config))
+    [Use,(choice.merge(:args => opts))]
+  elsif cmd = Commands.find(args_minus_opts, config)
+    [cmd, (args - cmd.names.map{|n| n.to_s})]
   end
-  
-  raise "The command '#{args.join(' ')}' is unknown." unless command
-  cmd = command.new(args, config, log)
+
+  # p [command, new_args]
+  raise PrettyError, "The command '#{args.join(' ')}' is unknown." unless command
+  cmd = command.new(new_args, config, log)
   cmd.execute
+  cmd
 rescue Pik::QuitError
   puts "\nQuitting..."
 rescue => e

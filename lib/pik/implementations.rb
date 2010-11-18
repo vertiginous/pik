@@ -28,7 +28,7 @@ module Pik
     end
     
     def self.implementations
-      [ruby, jruby, ironruby, devkit]
+      [ruby, jruby, ironruby]
     end
   
     def self.list
@@ -37,6 +37,12 @@ module Pik
       h
     end
     
+    def self.known
+      h = {}
+      implementations.each{|imp| imp.versions.each{|ver,url|  h[ver] = { :implementation => imp, :url => url} }  }
+      h
+    end
+
     class Base
     
       def self.find(*args)
@@ -59,6 +65,10 @@ module Pik
           versions.select{|v,k| v =~ pattern }.max
         end
       end
+
+      def name
+        self.class.name.downcase
+      end
           
       def most_recent(vers=versions)
         vers.max
@@ -69,7 +79,7 @@ module Pik
         Hpricot(read).search("a") do |a|
           if a_href = a.attributes['href']
             href, link, version, rc = *a_href.match(@re)
-            h["#{version}#{rc}"] =  @url + link  if version
+            h["#{name.downcase}-#{version}#{rc}"] =  @url + link  if version
           end
         end
         h
@@ -88,7 +98,7 @@ module Pik
       def after_install(install)
         puts
         p = Pik::Add.new([install.target + 'bin'], install.config)
-        p.execute
+        @new_cfg = p.execute
         p.close
       end
   
@@ -104,6 +114,13 @@ module Pik
         @re   = /(.+ruby\-(.+)\-i386\-mingw32(.*)\.7z)/
       end
     
+      def after_install(install)
+        super
+        if install.config.global[:devkit]
+          Pik::Devkit.new([], install.config).write_batch_files([@new_cfg])
+        end
+      end
+
     end
     
     class IronRuby < Base

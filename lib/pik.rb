@@ -11,7 +11,6 @@ require 'rbconfig'
 require 'hpricot'
 require 'highline'
 require 'term/ansicolor'
-require 'win32console'
 
 require 'pik/core_ext/pathname'
 require 'pik/scripts/script_file'
@@ -33,10 +32,11 @@ require 'pik/commands/run_command'
 require 'pik/commands/remove_command'
 require 'pik/commands/config_command'
 require 'pik/commands/gemset_command'
-require 'pik/commands/gemsync_command'
+# require 'pik/commands/gemsync_command'
 require 'pik/commands/default_command'
+require 'pik/commands/system_command'
 require 'pik/commands/implode_command'
-require 'pik/commands/tag_command'
+# require 'pik/commands/tag_command'
 require 'pik/commands/uninstall_command'
 require 'pik/commands/update_command'
 require 'pik/config_file'
@@ -56,11 +56,20 @@ module Pik
     '.sh'  => BashFile 
   }
 
+  #TODO: this should use log
   def self.print_error(error)
     puts "\nThere was an error."
     puts " Error: #{error.message}\n\n"
     puts error.backtrace.map{|m| "  in: #{m}" }
     puts
+  end
+
+  def self.home
+    @home ||= Pathname(ENV['PIK_HOME'] || ENV['HOME'] || ENV['USERPROFILE']) + '.pik'
+  end
+
+  def self.colored?
+    !!ENV['ANSICON']
   end
   
 end
@@ -70,6 +79,9 @@ Pik::Commands.deprecate(:checkup => "The checkup command is deprecated, using th
 Pik::Commands.deprecate(:cu => "The cu command is deprecated, using the info command instead.")
 
 PIK_HOME    = Pathname.new( ENV['USERPROFILE'] ) + '.pik'
+
+
+
 
 if defined?(ExerbRuntime) || $0 =~ /pik_runner/
   PIK_SCRIPT  = Pathname.new(ARGV.shift).ruby

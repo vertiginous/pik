@@ -13,18 +13,18 @@ module Pik
       when *actions
         send(action)
       else
-        puts
-        puts "error: Unrecognized gemset action '#{action}'.\n\n"
-        puts "Valid gemset actions are: {#{actions.join(", ")}}\n\n"
+        raise PrettyError, 
+          "Unrecognized gemset action '#{action}'.\n\n" +
+          "Valid gemset actions are: {#{actions.join(",")}}"
       end
     end
     
     # gems subcommands  
   
     def create
-      gem_home = gemset_gem_home(find_config_from_path, @args.shift)
+      gem_home = gemset_gem_home(find_config_from_path, args.shift)
       FileUtils.mkdir_p(gem_home.to_ruby)
-      puts "** Gemset #{gem_home} created"
+      log.info("Gemset #{gem_home} created")
     end
 
     def select
@@ -48,9 +48,9 @@ module Pik
       File.read(@args.first).split("\n").each do |gem_set_item|
         next if gem_set_item.match(/^\s*#/)
         if gem_set_dump.include? gem_set_item
-          puts "** Gem #{gem_set_item} already installed"
+          log.info("Gem #{gem_set_item} already installed")
         else
-          puts "** Installing #{gem_set_item}"
+          log.info("Installing #{gem_set_item}")
           sh "#{gem_cmd} install -q --no-rdoc --no-ri #{gem_set_item}"
         end
       end
@@ -62,10 +62,10 @@ module Pik
     end
     
     def list
-      short_version = current_ruby_short_version
+      short_version = find_config_from_path
       puts
-      puts "** gemsets : for #{short_version} (found in #{gemset_root.to_windows})"
-      x = gemset_root + "#{short_version}*"
+      log.info("gemsets : for #{short_version} (found in #{gemset_root.to_windows})")
+      x = gemset_root + "#{short_version}@*"
       Pathname.glob(x.to_ruby).each do |gemset|
         puts gemset.basename.to_s.split('@').last if gemset.directory?
       end

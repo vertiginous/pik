@@ -9,15 +9,14 @@ module Pik
     def self.add(command)
       commands << command
     end
-    
-    def self.find(command)
-      command = command.to_sym
-      puts deprecated[command] if deprecated[command]
-      commands.find{ |cmd| cmd.names.include?(command) }
-    end
   
+    def self.find(cmds, config)
+      cmds = (cmds & list)
+      names[cmds.first.to_sym] unless cmds.size.zero?
+    end
+
     def self.list
-      commands.map{|c| c.names }.flatten
+      @list ||= names.keys.map{|name| name.to_s }.flatten
     end
     
     def self.description
@@ -29,6 +28,13 @@ module Pik
   
     def self.commands
       @commands ||= []
+    end
+
+    def self.names
+      return @names if @names
+      @names = {}
+      @commands.each{|cmd| cmd.names.each{|name|  @names[name] = cmd }}
+      @names
     end
   
     def self.deprecate(command)

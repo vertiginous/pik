@@ -8,10 +8,10 @@ module Pik
     end
   end
 
-  class QuitError < StandardError
-  end
-  
   class VersionUnknown < StandardError
+  end
+
+  class QuitError < PrettyError
   end
 
   class GemSetMissingError < PrettyError
@@ -22,10 +22,16 @@ module Pik
   
   class  Command
 
+    attr_reader :args  #TODO: change all @args to args
+
     attr_reader :config
     
+    attr_reader :log   #TODO: change all @log to log
+        
     attr_reader :options
     
+    attr_accessor :env
+
     attr_accessor :output
     
     attr_accessor :version
@@ -59,26 +65,17 @@ module Pik
     def self.names
       @names ||= [cmd_name]
     end
-
-    def self.choose_from(patterns, config)
-      if patterns.empty?
-        possibles = config.keys  
-      else
-        possibles = patterns.map{|p| config.keys.grep(Regexp.new(Regexp.escape(p.to_s),Regexp::IGNORECASE) ) }
-        possibles = possibles.inject{|m,v| m & v }.flatten.uniq
-      end
-      case possibles.size
-      when 0
-        return nil
-      when 1
-        return possibles.first
-      else
-        hl.say('Select which Ruby you want:')
-        ver = hl.choose(*possibles)
-        return ver
-      end
-    end
     
+    def self.choose_from(args, config) # use config, fix install
+      imp, gemset = args.first.split(/@/)
+      
+      # gemset  = "--gemset=#{gemset}" if gemset
+      return {:ver => config.default.to_a} if args.include? 'default'
+      
+      matches = config.matches(imp)
+      matches.size.zero? ? nil : {:ver => matches.max, :gemset => gemset}
+    end
+
     def self.hl
       @hl ||= HighLine.new
     end
@@ -89,6 +86,10 @@ module Pik
       @config       = config_ || ConfigFile.new
       @log          = log
       @hl           = HighLine.new
+      @hl.page_at = :auto
+
+      #overridden by ScriptFileEditor
+      @env          = ENV
 
       add_sigint_handler
       options.program_name = "pik #{self.class.names.join('|')}"
@@ -120,39 +121,39 @@ module Pik
       options.on("--debug", "-d", "Outputs debug information") do |value|
         @debug = true
       end
-      options.parse! @args 
+      options.parse! @args
     end
     
     def pik_version
       "pik " + Pik::VERSION
     end
    
-    def current_version?(string)
-      string == get_version
-    end
-        
-    def get_version(path=Which::Ruby.find)
-      cmd = Which::Ruby.exe(path)
-      ruby_ver = `"#{cmd}" -v`
-      ruby_ver =~ /ruby (\d\.\d\.\d)/i
-      major    = $1.gsub('.','')
-      "#{major}: #{ruby_ver.strip}"
+    def current_version?(string) # is this used anywhere?
+      string == get_full_version
     end
 
-    def get_version(path=Which::Ruby.find)
+    def get_full_version(path=Which::Ruby.find)
       cmd = Which::Ruby.exe(path)
-      ruby_ver = `"#{cmd}" -v`
+      ruby_ver = `"#{cmd}" -v`.strip
+    end
+
+    def get_short_version(path=Which::Ruby.find)
+      ruby_ver = get_full_version(path)
       VersionParser.parse(ruby_ver).short_version
     end
     
     def find_config_from_path(path=Which::Ruby.find)
-      config.find{|k,v| 
-        Pathname(v[:path])== Pathname(path)
-      }.first rescue nil
+      # raise PrettyError, "No ruby found, do you have a ruby selected?" unless path
+      ver = config.reject{|ver,cfg| cfg == 'default' }.each{|ver,cfg| 
+        return ver if Pathname(cfg[:path]) == Pathname(path)
+      }
+      nil
     end
 
     def current_ruby_short_version
-      VersionParser.parse(find_config_from_path).short_version
+      current = find_config_from_path
+      raise unless current
+      VersionParser.parse(current[:version]).short_version
     end
   
     def current_gem_bin_path
@@ -186,14 +187,18 @@ module Pik
     end
     
     def gemset_gem_home(version, gemset)
-      ver = VersionParser.parse(version)
       gs = "@#{gemset}" if gemset
-      gemset_root + "#{ver.short_version}#{gs}"
+      gemset_root + "#{version}#{gs}"
+    end
+
+    def gemset_global(version)
+      gemset_gem_home(version, 'global')
     end
             
     def create(home)
-      puts "creating #{home}"
+      log.info "creating #{home}"
       home.mkpath
+      ['scripts','gems','rubies','config','downloads'].each{|dir| (home + dir).mkpath}
     end
    
     def delete_old_pik_script
@@ -207,6 +212,48 @@ module Pik
     
     def cmd_name
       self.class.cmd_name
+    end
+    
+    #TODO, make this gemset aware
+    def switch_path_to(path, gem_path)
+      current = Which::Ruby.find
+      
+      new_path = SearchPath.new(ENV['PATH'])
+      new_path.replace_or_add(current, path)
+
+      # remove old gemset bin dirs from the path
+      new_path.reject!{|i| i =~ /\.pik.gems/}
+      
+      # add new bin dir to the path
+      gem_path.each{|gem_home| new_path.add_before(path, (Pathname(gem_home) + 'bin')) }
+      
+      log.info "PATH=#{new_path}" if debug
+      env['PATH'] = new_path.join
+    end
+
+    def switch_gem_home_to(gem_home)
+      gem_home = Pathname(gem_home).to_windows rescue nil
+      if debug
+        # puts "GEM_PATH=#{gem_home}"
+        puts "GEM_HOME=#{gem_home}"
+      end
+      # env['GEM_PATH'] = gem_home
+      env['GEM_HOME'] = gem_home.to_s
+    end
+
+    #TODO, make this global gemset aware
+    def switch_gem_path_to(gem_path)
+      if debug
+        puts "GEM_PATH=#{gem_path}"
+      end
+      env['GEM_PATH'] = gem_path.to_s    
+    end
+
+    def switch_bundle_path_to(bundle_path)
+      if debug
+        puts "BUNDLE_PATH=#{bundle_path}"
+      end
+      env['BUNDLE_PATH'] = bundle_path    
     end
 
     # Installs a sigint handler.

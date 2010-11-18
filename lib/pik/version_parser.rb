@@ -12,11 +12,11 @@ module Pik
     end
     
     def interpreter
-      @interpreter ||= @parts[1]
+      @interpreter ||= @parts[0]
     end
     
     def version
-      md = @parts[2].match(/\d\.\d\.\d\.\d|\d\.\d\.\d/)
+      md = @parts[1].match(/\d\.\d\.\d\.\d|\d\.\d\.\d/)
       md[0] if md
     end
     
@@ -37,13 +37,18 @@ module Pik
     def patchlevel
       match(/patchlevel (\d+)|\dp(\d+)/) if interpreter == 'ruby'
     end
+
+    def dev
+      match(/(dev)/) if interpreter == 'ruby'
+    end
     
     def full_version
-      match(/.+: (.+)/)
+      @version
     end
 
     def short_version
       pl = "-p#{patchlevel}" if patchlevel
+      pl = "-#{dev}" if dev
       diff = "-#{differentiator}" if differentiator
       "#{interpreter.downcase}-#{version}#{pl}#{diff}"
     end

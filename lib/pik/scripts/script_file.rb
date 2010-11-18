@@ -30,6 +30,10 @@ module Pik
       @lines.reject!{ |i| i =~ re }
     end
 
+    def []=(variable,value)
+      set(variable => value)
+    end
+
     def to_s
       @lines.join("\n")
     end

@@ -1,6 +1,6 @@
 # -*- ruby -*-
-require 'win32console'
-require 'autotest/restart'
+
+# require 'autotest/restart'
 
 Autotest.add_hook :initialize do |at|
   # at.extra_files << "../some/external/dependency.rb"
@@ -13,13 +13,6 @@ Autotest.add_hook :initialize do |at|
   at.add_exception 'tools'
   at.add_exception 'features'
   
-  # at.add_mapping(/dependency.rb/) do |f, _|
-  #   at.files_matching(/test_.*rb$/)
-  # end
-
-  # %w(TestA TestB).each do |klass|
-  #   at.extra_class_map[klass] = "test/test_misc.rb"
-  # end
 end
 
 # Autotest.add_hook :run_command do |at|

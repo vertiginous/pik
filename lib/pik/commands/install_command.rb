@@ -18,13 +18,17 @@ module Pik
     
     def execute
       #TODO: Should check for arguments.
-      implementation   = Implementations[@args.shift]
-      @target, package = implementation.find(*@args)
-      @target          = install_root + "#{implementation.name}-#{@target.gsub('.','')}"
-      file             = download(package)
-
-      extract(@target, file)
-      implementation.after_install(self)
+      packages         = args.first.split(',')
+      known            = Implementations.known
+      packages.each{|pkg|
+        target           = self.class.choose_from(pkg, known.keys).first
+        package          = known[target][:url]
+        implementation   = known[target][:implementation]
+        @target          = install_root + target
+        file             = download(package)
+        extract(@target, file)
+        implementation.after_install(self)
+      }
     end
     
     def command_options
@@ -40,8 +44,8 @@ module Pik
     # install the latest version of JRuby (currently 1.4.0RC1)
     >pik install jruby
 
-    # install the latest 1.8 version of MinGW Ruby 
-    >pik install ruby 1.8    
+    # install the latest 1.8.7 version of MinGW Ruby 
+    >pik install 1.8.7
 
 SEP
       options.separator sep  
@@ -49,7 +53,7 @@ SEP
     
     def download(package, download_dir_=download_dir)   
       target = download_dir_ + package. split('/').last
-      @log.info "Downloading:  #{package} \n   to:  #{target.windows}"
+      @log.info "Downloading:  #{package} \n      to:  #{target.windows}"
       URI.download(package, target.to_s, {:progress => true})
       puts
       return target
@@ -68,7 +72,7 @@ SEP
     def seven_zip(target, file)
       file = Pathname(file)
       seven_zip = Which::SevenZip.exe.basename 
-      @log.info "Extracting:  #{file.windows}\n   to:  #{target}" #if verbose
+      @log.info "Extracting:  #{file.windows}\n      to:  #{target}" #if verbose
       system("#{seven_zip} x -y -o\"#{target}\" \"#{file.windows}\" > NUL")
     end
     

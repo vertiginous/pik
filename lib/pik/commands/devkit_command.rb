@@ -6,24 +6,22 @@ module Pik
 
     def execute
       if @args.include? 'update'
-        puts "Updating devkit batch files for:"
-        config.each{|ruby_version, ruby_config|
-             ver = Pik::VersionParser.parse(ruby_version)
-             if ver.platform =~ /mingw/
-               puts "   #{ver.full_version}"
-               write_batch_files(ruby_config[:path])
-             end
-            config.global[:devkit]
-          }
+        versions = config.map{|ruby_version, ruby_config| ruby_config if ruby_config[:version] =~ /mingw/ }.compact
+        write_batch_files(versions)
       else
         help
       end
     end
-  
-    def write_batch_files(path)
-      write_make(path)
-      write_sh(path)
-      write_gcc(path)
+
+    def write_batch_files(versions)
+      log.info "Adding devkit batch files for:"
+      versions.each{|cfg|
+        puts "      #{cfg[:version]}"
+        path = cfg[:path]
+        write_make(path)
+        write_sh(path)
+        write_gcc(path)
+      }
     end
     
     def write_make(path)
