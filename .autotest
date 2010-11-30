@@ -1,5 +1,4 @@
 # -*- ruby -*-
-require 'win32console'
 require 'autotest/restart'
 
 Autotest.add_hook :initialize do |at|

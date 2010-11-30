@@ -1,0 +1,4 @@
+--colour
+--require=ostruct
+--require=rubygems
+--require=lib/pik
