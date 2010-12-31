@@ -2,32 +2,27 @@ module Pik
 
   class ScriptFile
 
-    attr_accessor :lines, :file_name
+    attr_accessor :lines
 
     def initialize(file)
       file = file.to_s
       file += extname unless file =~ /#{extname}$/
       @file = Pathname.new(file)
       @lines = [header]
-      yield self if block_given?
+      if block_given?
+        yield self
+        write
+      end
     end
     
     def path
       @file
     end
 
-    def extname
-      raise
-    end
-
     def echo(string='.')
       string = ' ' + string unless string == '.'
       @lines << "ECHO#{string}"
       self
-    end
-
-    def remove_line(re)
-      @lines.reject!{ |i| i =~ re }
     end
 
     def to_s

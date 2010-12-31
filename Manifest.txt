@@ -58,7 +58,7 @@ lib/pik/implementations.rb
 lib/pik/options.rb
 lib/pik/scripts/bash_file.rb
 lib/pik/scripts/batch_file.rb
-lib/pik/scripts/ps_file.rb
+lib/pik/scripts/powershell_file.rb
 lib/pik/scripts/script_file.rb
 lib/pik/search_path.rb
 lib/pik/version_parser.rb

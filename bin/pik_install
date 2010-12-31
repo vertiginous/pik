@@ -62,7 +62,7 @@ pik_path=#{bash_install_dir}
 
 function pik  {
   $pik_path/pik_runner.exe pik.sh $@
-  [[ -s $USERPROFILE/.pik/pik.sh ]] && source $USERPROFILE/.pik/pik.sh
+  [[ -s ~/.pik/pik.sh ]] && source ~/.pik/pik.sh
 } 
 PIKRC
 puts
@@ -90,6 +90,6 @@ puts
 puts bash_msg =<<BASH_MSG
 if you want to use pik with git bash, add the following line to your ~/.bashrc:
 
-  [[ -s $USERPROFILE/.pik/.pikrc ]] && source $USERPROFILE/.pik/.pikrc
+  [[ -s ~/.pik/.pikrc ]] && source ~/.pik/.pikrc
 
 BASH_MSG
