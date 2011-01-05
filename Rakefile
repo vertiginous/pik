@@ -42,7 +42,7 @@ end
 file 'tools/pik_runner.exe', :needs => ['tools/pik_runner.exy'] do
   Dir.chdir 'tools' do
     sh('ruby -S exerb pik_runner.exy')
-    sh('upx -9 pik_runner.exe') unless ENV['QUICK']
+    sh('upx --lzma pik_runner.exe') unless ENV['QUICK']
   end
 end
 
