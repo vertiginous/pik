@@ -80,7 +80,7 @@ module Pik
       options.program_name = "pik #{self.class.names.join('|')}"
       command_options
       parse_options
-      create(PIK_HOME) unless PIK_HOME.exist?
+      create(Pik.home) unless Pik.home.exist?
       delete_old_pik_script
     end
 

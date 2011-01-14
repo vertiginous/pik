@@ -7,7 +7,7 @@ module Pik
     attr_reader :global
       
     def initialize
-      @file = File.join(PIK_HOME, 'config.yml')
+      @file = File.join(Pik.home, 'config.yml')
       @global = {}
       super
       if File.exists? @file

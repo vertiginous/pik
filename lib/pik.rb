@@ -52,25 +52,36 @@ module Pik
     '.sh'  => BashFile 
   }
 
-  def self.print_error(error)
+  extend self
+
+  def print_error(error)
     puts "\nThere was an error."
     puts " Error: #{error.message}\n\n"
     puts error.backtrace.map{|m| "  in: #{m}" }
     puts
   end
+
+  def exe
+    @exe ||= if defined?(ExerbRuntime)
+      Pathname(File.expand_path(ExerbRuntime.filepath))
+    else
+      File.expand_path($0)
+    end
+  end
+
+  def home
+    @home ||= Pathname.new( ENV['HOME'] || ENV['USERPROFILE'] ) + '.pik'
+  end
   
 end
 
-
-Pik::Commands.deprecate(:checkup => "The checkup command is deprecated, using the info command instead.")
-Pik::Commands.deprecate(:cu => "The cu command is deprecated, using the info command instead.")
-
-PIK_HOME    = Pathname.new( ENV['USERPROFILE'] ) + '.pik'
+# TODO: Delete this
+# Pik.home    = Pathname.new( ENV['USERPROFILE'] ) + '.pik'
 
 if defined?(ExerbRuntime) || $0 =~ /pik_runner/
   PIK_SCRIPT  = Pathname.new(ARGV.shift).ruby
   SCRIPT_LANG = Pik::Scripts[PIK_SCRIPT.extname]
-  SCRIPT_FILE = SCRIPT_LANG.new(PIK_HOME + 'pik')
+  SCRIPT_FILE = SCRIPT_LANG.new(Pik.home + 'pik')
 else
-  SCRIPT_FILE = Pik::BatchFile.new(PIK_HOME + 'pik')
+  SCRIPT_FILE = Pik::BatchFile.new(Pik.home + 'pik')
 end

@@ -13,8 +13,8 @@ module Pik
     
     def initialize(args=ARGV, config_=nil)
       super
-      @download_dir = config.global[:download_dir] || PIK_HOME + 'downloads'
-      @install_root = config.global[:install_dir]  || PIK_HOME + 'rubies'
+      @download_dir = config.global[:download_dir] || Pik.home + 'downloads'
+      @install_root = config.global[:install_dir]  || Pik.home + 'rubies'
       FileUtils.mkdir_p @download_dir.to_s
     end
     
@@ -56,7 +56,7 @@ SEP
     end
     
     def extract(target, file)
-      if Which::SevenZip.exe
+      if Which::SevenZip.exe || Which::SevenZip.exe(Pik.exe.dirname)
         FileUtils.mkdir_p target
         extract_(file, target)
       else
@@ -67,7 +67,7 @@ SEP
     
     def seven_zip(target, file)
       file = Pathname(file)
-      seven_zip = Which::SevenZip.exe.basename 
+      seven_zip = Which::SevenZip.exe || Which::SevenZip.exe(Pik.exe.dirname)
       puts "** Extracting:  #{file.windows}\n   to:  #{target}" #if verbose
       system("#{seven_zip} x -y -o\"#{target}\" \"#{file.windows}\" > NUL")
       puts 'done'
