@@ -7,29 +7,42 @@ module Pik
 
     attr_reader :verbose, :remote
     
-    def execute 
-      if remote
+    def execute
+      case @args.first
+      when 'known' 
         remote_list
+      when 'default'
+        default_list
       else
-        list
+        if remote
+          remote_list
+        else
+         list
+        end
       end
     end
     
     def remote_list
       puts Implementations.list.to_yaml
     end
+
+    def default_list
+      puts "Default Ruby\n\n"
+      puts layout(config.global[:default], config[config.global[:default]])
+      puts
+    end
     
     def list
       config.sort.each do |name, conf|
         puts layout(name, conf)
-        puts conf.map{|k,v| "       %s: %s" % [k, v]} + ["\n"] if verbose
+        puts conf.map{|k,v| "        %s: %s" % [k, v]} + ["\n"] if verbose
       end
     end
     
     private
     
     def layout(name, conf)
-      name = current?(conf) ? "* #{name}" : "  #{name}"
+      name = current?(conf) ? "=> #{name}" : "   #{name}"
       if name.length > columns
         remainder = -(name.length - columns + 5)
         "#{name[0,columns-5]}...#{"         ...%s" % name[remainder..-1] if verbose}"
@@ -49,7 +62,7 @@ module Pik
     def columns
       @hl.output_cols
     end
-    
+
     def command_options
       super
       @options.on("--verbose", "-v",
