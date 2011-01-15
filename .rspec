@@ -1,4 +1,5 @@
 --colour
+--fail-fast
 --require=ostruct
 --require=rubygems
 --require=lib/pik
