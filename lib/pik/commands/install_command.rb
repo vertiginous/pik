@@ -133,7 +133,7 @@ SEP
           bsd_tar_extract(target, file, options)
         when /(^.+)\.tgz$/
           bsd_tar_extract(target, file, options)
-        when /(^.+\.zip$)/
+        when /(^.+\.zip$)/, /(^.+\.7z$)/
           seven_zip(target, $1)
         else
           raise "Unknown file extension! (for file #{file})"
