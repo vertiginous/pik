@@ -6,6 +6,7 @@ module Pik
     include ConfigFileEditor
 
     def execute
+      puts "** Refreshing the list of installed rubies."
       old_config = @config.dup
       @config.clear
       adder = Pik::Add.new([], @config)

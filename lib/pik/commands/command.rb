@@ -110,19 +110,7 @@ module Pik
     end
     
     def pik_version
-      "pik " + Pik::VERSION
-    end
-   
-    def current_version?(string)
-      string == get_version
-    end
-        
-    def get_version(path=Which::Ruby.find)
-      cmd = Which::Ruby.exe(path)
-      ruby_ver = `"#{cmd}" -v`
-      ruby_ver =~ /ruby (\d\.\d\.\d)/i
-      major    = $1.gsub('.','')
-      "#{major}: #{ruby_ver.strip}"
+      "pik #{Pik::VERSION}\n by Gordon Thiesfeld (gthiesfeld@gmail.com)" 
     end
     
     def find_config_from_path(path=Which::Ruby.find)

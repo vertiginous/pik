@@ -3,30 +3,32 @@ module Pik
   
   class Default < Command
   
-    it "Switches back to the default settings."
+    it "Switches to the default ruby."
   
     attr_accessor :verbose
   
     include ScriptFileEditor
   
     def execute
-      sys = WindowsEnv.system
-      usr = WindowsEnv.user
-      new_path = [sys['PATH'],usr['PATH']].compact.join(';')
-      @script.set('PATH' => SearchPath.new(new_path) )
-      @script.set('GEM_PATH' => usr['GEM_PATH'] || sys['GEM_PATH'] )
-      @script.set('GEM_HOME' => usr['GEM_HOME'] || sys['GEM_HOME'] )
-      echo_ruby_version(Which::Ruby.find(new_path)) if verbose
-    end
-    
-    def command_options
-      super
-      @options.on("--verbose", "-v",
-         "Verbose output"
-         ) do |value|
-        @verbose = value
+      if ruby = config.global[:default]
+        use = Pik::Use.new([ruby])
+        use.execute
+        use.close
+      else
+        msg =  "Error: You must define a default ruby first.  Run:\n\n"
+        msg << "   pik use [ruby] --default\n\n"
+        abort msg
       end
     end
+    
+    # def command_options
+    #   super
+    #   @options.on("--verbose", "-v",
+    #      "Verbose output"
+    #      ) do |value|
+    #     @verbose = value
+    #   end
+    # end
   
   end
 

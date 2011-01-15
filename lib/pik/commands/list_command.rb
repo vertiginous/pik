@@ -20,11 +20,9 @@ module Pik
     end
     
     def list
-      
       config.sort.each do |name, conf|
         puts layout(name, conf)
         puts conf.map{|k,v| "       %s: %s" % [k, v]} + ["\n"] if verbose
-        
       end
     end
     

@@ -5,13 +5,14 @@ module Pik
     aka :switch, :sw
     it "Switches ruby versions based on patterns."
     include ScriptFileEditor
+    include ConfigFileEditor
     
-    attr_accessor :global
     attr_accessor :gem_home
     attr_accessor :verbose
     
     def execute
       abort('Nothing matches:') unless new_ver = self.class.choose_from(@args, @config)
+      config.global[:default] = new_ver
       switch_path_to(@config[new_ver])
       switch_gem_home_to(@config[new_ver][:gem_home])
       echo_ruby_version(@config[new_ver][:path]) if verbose
@@ -25,6 +26,13 @@ module Pik
          ) do |value|
         @verbose = true
       end
+
+      options.on("--default",
+         "Set the default interpreter"
+         ) do |value|
+        @default = true
+      end
+
 
       sep =<<SEP
   Examples:
