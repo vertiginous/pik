@@ -5,28 +5,29 @@ module Pik
 
   class ConfigFile
     extend Forwardable
-    attr_reader :global
+    attr_reader :global, :rubies
       
     def initialize
       @file = File.join(Pik.home, 'config.yml')
-      @config = {}
+      @rubies = {}
       @global = {}
       super
       if File.exists? @file
         contents = File.read( @file )
         unless contents.empty?
           documents = YAML.load_stream( contents )  
-          @config.update( documents[0] )
+          @rubies.update( documents[0] )
           @global.update( documents[1] ) if documents[1]
         end
       end
     end
 
-    def_delegators :@config, :[], :[]=, :clear, :sort, :find, :keys, :delete
+    def_delegators :@rubies, :[], :[]=, :clear, :sort, :find, :keys, 
+      :delete, :each
 
     def write
       File.open(@file, 'w')do |f| 
-        f.puts YAML.dump(@config), YAML.dump(@global) 
+        f.puts YAML.dump(@rubies), YAML.dump(@global) 
       end
     end
 

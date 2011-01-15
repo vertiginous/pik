@@ -7,8 +7,8 @@ module Pik
 
     def execute
       puts "** Refreshing the list of installed rubies."
-      old_config = @config.dup
-      @config.clear
+      old_config = @config.rubies.dup
+      @config.rubies.clear
       adder = Pik::Add.new([], @config)
       old_config.each do |version,hash|
         adder.add(hash[:path])
