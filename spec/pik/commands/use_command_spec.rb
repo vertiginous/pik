@@ -13,11 +13,6 @@ describe Pik::Use do
   it "should have an alias of use" do
     Pik::Use.names.should include(:use)
   end
-  
-  it "should have a global option" #do
-  #   sw = Pik::Use.new(['-g'])
-  #   sw.global.should be_true
-  # end
 
   it "should have a gem_home option" # do
   #   sw = Pik::Use.new(['-m', 'test'])
