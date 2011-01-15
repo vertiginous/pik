@@ -22,7 +22,7 @@ module Pik
       end
     end
 
-    def_delegators :@config, :[], :[]=, :clear, :sort, :find, :keys
+    def_delegators :@config, :[], :[]=, :clear, :sort, :find, :keys, :delete
 
     def write
       File.open(@file, 'w')do |f| 
