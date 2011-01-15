@@ -7,8 +7,6 @@ module Pik
   
     attr_accessor :verbose
   
-    include ScriptFileEditor
-  
     def execute
       if ruby = config.global[:default]
         use = Pik::Use.new([ruby])
@@ -20,15 +18,6 @@ module Pik
         abort msg
       end
     end
-    
-    # def command_options
-    #   super
-    #   @options.on("--verbose", "-v",
-    #      "Verbose output"
-    #      ) do |value|
-    #     @verbose = value
-    #   end
-    # end
   
   end
 

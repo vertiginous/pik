@@ -7,8 +7,8 @@ module Pik
     include ScriptFileEditor
     include ConfigFileEditor
     
-    attr_accessor :gem_home
     attr_accessor :verbose
+    attr_accessor :default
     
     def execute
       abort('Nothing matches:') unless new_ver = self.class.choose_from(@args, @config)

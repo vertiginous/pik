@@ -1,28 +1,32 @@
 require 'yaml'
+require 'forwardable'
 
 module Pik
 
-  class ConfigFile < Hash
-  
+  class ConfigFile
+    extend Forwardable
     attr_reader :global
       
     def initialize
       @file = File.join(Pik.home, 'config.yml')
+      @config = {}
       @global = {}
       super
       if File.exists? @file
         contents = File.read( @file )
         unless contents.empty?
           documents = YAML.load_stream( contents )  
-          self.update( documents[0] )
+          @config.update( documents[0] )
           @global.update( documents[1] ) if documents[1]
         end
       end
     end
 
+    def_delegators :@config, :[], :[]=, :clear, :sort, :find, :keys
+
     def write
       File.open(@file, 'w')do |f| 
-        f.puts YAML::dump_stream( Hash[self]), YAML.dump(global) 
+        f.puts YAML.dump(@config), YAML.dump(@global) 
       end
     end
 
