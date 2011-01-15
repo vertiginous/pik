@@ -1,6 +1,10 @@
 
 describe Pik::Add do
 
+  before(:each) do
+    @cmd = Pik::Add.new([])
+  end  
+ 
   it "should have a summary" do
     Pik::Add.summary.should eql("Adds another ruby location to pik.")
   end

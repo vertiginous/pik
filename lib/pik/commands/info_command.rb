@@ -10,11 +10,11 @@ module Pik
       puts pik_version
       
       ruby = check_path
-      
+
       ruby_version = find_config_from_path(ruby)
       current = config[ruby_version]
       gem_home = current[:gem_home] || actual_gem_home
-      ruby_version = Pik::VersionParser.parse(ruby_version)
+      ruby_version = Pik::VersionParser.parse(current[:version])
 
       puts info =<<INFO
 
@@ -75,7 +75,7 @@ MSG
 
 Pik info will not work unless there is a version of ruby in the path.
 
-You can use pik switch to add one.
+You can use pik use to add one.
 MSG
     end
     

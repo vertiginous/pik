@@ -23,9 +23,12 @@ module Pik
           version = get_version(path)
           version = modify_version(version) if config[version]
           path    = Pathname(path.expand_path.to_ruby)
-          puts "** Adding:  #{version}\n Located at:  #{path}\n"
-          @config[version] = {}
-          @config[version][:path] = path
+
+          puts "** Adding:  #{version.short_version}\n Located at:  #{path}\n"
+          
+          @config[version.short_version]           = {}
+          @config[version.short_version][:path]    = path
+          @config[version.short_version][:version] = version.full_version
         end
       else
         puts "Couldn't find a Ruby version at #{path}"
@@ -40,6 +43,12 @@ module Pik
         @interactive = value
       end 
     end    
+
+    def get_version(path=Which::Ruby.find)
+      cmd = Which::Ruby.exe(path)
+      ruby_ver = `"#{cmd}" -v`
+      version  = VersionParser.parse(ruby_ver)
+    end
 
     def add_interactive
       @hl.choose do |menu|  
