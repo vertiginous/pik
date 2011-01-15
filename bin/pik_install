@@ -47,7 +47,7 @@ begin
   rmdir(old_dir, :verbose=> true) if File.exist? old_dir
 rescue Errno::ENOTEMPTY
   puts "warning: can't delete #{old_dir}, directory not empty"
-  puts "continuing intall..."
+  puts "continuing install..."
 end
 
 puts "Installing to #{install_dir}\n\n"
