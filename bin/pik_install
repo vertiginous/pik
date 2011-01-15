@@ -27,7 +27,7 @@ puts "Thank you for using pik.\n\n"
 
 install_dir      = ARGV.first
      
-pik_home         = File.join(ENV['USERPROFILE'], '.pik')
+pik_home         = File.join(ENV['HOME'] || ENV['USERPROFILE'], '.pik')
 
 src_dir          = File.join(File.dirname(File.dirname(__FILE__)), 'tools')
 
@@ -39,7 +39,7 @@ mkdir_p pik_home,    :verbose => true
 old_dir = File.join(install_dir, 'pik')
 old_pik = File.join(old_dir, 'pik_runner.exe')
 if File.exist? old_pik
-  puts "cleaning up old files"
+  puts "cleaning up old files and directories"
   rm old_pik,    :verbose => true
 end
 
