@@ -19,10 +19,15 @@ module Pik
     end
     
     def execute
-      implementation  = Implementations[@args.shift]
-      @target, package = implementation.find(*@args)
-      @target          = @install_root + "#{implementation.name}-#{@target.gsub('.','')}"
-      file            = download(package)
+      implementation   = Implementations[@args.shift]
+      ver, package     = implementation.find(*@args)
+      ruby             = "#{implementation.name}-#{ver}"
+      puts "** Installing #{ruby}\n\n"
+      @target          = @install_root + ruby
+      
+      handle_target if @target.exist?
+      
+      file = download(package)
       extract(@target, file)
       implementation.after_install(self)
     end
@@ -44,9 +49,25 @@ module Pik
     >pik install ruby 1.8    
 
 SEP
-      options.separator sep  
+      options.separator sep
+      options.on("--overwrite", "Overwrite existing installation") do |value|
+        @overwrite = value
+      end 
     end
     
+    def handle_target
+      if @overwrite
+        puts "** Removing #{@target}\n\n"
+        FileUtils.rm_rf @target
+      else
+        msg =  "\nThe directory '#{@target}' already exists.\n"
+        msg << "Run:\n\n   'pik install --overwrite [ruby]'\n\n" 
+        msg << "if you want to replace it.\n"
+        abort msg
+      end
+    end
+
+
     def download(package, download_dir=@download_dir)   
       target = download_dir + package. split('/').last
       puts "** Downloading:  #{package} \n   to:  #{target.windows}\n\n"
@@ -57,7 +78,7 @@ SEP
     
     def extract(target, file)
       if Which::SevenZip.exe || Which::SevenZip.exe(Pik.exe.dirname)
-        FileUtils.mkdir_p target
+        FileUtils.mkdir target
         extract_(file, target)
       else
         download_seven_zip
@@ -69,7 +90,7 @@ SEP
       file = Pathname(file)
       seven_zip = Which::SevenZip.exe || Which::SevenZip.exe(Pik.exe.dirname)
       puts "** Extracting:  #{file.windows}\n   to:  #{target}" #if verbose
-      system("#{seven_zip} x -y -o\"#{target}\" \"#{file.windows}\" > NUL")
+      system("#{seven_zip} x \"#{file.windows}\" -y -aoa -o\"#{target}\" > NUL")
       puts 'done'
     end
     
@@ -77,7 +98,7 @@ SEP
       question = "You need the 7zip utility to extract this file.\n"
       question << "Would you like me to download it? (yes/no)"
       if @hl.agree(question){|answer| answer.default = 'yes' }
-        uri  = 'http://downloads.sourceforge.net/sevenzip/7za465.zip'
+        uri  = 'http://downloads.sourceforge.net/sevenzip/7za920.zip'
         file = download(uri)
         Zip.fake_unzip(file.to_s, /\.exe|\.dll$/, PIK_SCRIPT.dirname.to_s)
       else
@@ -85,56 +106,60 @@ SEP
       end
     end
     
+    def mv_r(src, dest, options = {})
+      if File.directory? src
+        d = File.directory?(dest) ? File.join(dest, File.basename(src)) : dest
+        if File.directory? d
+          Dir.glob(File.join(src, '*')).each do |s|
+            mv_r(s, d, options)
+          end
+        else
+          FileUtils.mv(src, dest, options)
+        end
+      else
+        FileUtils.mv(src, dest, options)
+      end
+    end
+
     def extract_(file, target, options = {})
       fail unless File.directory?(target)
-      
-      # create a temporary folder used to extract files there
-      tmpdir = File.expand_path(File.join(Dir.tmpdir, "extract_sandbox_#{$$}"))
-      FileUtils.mkpath(tmpdir) unless File.exist?(tmpdir)
-    
-      # based on filetypes, extract the intermediate file into the temporary folder
+
+      # based on filetypes, extract the files
       case file
-        # tar.z, tar.gz and tar.bz2 contains .tar files inside, extract into 
-        # temp first
-        when /(^.+\.tar)\.z$/, /(^.+\.tar)\.gz$/, /(^.+\.tar)\.bz2$/
-          seven_zip tmpdir, file
-          seven_zip target, File.join(tmpdir, File.basename($1))
+        # tar.z, tar.gz, tar.bz2 and tar.lzma contains .tar files inside, use bsdtar to
+        # extract the files directly to target directory without the need to first
+        # extract to a temporary directory as when using 7za.exe
+        when /(^.+\.tar)\.z$/, /(^.+\.tar)\.gz$/, /(^.+\.tar)\.bz2$/, /(^.+\.tar)\.lzma$/
+          bsd_tar_extract(target, file, options)
         when /(^.+)\.tgz$/
-          seven_zip tmpdir, file
-          seven_zip target, File.join(tmpdir, "#{File.basename($1)}.tar")
-        when /(^.+\.zip$)/, /(^.+\.7z$)/
+          bsd_tar_extract(target, file, options)
+        when /(^.+\.zip$)/
           seven_zip(target, $1)
         else
           raise "Unknown file extension! (for file #{file})"
       end
-    
+
       # after extraction, lookup for a folder that contains '-' (version number or datestamp)
       folders_in_target = []
       Dir.chdir(target) { folders_in_target = Dir.glob('*') }
-    
+
       # the package was created inside another folder
       # exclude folders packagename-X.Y.Z or packagename-DATE
       # move all the folders within that into target directly.
       folders_in_target.each do |folder|
         next unless File.directory?(File.join(target, folder)) && folder =~ /\-/
-    
+
         # take the folder contents out!, now!
         contents = []
         Dir.chdir(File.join(target, folder)) { contents = Dir.glob('*') }
-    
+
         contents.each do |c|
-          #puts "** Moving out #{c} from #{folder} and drop into #{target}" if Rake.application.options.trace
-          FileUtils.mv File.join(target, folder, c), target, :force => true
+          mv_r File.join(target, folder, c), target
         end
-        
+
         # remove the now empty folder
-        # puts "** Removing #{folder}" if Rake.application.options.trace
         FileUtils.rm_rf File.join(target, folder)
       end
-    
-      # remove the temporary directory
-      # puts "** Removing #{tmpdir}" if Rake.application.options.trace
-      FileUtils.rm_rf tmpdir
     end
     
   end
