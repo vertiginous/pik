@@ -21,14 +21,17 @@ module Pik
           puts "This version has already been added."
         else
           version = get_version(path)
-          version = modify_version(version) if config[version]
+          short_version = version.short_version
+
+          short_version = modify_version(short_version) if config[short_version]
+          
           path    = Pathname(path.expand_path.to_ruby)
 
-          puts "** Adding:  #{version.short_version}\n Located at:  #{path}\n"
+          puts "** Adding:  #{short_version}\n Located at:  #{path}\n"
           
-          @config[version.short_version]           = {}
-          @config[version.short_version][:path]    = path
-          @config[version.short_version][:version] = version.full_version
+          @config[short_version]           = {}
+          @config[short_version][:path]    = path
+          @config[short_version][:version] = version.full_version
         end
       else
         puts "Couldn't find a Ruby version at #{path}"
@@ -73,13 +76,12 @@ module Pik
     end
 
     def modify_version(version)
-      puts "This version appears to exist in another location."
-      puts "Path:  " + config[version][:path]
-      puts "If you'd still like to add this version, you can."
+      puts "This version appears to already be installed at this location:\n\n"
+      puts "  #{config[version][:path]}\n\n"
+      puts "If you'd still like to add this version, you can.\n\n"
       modifier = @hl.ask("Enter a unique name to modify the name of this version. (enter to quit)")
       raise QuitError if modifier.empty?
-      ver = version.split(':')
-      ["#{ver.shift}-#{modifier}", ver].join(':')
+      "#{version}-#{modifier}"
     end
 
   end

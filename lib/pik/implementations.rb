@@ -83,7 +83,10 @@ module Pik
       def subclass
         self.class.to_s.split('::').last
       end
-      alias :name :subclass
+      
+      def name
+        subclass.downcase
+      end
       
       def after_install(install)
         puts

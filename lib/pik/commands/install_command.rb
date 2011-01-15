@@ -19,9 +19,15 @@ module Pik
     end
     
     def execute
-      implementation   = Implementations[@args.shift]
-      ver, package     = implementation.find(*@args)
+      name,ver         = @args.shift.scan(/(.+?)\-(.+)/).first
+      implementation   = Implementations[name]
+      abort "#{name} not found" unless implementation
+      
+      ver, package     = implementation.find(ver)
+      abort "Ruby version not found" unless ver
+
       ruby             = "#{implementation.name}-#{ver}"
+      
       puts "** Installing #{ruby}\n\n"
       @target          = @install_root + ruby
       
