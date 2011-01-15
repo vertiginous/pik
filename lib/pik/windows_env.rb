@@ -1,6 +1,6 @@
 require 'win32/registry'
 require 'Win32API'
-
+require 'forwardable'
 
 class WindowsEnv
 
@@ -30,16 +30,39 @@ class WindowsEnv
     @reg.open(@key, @subkey, name)
   end
 
-  def []=(name, other)
-    if other == nil
-      @env.remove(name)
-    else
-      @env.setproperty('item', name, other)
-    end
+  def []=(name, value)
+    @reg.set(@key, @subkey, name, value)
   end
 
   def has_key?(key)
     !!self[key]
+  end
+
+end
+
+class CommandProcessor < WindowsEnv
+
+  def initialize
+    @key    = :HKEY_CURRENT_USER
+    @subkey = 'Software\Microsoft\Command Processor'
+    @reg    = Reg.new
+  end
+
+end
+
+class AutoRun
+  extend Forwardable
+
+  def initialize
+    @cp = CommandProcessor.new
+    @value = @cp['Autorun'].split('&')
+  end
+
+  def_delegators :@value, :<<, :reject!
+
+  def save
+    p @value.join('&')
+    @cp['Autorun'] = @value.join('&')
   end
 
 end
@@ -76,6 +99,14 @@ class Reg
       return reg_val
     end
   end
+
+  def set(key, subkey, name, value)
+    key   = Win32::Registry.const_get(key)
+    write = Win32::Registry::KEY_WRITE
+    key.open(subkey, write) do |reg|
+      reg.write_s(name, value)
+    end
+  end   
 end
 
 class User
