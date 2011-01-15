@@ -12,7 +12,7 @@ module Pik
     
     def execute
       abort('Nothing matches:') unless new_ver = self.class.choose_from(@args, @config)
-      config.global[:default] = new_ver
+      @config.global[:default] = new_ver if default
       switch_path_to(@config[new_ver])
       switch_gem_home_to(@config[new_ver][:gem_home])
       echo_ruby_version(@config[new_ver][:path]) if verbose
