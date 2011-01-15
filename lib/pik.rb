@@ -20,7 +20,6 @@ require 'pik/commands'
 require 'pik/commands/config_file_editor'
 require 'pik/commands/script_file_editor'
 require 'pik/commands/command'
-require 'pik/commands/devkit_command'
 require 'pik/commands/install_command'
 require 'pik/commands/list_command'
 require 'pik/commands/add_command'
@@ -76,9 +75,6 @@ module Pik
   end
   
 end
-
-# TODO: Delete this
-# Pik.home    = Pathname.new( ENV['USERPROFILE'] ) + '.pik'
 
 if defined?(ExerbRuntime) || $0 =~ /pik_runner/
   PIK_SCRIPT  = Pathname.new(ARGV.shift).ruby
