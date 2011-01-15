@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-   <Product Id="6c339350-5fcb-012d-9c70-0022fa95c22f" Name="Pik" Language="1033" Version="0.2.8" Manufacturer="Gordon Thiesfeld" UpgradeCode="4729D701-5814-012D-9C5F-0022FA95C22F">
+   <Product Id="8e7f1a90-032b-012e-9c85-0022fa95c22f" Name="Pik" Language="1033" Version="0.3.0" Manufacturer="Gordon Thiesfeld" UpgradeCode="4729D701-5814-012D-9C5F-0022FA95C22F">
       <Package Description="The Ruby version manager for Windows." Manufacturer="Gordon Thiesfeld" InstallerVersion="301" Compressed="yes"/>
                
       <Media Id="1" Cabinet="pik.cab" EmbedCab="yes" CompressionLevel="high"/>
 
       <Upgrade Id="4729D701-5814-012D-9C5F-0022FA95C22F">
-          <UpgradeVersion Property="OLDAPPFOUND" IncludeMinimum="yes" Minimum="0.0.0.0" IncludeMaximum="no" Maximum="0.2.8"/>
-          <UpgradeVersion Property="NEWAPPFOUND" IncludeMinimum="no" Minimum="0.2.8" OnlyDetect="yes"/>
+          <UpgradeVersion Property="OLDAPPFOUND" IncludeMinimum="yes" Minimum="0.0.0.0" IncludeMaximum="no" Maximum="0.3.0"/>
+          <UpgradeVersion Property="NEWAPPFOUND" IncludeMinimum="no" Minimum="0.3.0" OnlyDetect="yes"/>
       </Upgrade>
       
       <Property Id="ARPURLINFOABOUT">http://github.com/vertiginous/pik</Property>
@@ -15,7 +15,7 @@
       <!-- <Property Id="ALREADYINPATH"><![CDATA[ [%PATH] >< [INSTALLDIR] ]]></Property> -->
       <!-- <Property Id="ALLUSERS">1</Property> -->
       <Property Id="APPENDSYSTEMPATH" Value="1"/>
-      <Property Id='ROOTDRIVE' Value='$(env.SystemDrive)' />
+      <Property Id="ROOTDRIVE" Value="$(env.SystemDrive)"/>
 
       
       <Directory Id="TARGETDIR" Name="SourceDir">

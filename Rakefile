@@ -5,6 +5,8 @@ require 'rbconfig'
 require 'uuid'
 require 'hoe'
 
+require 'rake/packagetask'
+
 $LOAD_PATH.unshift('lib')
 require 'pik'
 
@@ -65,6 +67,10 @@ task :reinstall, :needs => [:clobber_exy, :install]
 
 task :package => :rebuild
 
+Rake::PackageTask.new('pik', 'latest') do |p|
+  p.need_zip = true
+  p.package_files.include("tools/pik_runner.exe",'tools/pik.bat','tools/pik.ps1')
+end
 
 Hoe.plugin :git
 

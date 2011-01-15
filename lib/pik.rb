@@ -45,7 +45,7 @@ require 'pik/windows_env'
 require 'pik/which'
 
 module Pik
-  VERSION = '0.2.8'
+  VERSION = '0.3.0'
   Scripts = {
     '.cmd' => BatchFile, 
     '.bat' => BatchFile, 
