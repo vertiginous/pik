@@ -2,7 +2,8 @@ module Pik
 
   class  Run < Command
   	
-  	it "Runs command with all versions of ruby that pik is aware of."
+  	it "Executes shell command with all versions of ruby that pik is aware of."
+    aka :exec
 
     def execute
       check_args
@@ -36,9 +37,9 @@ module Pik
       sep =<<SEP
   Examples:
 
-    C:\\>pik run PATH
+    C:\\>pik exec PATH
 
-    C:\\>pik run rake spec
+    C:\\>pik exec rake spec
 
 SEP
     end
