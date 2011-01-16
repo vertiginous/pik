@@ -10,7 +10,10 @@ module Pik
     
     def execute
       to_remove = self.class.choose_from(@args, @config)
-      raise QuitError unless to_remove
+      unless to_remove
+        puts "Couldn't find the version you're looking for '#{@args.join(' ')}'."
+        raise QuitError
+      end
       if force || @hl.agree("Are you sure you'd like to uninstall '#{to_remove}'?"){|answer| answer.default = 'yes' }
         puts "** Deleting #{config[to_remove][:path].dirname}"
         path = config[to_remove][:path].dirname
