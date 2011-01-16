@@ -19,23 +19,20 @@ module Pik
     end
     
     def execute
-      name,ver         = @args.shift.scan(/(.+?)\-(.+)/).first
-      implementation   = Implementations[name]
-      abort "#{name} not found" unless implementation
+      name = @args.shift
+      ruby = Implementations[name]
+      abort "#{name} not found" unless ruby
       
-      ver, package     = implementation.find(ver)
-      abort "Ruby version not found" unless ver
-
-      ruby             = "#{implementation.name}-#{ver}"
+      puts "** Installing #{ruby[:name]}\n\n"
       
-      puts "** Installing #{ruby}\n\n"
-      @target          = @install_root + ruby
-      
+      @target = @install_root + ruby[:name]
       handle_target if @target.exist?
       
-      file = download(package)
+      file = download(ruby)
+
       extract(@target, file)
-      implementation.after_install(self)
+
+      add(@target)
     end
     
     def command_options
@@ -74,30 +71,38 @@ SEP
     end
 
 
-    def download(package, download_dir=@download_dir)   
-      target = download_dir + package. split('/').last
-      puts "** Downloading:  #{package} \n   to:  #{target.windows}\n\n"
-      URI.download(package, target.to_s, {:progress => true})
-      puts
+    def download(ruby, download_dir=@download_dir)
+      target = ruby[:url].split('/').last
+      target = "#{ruby[:name]}#{ruby[:extname]}" if  target.include?('?')
+      target = download_dir + target
+      puts "** Downloading:  #{ruby[:url]} \n   to:  #{target.windows}\n\n"
+      URI.download(ruby[:url], target.to_s, {:progress => true, :verbose => true})
       return target
     end
     
     def extract(target, file)
       if Which::SevenZip.exe || Which::SevenZip.exe(Pik.exe.dirname)
-        FileUtils.mkdir target
+        FileUtils.mkdir_p target
         extract_(file, target)
       else
         download_seven_zip
         extract(target, file)
       end  
     end
+
+      def add(target)
+        puts
+        p = Pik::Add.new([target + 'bin'], @config)
+        p.execute
+        p.close
+      end
     
     def seven_zip(target, file)
       file = Pathname(file)
       seven_zip = Which::SevenZip.exe || Which::SevenZip.exe(Pik.exe.dirname)
       puts "** Extracting:  #{file.windows}\n   to:  #{target}" #if verbose
       system("#{seven_zip} x \"#{file.windows}\" -y -aoa -o\"#{target}\" > NUL")
-      puts 'done'
+      puts '   done'
     end
     
     def download_seven_zip

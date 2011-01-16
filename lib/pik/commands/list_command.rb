@@ -23,7 +23,11 @@ module Pik
     end
     
     def remote_list
-      puts Implementations.list.to_yaml
+      Implementations.list.each do |imp, ver|
+        puts "# #{imp}"
+        puts ver
+        puts
+      end
     end
 
     def default_list
@@ -73,6 +77,9 @@ module Pik
       @options.on("--remote", "-r",
          "List remote install packages"
          ) do |value|
+        puts "\nThe --remote parameter is deprecated and will be removed in a"
+        puts "future release.\n\n"
+        puts "use 'pik list known' instead.\n\n"
         @remote = value
       end
     end

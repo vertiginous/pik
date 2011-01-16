@@ -4,11 +4,10 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), 'vendor/lib'))
 require 'yaml'
 require 'pathname'
 require 'fileutils'
-require 'find'
-require 'open-uri'
+# require 'find'
+# require 'open-uri'
 require 'rbconfig'
 
-require 'hpricot'
 require 'highline'
 
 require 'pik/core_ext/pathname'
@@ -71,7 +70,11 @@ module Pik
   end
 
   def home
-    @home ||= Pathname.new( ENV['HOME'] || ENV['USERPROFILE'] ) + '.pik'
+    @home ||= if ENV['PIK_HOME']
+      Pathname( ENV['PIK_HOME'] )
+    else
+      Pathname( ENV['HOME'] || ENV['USERPROFILE'] ) + '.pik'
+    end
   end
   
 end

@@ -1,156 +1,121 @@
 
 module Pik
   
+  module Packages
+
+    extend self
+
+    def [](key)
+      packages[key]
+    end
+
+    def packages
+      @packages ||= YAML.load(read('http://vert.igino.us/pik/packages.yml'))
+    end
+
+    def read(package)
+      uri = URI.parse(package)
+      uri.read rescue ''
+    end
+
+  end
+
   module Implementations
-    
-    def self.[](implementation)
-      self.send(implementation.downcase)
+
+    extend self
+
+    def rubies 
+      @rubies ||= Packages['rubies']
     end
-  
-    def self.ruby
-      Ruby.new
-    end
-    
-    def self.ironruby
-      IronRuby.new
-    end
-    
-    def self.jruby
-      JRuby.new
-    end
-    
-    def self.devkit
-      DevKit.new
-    end
-    
-    def self.method_missing(meth)
-      raise "Pik isn't aware of an implementation called '#{meth}' for Windows."
-    end
-    
-    def self.implementations
-      [ruby, jruby, ironruby, devkit]
-    end
-  
-    def self.list
-      h = {}
-      implementations.each{|i| h[i.subclass] = i.versions  }
+
+    def list
+      h = Hash.new{|h,k| h[k] = [] }
+      rubies.each{|name,data| h[data[:implementation]] << name  }
       h
     end
     
-    class Base
-    
-      def self.find(*args)
-        new.find(*args)
-      end
-      
-      def initialize
-        @url = 'http://rubyforge.org'
-      end
+    def [](key)
+      all_rubies[key]
+    end
 
-      def url
-        @url + @path
+    def all_rubies
+      return @all_rubies if @all_rubies
+      @all_rubies = {}
+      rubies.each do |name, data| 
+        data = data.merge(:name => full(name)) 
+        @all_rubies[full(name)]  = data
+        @all_rubies[short(name)] = data
       end
+      @all_rubies  
+    end
+
+    def full(name)
+      name.gsub(/[\[\]]/,'')
+    end
+
+    def short(name)
+      name.gsub(/\[.+?\]/,'')
+    end
+    
+#     class Base
+    
+#       def self.find(*args)
+#         new.find(*args)
+#       end
       
-      def find(*args)
-        if args.empty?
-          return most_recent
-        else
-          pattern = Regexp.new(Regexp.escape(args.first))
-          versions.select{|v,k| v =~ pattern }.max
-        end
-      end
+#       def initialize
+#         @url = 'http://rubyforge.org'
+#       end
+
+#       def url
+#         @url + @path
+#       end
+      
+#       def find(*args)
+#         if args.empty?
+#           return most_recent
+#         else
+#           pattern = Regexp.new(Regexp.escape(args.first))
+#           versions.select{|v,k| v =~ pattern }.max
+#         end
+#       end
           
-      def most_recent(vers=versions)
-        vers.max
-      end
+#       def most_recent(vers=versions)
+#         vers.max
+#       end
       
-      def versions
-        h = {}
-        Hpricot(read).search("a") do |a|
-          if a_href = a.attributes['href']
-            href, link, version, rc = *a_href.match(@re)
-            h["#{version}#{rc}"] =  @url + link  if version
-          end
-        end
-        h
-      end
+#       def versions
+#         h = {}
+#         Hpricot(read).search("a") do |a|
+#           if a_href = a.attributes['href']
+#             href, link, version, rc = *a_href.match(@re)
+#             h["#{version}#{rc}"] =  @url + link  if version
+#           end
+#         end
+#         h
+#       end
   
-      def read
-        uri = URI.parse(@url+@path)
-        uri.read rescue ''
-      end    
+#       def read
+#         uri = URI.parse(@url+@path)
+#         uri.read rescue ''
+#       end    
   
-      def subclass
-        self.class.to_s.split('::').last
-      end
+#       def subclass
+#         self.class.to_s.split('::').last
+#       end
       
-      def name
-        subclass.downcase
-      end
+#       def name
+#         subclass.downcase
+#       end
       
-      def after_install(install)
-        puts
-        p = Pik::Add.new([install.target + 'bin'], install.config)
-        p.execute
-        p.close
-      end
+#       def after_install(install)
+#         puts
+#         p = Pik::Add.new([install.target + 'bin'], install.config)
+#         p.execute
+#         p.close
+#       end
   
-    end
-    
-    class Ruby < Base
-    
-      # <a href="/frs/download.php/66874/ruby-1.9.1-p243-i386-mingw32-rc1.7z">
-      # <a href="/frs/download.php/62269/ruby-1.9.1-p243-i386-mingw32.7z">
-      def initialize
-        super
-        @path = "/frs/?group_id=167"
-        @re   = /(.+ruby\-(.+)\-i386\-mingw32(.*)\.7z)/
-      end
-    
-    end
-    
-    class IronRuby < Base
-    
-      def initialize
-        super
-        @path = "/frs/?group_id=4359"
-        @re   = /(.+ironruby\-(.*[^ipy])\.zip)/
-      end
-    
-    end
-    
-    class JRuby < Base
-    
-      # <a href='http://jruby.kenai.com/downloads/1.4.0RC3/jruby-bin-1.4.0RC3.zip'>
-      def initialize
-        @url  = ''
-        @path = "http://www.jruby.org/download"
-        @re   = /(.+\-bin\-(.+)\.zip)/
-      end
-
-    end
-    
-    class DevKit < Base
-    
-      def initialize
-        super
-        @path = "/frs/?group_id=167"
-        @re   = /(.+devkit-(.*)-.*\.7z)/
-      end
-      
-      def after_install(install)
-        devkit = install.target + 'devkit'
-        p = Pik::Config.new(["devkit=#{devkit.to_windows}"], install.config)
-        p.execute
-        p.close
-
-        p = Pik::Devkit.new(["update"], install.config)
-        p.execute
-        p.close
-        puts
-      end
-        
-    end  
+#     end
 
   end
   

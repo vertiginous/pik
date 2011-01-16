@@ -2,7 +2,7 @@ require 'rake/packagetask'
 
 task :package => [:rebuild, 'installer:package']
 
-Rake::PackageTask.new('pik', 'latest') do |p|
+Rake::PackageTask.new('pik-update', Pik::VERSION) do |p|
   p.need_zip = true
   p.package_files.include("tools/pik_runner.exe",'tools/pik.bat','tools/pik.ps1')
 end
