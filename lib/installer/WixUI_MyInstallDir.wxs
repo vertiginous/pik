@@ -22,7 +22,6 @@ First-time install dialog sequence:      Maintenance dialog sequence:
 
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Fragment>
-        <WixVariable Id="WixUICostingPopupOptOut" Value="1" Overridable="yes" />
 
         <UI Id="WixUI_MyInstallDir">
             <TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
