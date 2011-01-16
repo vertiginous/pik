@@ -12,7 +12,7 @@ module Pik
     end
     
     def interpreter
-      @interpreter ||= @parts[0]
+      @interpreter ||= @parts[0].downcase if @parts[0]
     end
     
     def version
@@ -22,7 +22,7 @@ module Pik
     
     def date
       case interpreter
-      when 'IronRuby'
+      when 'ironruby'
         nil
       when 'ruby', 'jruby'
         md = @version.match(/\d\d\d\d\-\d\d\-\d\d/)
