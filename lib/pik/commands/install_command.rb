@@ -41,30 +41,30 @@ module Pik
   Choices are: ruby, jruby, or ironruby
   
   If no version is specified, the latest version will be installed.
-  Download and install locations can be configured with 'pik config'.
-  
+  You can see the full list by running 'pik list known'.
+
   Examples:
 
-    # install the latest version of JRuby (currently 1.4.0RC1)
+    # install the latest version of JRuby (currently 1.5.6)
     >pik install jruby
 
-    # install the latest 1.8 version of MinGW Ruby 
-    >pik install ruby 1.8    
+    # install the latest 1.8.7 version of MRI Ruby 
+    >pik install ruby-1.8.7    
 
 SEP
       options.separator sep
-      options.on("--overwrite", "Overwrite existing installation") do |value|
-        @overwrite = value
+      options.on("--force", "Overwrite existing installation") do |value|
+        @force = value
       end 
     end
     
     def handle_target
-      if @overwrite
+      if @force
         puts "** Removing #{@target}\n\n"
         FileUtils.rm_rf @target
       else
         msg =  "\nThe directory '#{@target}' already exists.\n"
-        msg << "Run:\n\n   'pik install --overwrite [ruby]'\n\n" 
+        msg << "Run:\n\n   'pik install --force [ruby]'\n\n" 
         msg << "if you want to replace it.\n"
         abort msg
       end
