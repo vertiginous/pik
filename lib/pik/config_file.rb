@@ -7,8 +7,8 @@ module Pik
     extend Forwardable
     attr_reader :global, :rubies
       
-    def initialize
-      @file = File.join(Pik.home, 'config.yml')
+    def initialize(file = File.join(Pik.home, 'config.yml'))
+      @file = file
       @rubies = {}
       @global = {}
       super

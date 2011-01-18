@@ -6,8 +6,7 @@ module Pik
     
     def execute
       config.global[:tags] ||= Hash.new{|h,k| h[k] = [] }
-      @tag_config = config.dup
-      @tag_config.clear
+      @tag_config = ConfigFile.new('')
       abort self.class.description if @args.empty?
       
       tags = @args.shift.split(',')
