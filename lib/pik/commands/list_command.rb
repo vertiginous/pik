@@ -32,8 +32,8 @@ module Pik
 
     def default_list
       puts "Default Ruby\n\n"
-      if config.global[:default] && config[config.global[:default]]
-        puts layout(config.global[:default], config[config.global[:default]])
+      if default = config.match(config.global[:default])
+        puts layout(*default)
       else
         puts "no default assigned."
         puts "run 'pik use [ruby] --default' to assign one"  

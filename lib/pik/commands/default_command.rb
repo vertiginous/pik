@@ -8,8 +8,9 @@ module Pik
     attr_accessor :verbose
   
     def execute
-      if ruby = config.global[:default]
-        use = Pik::Use.new([ruby])
+      if ruby = config.match(config.global[:default])
+        config.options[:use] = ruby
+        use = Pik::Use.new([], config)
         use.execute
         use.close
       else

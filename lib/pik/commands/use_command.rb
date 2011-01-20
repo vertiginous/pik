@@ -3,6 +3,7 @@ module Pik
   class  Use < Command
    
     it "Switches ruby versions by name."
+    
     include ScriptFileEditor
     include ConfigFileEditor
     
@@ -15,7 +16,7 @@ module Pik
 
       ver_name, ver_config = *new_ver
       
-      @config.global[:default] = VersionPatter.fulll(ver_name) if default
+      @config.global[:default] = VersionPattern.full(ver_name) if default
       
       switch_path_to(ver_config)
       switch_gem_home_to(ver_config[:gem_home])
