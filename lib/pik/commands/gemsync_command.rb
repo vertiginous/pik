@@ -8,7 +8,7 @@ module Pik
     attr_reader :remote, :quiet
     
     def execute
-      source  = self.class.choose_from(@args, config)
+      source  = @config.match(@args.first)
       raise "Couldn't find a version from the pattern given: '#{@args.join(' ')}'" unless source
       current = find_config_from_path
       

@@ -48,38 +48,22 @@ module Pik
       @names ||= [cmd_name]
     end
 
-    def self.choose_from(patterns, config)
-      if patterns.empty?
-        possibles = config.keys  
-      else
-        possibles = patterns.map{|p| config.keys.grep(Regexp.new(Regexp.escape(p.to_s),Regexp::IGNORECASE) ) }
-        possibles = possibles.inject{|m,v| m & v }.flatten.uniq
-      end
-      case possibles.size
-      when 0
-        return nil
-      when 1
-        return possibles.first
-      else
-        hl.say('Select which Ruby you want:')
-        ver = hl.choose(*possibles)
-        return ver
-      end
-    end
-    
-    def self.hl
-      @hl ||= HighLine.new
-    end
+    # def hl
+    #   @hl ||= HighLine.new
+    # end
   
     def initialize(args=ARGV, config_=nil)
       @args    = args
       @options = OptionParser.new
       @config  = config_ || ConfigFile.new
       @hl      = HighLine.new
+      
       add_sigint_handler
+
       options.program_name = "pik #{self.class.names.join('|')}"
       command_options
       parse_options
+      
       create(Pik.home) unless Pik.home.exist?
       delete_old_pik_script
     end

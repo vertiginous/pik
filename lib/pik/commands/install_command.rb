@@ -20,7 +20,7 @@ module Pik
     
     def execute
       name = @args.shift
-      ruby = Implementations[name]
+      ruby = Rubies[name]
       abort "#{name} not found" unless ruby
       
       puts "** Installing #{ruby[:name]}\n\n"

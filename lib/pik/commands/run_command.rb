@@ -7,7 +7,7 @@ module Pik
 
     def execute
       check_args
-      @config.sort.each do |version,hash|
+      rubies.sort.each do |version,hash|
         begin
           switch_path_to(hash)
           switch_gem_home_to(hash[:gem_home])
@@ -15,7 +15,6 @@ module Pik
           system command
           puts
         rescue => e
-          version = version.split(': ')[1..-1].join(': ')
           puts version
           Pik.print_error(e)
         end
@@ -26,7 +25,6 @@ module Pik
       args = @args.map{|a| a.sub(/.*\s.*/m, '"\&"')}.join(' ')
       "#{cmd} #{args}"
     end
-    
     
     def command_options
       super
@@ -81,6 +79,14 @@ SEP
       end
     end
     
+    def rubies
+      if versions = @config.options[:versions]
+        versions.split(',').map{|v| @config.match(v) }
+      else
+        @config
+      end
+    end
+
     def args_required?
       true
     end

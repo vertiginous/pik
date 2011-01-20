@@ -20,18 +20,22 @@ module Pik
         if find_config_from_path(path)
           puts "This version has already been added."
         else
-          version = get_version(path)
-          short_version = version.short_version
-
-          short_version = modify_version(short_version) if config[short_version]
+          version  = get_version(path)
+          name     = version.short_version
+          name     = modify_version(name) if config[name]
+          if found = Rubies[name]
+            name   = found[:pattern]
+          else
+            name = name.gsub(/^(ruby\-)(.+)/, '[\1]\2')
+          end
           
           path    = Pathname(path.expand_path.to_ruby)
 
-          puts "** Adding:  #{short_version}\n Located at:  #{path}\n"
+          puts "** Adding:  #{name}\n Located at:  #{path}\n"
           
-          @config[short_version]           = {}
-          @config[short_version][:path]    = path
-          @config[short_version][:version] = version.full_version
+          @config[name]           = {}
+          @config[name][:path]    = path
+          @config[name][:version] = version.full_version
         end
       else
         puts "Couldn't find a Ruby version at #{path}"

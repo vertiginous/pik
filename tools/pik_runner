@@ -10,21 +10,25 @@ args = ARGV
 begin
   config  = ConfigFile.new
   
-  args_minus_opts = args.reject{|p| p =~ /^-/}
-  
-  command = if args_minus_opts.empty?
-    Help
-  elsif (c = Commands.find(args.first))
+  command = if cmd = Commands.find(args[0])
     args.shift
-    c
-  elsif (choice = Command.choose_from(args_minus_opts, config))
-    args = [choice] + args
+    cmd
+  elsif args[0] =~ /,/ && cmd = Commands.find(args[1])
+    config.options[:versions] = args.shift
+    args.shift
+    cmd
+  elsif version = config.match(args[0])
+    args.shift
+    config.options[:use] = version
     Use
+  else
+    Help
   end
   
-  raise "The command '#{args.join(' ')}' is unknown." unless command
+  
   cmd = command.new(args, config)
   cmd.execute
+
 rescue QuitError
   puts "\nQuitting..."
 rescue => e

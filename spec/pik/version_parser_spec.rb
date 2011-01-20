@@ -2,22 +2,22 @@
 
   [
     ["IronRuby 0.9.1.0 on .NET 2.0.0.0", OpenStruct.new(
-       :interpreter  => "IronRuby",
-       :version      => "0.9.1.0",
+       :interpreter  => "ironruby",
+       :version      => "0.9.1",
        :date         => nil,
        :platform     => ".NET 2.0.0.0",
        :patchlevel   => nil,
        :full_version => "IronRuby 0.9.1.0 on .NET 2.0.0.0",
-       :short_version => "IronRuby-0.9.1.0"
+       :short_version => "ironruby-0.9.1"
       )], 
     ["IronRuby 0.9.2.0 on .NET 2.0.0.0", OpenStruct.new(
-       :interpreter  => "IronRuby",
-       :version      => "0.9.2.0",
+       :interpreter  => "ironruby",
+       :version      => "0.9.2",
        :date         => nil,
        :platform     => ".NET 2.0.0.0",
        :patchlevel   => nil,
        :full_version => "IronRuby 0.9.2.0 on .NET 2.0.0.0",
-       :short_version => "IronRuby-0.9.2.0"
+       :short_version => "ironruby-0.9.2"
       )], 
     ["jruby 1.3.1 (ruby 1.8.6p287) (2009-06-15 2fd6c3d) (Java HotSpot(TM) Client VM 1.6.0_14)    [x86-java]", OpenStruct.new(
        :interpreter  => "jruby",

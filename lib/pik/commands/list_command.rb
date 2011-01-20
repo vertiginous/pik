@@ -23,7 +23,7 @@ module Pik
     end
     
     def remote_list
-      Implementations.list.each do |imp, ver|
+      Rubies.list.each do |imp, ver|
         puts "# #{imp}"
         puts ver
         puts
@@ -32,7 +32,7 @@ module Pik
 
     def default_list
       puts "Default Ruby\n\n"
-      if config.global[:default]
+      if config.global[:default] && config[config.global[:default]]
         puts layout(config.global[:default], config[config.global[:default]])
       else
         puts "no default assigned."
@@ -51,6 +51,7 @@ module Pik
     private
     
     def layout(name, conf)
+      name = VersionPattern.full(name)
       name = current?(conf) ? "=> #{name}" : "   #{name}"
       if name.length > columns
         remainder = -(name.length - columns + 5)

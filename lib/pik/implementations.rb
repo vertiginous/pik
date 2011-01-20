@@ -20,8 +20,8 @@ module Pik
 
   end
 
-  module Implementations
-
+  module Rubies
+    extend VersionPattern
     extend self
 
     def rubies 
@@ -35,28 +35,20 @@ module Pik
     end
     
     def [](key)
-      all_rubies[key]
+      found = all_rubies.find{|names, data| names.include? key }
+      found.last if found
     end
 
     def all_rubies
       return @all_rubies if @all_rubies
       @all_rubies = {}
       rubies.each do |name, data| 
-        data = data.merge(:name => full(name)) 
-        @all_rubies[full(name)]  = data
-        @all_rubies[short(name)] = data
+        names = parse(name)
+        @all_rubies[names] = data.merge!(:name => full(name), :pattern => name)
       end
       @all_rubies  
     end
 
-    def full(name)
-      name.gsub(/[\[\]]/,'')
-    end
-
-    def short(name)
-      name.gsub(/\[.+?\]/,'')
-    end
-    
 #     class Base
     
 #       def self.find(*args)

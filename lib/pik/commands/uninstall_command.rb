@@ -9,7 +9,7 @@ module Pik
     attr_reader :force
     
     def execute
-      to_remove = self.class.choose_from(@args, @config)
+      to_remove = @config.match(@args.first)
       unless to_remove
         puts "Couldn't find the version you're looking for '#{@args.join(' ')}'."
         raise QuitError

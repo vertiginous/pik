@@ -5,13 +5,13 @@ module Pik
 
   class ConfigFile
     extend Forwardable
-    attr_reader :global, :rubies
+    attr_reader :global, :rubies, :options
       
     def initialize(file = File.join(Pik.home, 'config.yml'))
       @file = file
-      @rubies = {}
-      @global = {}
-      super
+      @rubies  = {}
+      @global  = {}
+      @options = {}
       if File.exists? @file
         contents = File.read( @file )
         unless contents.empty?

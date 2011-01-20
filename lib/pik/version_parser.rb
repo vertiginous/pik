@@ -16,7 +16,7 @@ module Pik
     end
     
     def version
-      md = @parts[1].match(/\d\.\d\.\d\.\d|\d\.\d\.\d/)
+      md = @parts[1].match(/\d\.\d\.\d/)
       md[0] if md
     end
     

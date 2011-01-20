@@ -2,8 +2,7 @@ module Pik
 
   class  Use < Command
    
-    aka :switch, :sw
-    it "Switches ruby versions based on patterns."
+    it "Switches ruby versions by name."
     include ScriptFileEditor
     include ConfigFileEditor
     
@@ -11,11 +10,17 @@ module Pik
     attr_accessor :default
     
     def execute
-      abort('Nothing matches:') unless new_ver = self.class.choose_from(@args, @config)
-      @config.global[:default] = new_ver if default
-      switch_path_to(@config[new_ver])
-      switch_gem_home_to(@config[new_ver][:gem_home])
-      echo_ruby_version(@config[new_ver][:path]) if verbose
+      new_ver = @config.options[:use] || @config.match(@args.shift)
+      abort('Nothing matches:') unless new_ver
+
+      ver_name, ver_config = *new_ver
+      
+      @config.global[:default] = VersionPatter.fulll(ver_name) if default
+      
+      switch_path_to(ver_config)
+      switch_gem_home_to(ver_config[:gem_home])
+      
+      echo_ruby_version(ver_config[:path]) if verbose
     end
     
     def command_options
@@ -37,10 +42,10 @@ module Pik
       sep =<<SEP
   Examples:
 
-    C:\\>pik sw 186 mingw
+    C:\\>pik use 186 mingw
     Using ruby 1.8.6 (2009-03-31 patchlevel 368) [i386-mingw32]
     
-    C:\\>pik switch 191 p1
+    C:\\>pik use 191 p1
     Using ruby 1.9.1p129 (2009-05-12 revision 23412) [i386-mingw32]
     
     C:\\>pik use 186 mswin
