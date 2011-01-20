@@ -43,17 +43,26 @@ module Pik
       sep =<<SEP
   Examples:
 
-    C:\\>pik use 186 mingw
-    Using ruby 1.8.6 (2009-03-31 patchlevel 368) [i386-mingw32]
+    C:\\>pik use 1.8.7
+
+    C:\\>ruby -v
+    ruby 1.8.7 (2010-12-23 patchlevel 330) [i386-mingw32]
+
+    C:\\>pik 1.9.1
+
+    C:\\>ruby -v
+    ruby 1.9.1p430 (2010-08-16 revision 28998) [i386-mingw32]
+
+    C:\\>pik 1.9.2
+
+    C:\\>ruby -v
+    ruby 1.9.2p136 (2010-12-25) [i386-mingw32]
+
+    C:\\>pik jruby-1.6.0
+
+    C:\\>jruby -v
+    jruby 1.6.0.RC1 (ruby 1.8.7 patchlevel 330) (2011-01-10 769f847) 
     
-    C:\\>pik use 191 p1
-    Using ruby 1.9.1p129 (2009-05-12 revision 23412) [i386-mingw32]
-    
-    C:\\>pik use 186 mswin
-    Using ruby 1.8.6 (2008-08-11 patchlevel 287) [i386-mswin32]
-    
-    C:\\>pik 191 p2
-    Using ruby 1.9.1p243 (2009-07-16 revision 24175) [i386-mingw32]
 SEP
       options.separator sep
     end
