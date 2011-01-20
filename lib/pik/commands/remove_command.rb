@@ -12,21 +12,23 @@ module Pik
       to_remove = @config.match(@args.first)
       raise QuitError unless to_remove
       
-      rm_name, rm_config = *to_remove
+      name, config = *to_remove
 
-      if force || @hl.agree("Are you sure you'd like to remove '#{rm_name}'?"){|answer| answer.default = 'yes' }
-        @config.delete(rm_name)
-        @hl.say("#{rm_name} removed.") unless quiet
+      if remove?(name)
+        @config.delete(name)
+        @hl.say("#{VersionPattern.full(name)} removed.")
       end
     end
     
+    def remove?(name)
+      msg = "Are you sure you'd like to remove '#{VersionPattern.full(name)}'?"
+      force || @hl.agree(msg){|answer| answer.default = 'yes' }
+    end
+
     def command_options
       super
       options.on("--force", "-f", "Remove without prompting") do |value|
         @force = value
-      end
-      options.on("--quiet", "-q", "Remove without a response") do |value|
-        @quiet = value
       end
     end
     
