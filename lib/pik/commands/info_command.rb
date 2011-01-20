@@ -4,7 +4,6 @@ module Pik
   class  Info < Command
   
     it "Displays information about the current ruby version."
-    aka :checkup, :cu
     
     def execute
       puts pik_version
