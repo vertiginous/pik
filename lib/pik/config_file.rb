@@ -25,6 +25,10 @@ module Pik
     def_delegators :@rubies, :[], :[]=, :clear, :sort, :find, :keys, 
       :delete, :each
 
+    def match(string)
+      find{|pattern, ver| VersionPattern.parse(pattern).include? string }
+    end
+
     def write
       File.open(@file, 'w')do |f| 
         f.puts YAML.dump(@rubies), YAML.dump(@global) 

@@ -9,11 +9,14 @@ module Pik
     attr_reader :force, :quiet
     
     def execute
-      to_remove = self.class.choose_from(@args, @config)
+      to_remove = @config.match(@args.first)
       raise QuitError unless to_remove
-      if force || @hl.agree("Are you sure you'd like to remove '#{to_remove}'?"){|answer| answer.default = 'yes' }
-        @config.delete(to_remove)
-        @hl.say("#{to_remove} removed.") unless quiet
+      
+      rm_name, rm_config = *to_remove
+
+      if force || @hl.agree("Are you sure you'd like to remove '#{rm_name}'?"){|answer| answer.default = 'yes' }
+        @config.delete(rm_name)
+        @hl.say("#{rm_name} removed.") unless quiet
       end
     end
     

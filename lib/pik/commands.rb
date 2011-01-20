@@ -11,9 +11,7 @@ module Pik
     end
     
     def self.find(command)
-      command = command.to_sym
-      puts deprecated[command] if deprecated[command]
-      commands.find{ |cmd| cmd.names.include?(command) }
+      commands.find{ |cmd| cmd.names.include?(command.to_sym) } if command
     end
   
     def self.list
