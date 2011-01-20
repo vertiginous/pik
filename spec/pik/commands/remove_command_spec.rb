@@ -11,23 +11,15 @@ describe Pik::Remove do
     cmd = Pik::Remove.new(['-f'])
     cmd.force.should be_true
   end
-  
-  it "should have a 'quiet' option" do
-    cmd = Pik::Remove.new(['--quiet'])
-    cmd.quiet.should be_true
-    
-    cmd = Pik::Remove.new(['-q'])
-    cmd.quiet.should be_true
-  end
-  
+
   it "should remove items from the config" do
-    cmd = Pik::Remove.new(['a', '-f', '-q'], { 
-                                   'a' => {:path => 'C:/ruby/bin', :gem_home => 'C:/users/rupert/.gems'}, 
-                                   'b' => {:path => 'C:/Ruby19/bin'}
-                                   }
-    )
+    cfg = Pik::ConfigFile.new('')
+    cfg.rubies['a'] = {:path => 'C:/ruby/bin' }
+    cfg.rubies['b'] = {:path => 'C:/Ruby19/bin'}
+    
+    cmd = Pik::Remove.new(['a', '-f'], cfg)
     cmd.execute
-    cmd.config.should == ( {'b' => {:path => 'C:/Ruby19/bin'}} )
+    cmd.config.should_not include('a')
   end
   
 end

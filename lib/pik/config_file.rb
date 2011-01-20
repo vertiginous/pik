@@ -23,7 +23,7 @@ module Pik
     end
 
     def_delegators :@rubies, :[], :[]=, :clear, :sort, :find, :keys, 
-      :delete, :each
+      :delete, :each, :include?
 
     def match(string)
       find{|pattern, ver| VersionPattern.parse(pattern).include? string }
