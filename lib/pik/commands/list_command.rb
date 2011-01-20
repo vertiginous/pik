@@ -12,7 +12,9 @@ module Pik
       when 'known' 
         remote_list
       when 'default'
-        default_list
+        default_string? ? default_list(:strings) : default_list
+      when 'strings'
+         list(:string)
       else
         if remote
           remote_list
@@ -30,10 +32,12 @@ module Pik
       end
     end
 
-    def default_list
+    def default_list(type=:simple)
       puts "Default Ruby\n\n"
       if default = config.match(config.global[:default])
-        puts layout(*default)
+        name, config = *default
+        name = VersionPattern.full(name) if type == :simple
+        puts layout(name, config)
       else
         puts "no default assigned."
         puts "run 'pik use [ruby] --default' to assign one"  
@@ -41,8 +45,13 @@ module Pik
       end
     end
     
-    def list
+    def default_string?
+      @args[1] == 'string'
+    end
+
+    def list(type=:simple)
       config.sort.each do |name, conf|
+        name = VersionPattern.full(name) if type == :simple
         puts layout(name, conf)
         puts conf.map{|k,v| "        %s: %s" % [k, v]} + ["\n"] if verbose
       end
@@ -51,7 +60,6 @@ module Pik
     private
     
     def layout(name, conf)
-      name = VersionPattern.full(name)
       name = current?(conf) ? "=> #{name}" : "   #{name}"
       if name.length > columns
         remainder = -(name.length - columns + 5)
