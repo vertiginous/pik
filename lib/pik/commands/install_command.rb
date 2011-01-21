@@ -137,14 +137,14 @@ SEP
 
       # based on filetypes, extract the files
       case file
-        # tar.z, tar.gz, tar.bz2 and tar.lzma contains .tar files inside, use bsdtar to
-        # extract the files directly to target directory without the need to first
-        # extract to a temporary directory as when using 7za.exe
-        when /(^.+\.tar)\.z$/, /(^.+\.tar)\.gz$/, /(^.+\.tar)\.bz2$/, /(^.+\.tar)\.lzma$/
-          bsd_tar_extract(target, file, options)
-        when /(^.+)\.tgz$/
-          bsd_tar_extract(target, file, options)
-        when /(^.+\.zip$)/, /(^.+\.7z$)/
+        # # tar.z, tar.gz, tar.bz2 and tar.lzma contains .tar files inside, use bsdtar to
+        # # extract the files directly to target directory without the need to first
+        # # extract to a temporary directory as when using 7za.exe
+        # when /(^.+\.tar)\.z$/, /(^.+\.tar)\.gz$/, /(^.+\.tar)\.bz2$/, /(^.+\.tar)\.lzma$/
+        #   bsd_tar_extract(target, file, options)
+        # when /(^.+)\.tgz$/
+        #   bsd_tar_extract(target, file, options)
+        when /(^.+\.zip$)/, /(^.+\.7z$)/, /(^.+\.exe$)/
           seven_zip(target, $1)
         else
           raise "Unknown file extension! (for file #{file})"
