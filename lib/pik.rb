@@ -41,13 +41,6 @@ require 'pik/which'
 
 module Pik
   VERSION = '0.3.0'
-  Scripts = {
-    '.cmd' => BatchFile, 
-    '.bat' => BatchFile, 
-    '.ps1' => PowershellFile, 
-    '.sh'  => BashFile 
-  }
-
   extend self
 
   def print_error(error)
