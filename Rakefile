@@ -1,18 +1,16 @@
-# -*- ruby -*-
-
 require 'rubygems'
 require 'rbconfig'
-require 'uuid'
+
+# I couldn't get hoe-isolate plugin to work
+# require order problem, perhaps?
+require 'isolate/now' 
+require 'isolate/lockdown'
 require 'hoe'
+
+Hoe.plugin :git
 
 $LOAD_PATH.unshift('lib')
 require 'pik'
-
-require 'tasks/package'
-require 'tasks/build'
-require 'tasks/cucumber'
-
-Hoe.plugin :git
 
 Hoe.spec('pik') do
 
@@ -37,27 +35,13 @@ Hoe.spec('pik') do
 
      >pik_install C:\\tools
   
-*  If this is a first-time install, add all the versions of ruby that you 
-   want to use with pik
-
-    >pik add
-    Adding:  186: ruby 1.8.6 (2009-03-31 patchlevel 368) [i386-mingw32]
-     Located at:  c:/ruby/186-p368-mingw32/bin
-    
-    >pik add C:\\ruby\\IronRuby-091\\bin
-    Adding:  091: IronRuby 0.9.1.0 on .NET 2.0.0.0
-     Located at:  C:/ruby/IronRuby-091/bin
-    
-    >pik add C:\\ruby\\jruby-1.4.0RC1\\bin
-    Adding:  140: jruby 1.4.0RC1 (ruby 1.8.7 patchlevel 174) (2009-09-30 80c263b) (Java HotSpot(TM) Client VM 1.6.0_14) [x86-java]
-     Located at:  C:/ruby/jruby-1.4.0RC1/bin
-     
-
 ----------------------------------------------------------------------------  
 
 PIM
 
 end
 
-# vim: syntax=Ruby
+require 'tasks/package'
+require 'tasks/build'
+require 'tasks/cucumber'
 

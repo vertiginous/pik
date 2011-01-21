@@ -43,6 +43,13 @@ module Pik
   VERSION = '0.3.0'
   extend self
 
+  Scripts = {
+    '.cmd' => BatchFile, 
+    '.bat' => BatchFile, 
+    '.ps1' => PowershellFile, 
+    '.sh'  => BashFile 
+  }
+
   def print_error(error)
     puts "\nThere was an error."
     puts " Error: #{error.message}\n\n"

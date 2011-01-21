@@ -1,12 +1,5 @@
 module Pik
 
-  Scripts = {
-    '.cmd' => BatchFile, 
-    '.bat' => BatchFile, 
-    '.ps1' => PowershellFile, 
-    '.sh'  => BashFile 
-  }
-
   class ScriptFile
 
     attr_accessor :lines

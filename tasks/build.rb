@@ -32,8 +32,13 @@ file 'tools/pik_runner.exe', :needs => ['tools/pik_runner.exy'] do
   end
 end
 
+task :lockdown do
+  ENV['ISOLATE_ENV'] = 'production'
+  Rake::Task['isolate:lockdown'].invoke('lib/vendor')
+end
+
 desc "builds executable"
-task :build, :needs => 'tools/pik_runner.exe'
+task :build, :needs => [:lockdown, 'tools/pik_runner.exe']
 
 desc "installs executable"
 task :install, :needs => :build do

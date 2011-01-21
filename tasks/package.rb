@@ -1,3 +1,4 @@
+require 'uuid'
 require 'rake/packagetask'
 
 task :package => [:rebuild, 'installer:package']
