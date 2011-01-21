@@ -4,10 +4,10 @@
 
 IF "%PIK_HOME%"=="" (
 
-  IF EXIST "%HOME%\.pik\pik.bat" (call "%HOME%\.pik\pik.bat")
+  IF EXIST "%HOME%\.pik\pik_run.bat" (call "%HOME%\.pik\pik_run.bat")
 
 ) ELSE (
   
-  IF EXIST "%PIK_HOME%\pik.bat" (call "%PIK_HOME%\pik.bat")
+  IF EXIST "%PIK_HOME%\pik_run.bat" (call "%PIK_HOME%\pik_run.bat")
 
 )

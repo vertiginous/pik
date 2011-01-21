@@ -11,7 +11,7 @@ module Pik
 
     PACKAGES = {
       "Sqlite"=>{:url=>"http://www.sqlite.org/sqlite-dll-win32-x86-3070400.zip"},
-      "DevKit"=>{:url=>"https://github.com/oneclick/rubyinstaller/downloads"},
+      "DevKit"=>{:url=>"http://github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.1-20101214-1400-sfx.exe"},
       "7zip"=>{:url=>"http://downloads.sourceforge.net/sevenzip/7za920.zip"}
     }
     

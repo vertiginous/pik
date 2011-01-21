@@ -6,7 +6,7 @@ module Pik
         
     def initialize(args=ARGV,config=nil)
       super
-      @script = SCRIPT_FILE
+      @script = Pik.script_file
       editors << @script
     end
 

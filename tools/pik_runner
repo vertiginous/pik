@@ -3,33 +3,30 @@
 lib = File.join(File.dirname(__FILE__), '..', 'lib')
 require File.join(lib, 'pik')
 
-include Pik
-
-args = ARGV
-
 begin
-  config  = ConfigFile.new
   
-  command = if cmd = Commands.find(args[0])
-    args.shift
+  Pik.script = ARGV.shift
+  config     = Pik::ConfigFile.new
+  
+  command = if cmd = Pik::Commands.find(ARGV[0])
+    ARGV.shift
     cmd
-  elsif args[0] =~ /,/ && cmd = Commands.find(args[1])
-    config.options[:versions] = args.shift
-    args.shift
+  elsif ARGV[0] =~ /,/ && cmd = Pik::Commands.find(ARGV[1])
+    config.options[:versions] = ARGV.shift
+    ARGV.shift
     cmd
-  elsif version = config.match(args[0])
-    args.shift
+  elsif version = config.match(ARGV[0])
+    ARGV.shift
     config.options[:use] = version
-    Use
+    Pik::Use
   else
-    Help
+    Pik::Help
   end
   
-  
-  cmd = command.new(args, config)
+  cmd = command.new(ARGV, config)
   cmd.execute
 
-rescue QuitError
+rescue Pik::QuitError
   puts "\nQuitting..."
 rescue => e
   Pik.print_error(e)

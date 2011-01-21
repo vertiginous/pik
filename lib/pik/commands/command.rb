@@ -127,7 +127,7 @@ module Pik
     end
    
     def delete_old_pik_script
-      SCRIPT_FILE.path.delete if SCRIPT_FILE.path.exist?
+      Pik.script_file_name.delete if Pik.script_file_name.exist?
     end
     
     def sh(cmd)

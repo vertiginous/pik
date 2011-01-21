@@ -58,10 +58,10 @@ module Pik
   end
 
   def exe
-    @exe ||= if defined?(ExerbRuntime)
+    @exe ||= if exerb?
       Pathname(File.expand_path(ExerbRuntime.filepath))
     else
-      File.expand_path($0)
+      Pathname(File.expand_path($0))
     end
   end
 
@@ -72,13 +72,34 @@ module Pik
       Pathname( ENV['HOME'] || ENV['USERPROFILE'] ) + '.pik'
     end
   end
-  
+
+  def script=(arg)
+    @script = Pathname.new(arg).ruby
+  end
+
+  def script
+    @script
+  end
+
+  def script_language
+    @script_language ||= Scripts.fetch(script.extname, '.bat')
+  end
+
+  def script_file_name
+    @script_file_name ||= Pik.home + 'pik_run'
+  end
+
+  def script_file
+    @script_file ||= if exerb? 
+      script_language.new(script_file_name)
+    else
+      BatchFile.new(script_file_name)
+    end
+  end
+
+  def exerb?
+    defined?(ExerbRuntime)
+  end
+
 end
 
-if defined?(ExerbRuntime) || $0 =~ /pik_runner/
-  PIK_SCRIPT  = Pathname.new(ARGV.shift).ruby
-  SCRIPT_LANG = Pik::Scripts[PIK_SCRIPT.extname]
-  SCRIPT_FILE = SCRIPT_LANG.new(Pik.home + 'pik')
-else
-  SCRIPT_FILE = Pik::BatchFile.new(Pik.home + 'pik')
-end

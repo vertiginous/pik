@@ -111,7 +111,7 @@ SEP
       if @hl.agree(question){|answer| answer.default = 'yes' }
         uri  = 'http://downloads.sourceforge.net/sevenzip/7za920.zip'
         file = download(uri)
-        Zip.fake_unzip(file.to_s, /\.exe|\.dll$/, PIK_SCRIPT.dirname.to_s)
+        Zip.fake_unzip(file.to_s, /\.exe|\.dll$/, Pik.exe.dirname.to_s)
       else
         raise QuitError
       end
