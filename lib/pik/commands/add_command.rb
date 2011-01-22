@@ -31,7 +31,7 @@ module Pik
           
           path    = Pathname(path.expand_path.to_ruby)
 
-          puts "** Adding:  #{name}\n Located at:  #{path}\n"
+          Log.info "Adding:  #{name}\n      Located at:  #{path}\n"
           
           @config[name]           = {}
           @config[name][:path]    = path

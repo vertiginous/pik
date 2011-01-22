@@ -15,7 +15,7 @@ module Pik
       
       target = download_directory + opts.fetch(:filename, filename(package))
       
-      puts "** Downloading:  #{package} \n   to:  #{target.windows}\n\n"
+      Log.info  "Downloading:  #{package} \n     to:  #{target.windows}"
       URI.download(package, target.to_s, {:progress => true, :verbose => true})
       return target
     end
@@ -31,16 +31,16 @@ module Pik
       else
         msg =  "You need the 7zip utility to extract this file.\n"
         msg << "Run 'pik package 7zip install'\n\n"
-        puts msg
+        Log.error msg
       end  
     end
     
     def seven_zip(target, file)
       file = Pathname(file)
       seven_zip = Which::SevenZip.exe || Which::SevenZip.exe(Pik.exe.dirname)
-      puts "** Extracting:  #{file.windows}\n   to:  #{target}" #if verbose
+      Log.info "Extracting:  #{file.windows}\n      to:  #{target}" #if verbose
       system("#{seven_zip} x \"#{file.windows}\" -y -aoa -o\"#{target}\" > NUL")
-      puts '   Extraction complete.'
+      puts '      Extraction complete.'
     end
     
     def mv_r(src, dest, options = {})

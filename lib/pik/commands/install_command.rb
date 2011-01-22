@@ -17,7 +17,7 @@ module Pik
       ruby = Rubies[name]
       abort "#{name} not found" unless ruby
       
-      puts "** Installing #{ruby[:name]}\n\n"
+      Log.info("Installing #{ruby[:name]}\n\n")
       
       @target = install_root + ruby[:name]
       handle_target if @target.exist?
@@ -54,7 +54,7 @@ SEP
     
     def handle_target
       if @force
-        puts "** Removing #{@target}\n\n"
+        Log.info "Removing #{@target}\n\n"
         FileUtils.rm_rf @target
       else
         msg =  "\nThe directory '#{@target}' already exists.\n"
