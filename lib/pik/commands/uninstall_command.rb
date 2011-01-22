@@ -14,13 +14,13 @@ module Pik
         puts "Couldn't find the version you're looking for '#{@args.join(' ')}'."
         raise QuitError
       end
-      if force || @hl.agree("Are you sure you'd like to uninstall '#{to_remove}'?"){|answer| answer.default = 'yes' }
+      if force || hl.agree("Are you sure you'd like to uninstall '#{to_remove}'?"){|answer| answer.default = 'yes' }
         puts "** Deleting #{config[to_remove][:path].dirname}"
         path = config[to_remove][:path].dirname
         FileUtils.rm_rf(path) if path.exist?
         remove(to_remove)
         puts
-        @hl.say("#{to_remove} has been uninstalled.")
+        hl.say("#{to_remove} has been uninstalled.")
       end
     end
     

@@ -58,19 +58,19 @@ module Pik
     end
 
     def add_interactive
-      @hl.choose do |menu|  
+      hl.choose do |menu|  
         menu.prompt = ""
         menu.choice('e]nter a path') do
-          dir = @hl.ask("Enter a path to a ruby/bin dir (enter to quit)")
-          execute(dir) unless dir.empty? || !@hl.agree("Add '#{dir}'?"){|answer| answer.default = 'yes' }
+          dir = hl.ask("Enter a path to a ruby/bin dir (enter to quit)")
+          execute(dir) unless dir.empty? || !hl.agree("Add '#{dir}'?"){|answer| answer.default = 'yes' }
           add_interactive
         end
         menu.choice('s]earch') do
-          search_dir = @hl.ask("Enter a search path")
+          search_dir = hl.ask("Enter a search path")
           files = Which::Ruby.glob(search_dir + '**')
           files.uniq.each do |file| 
             dir = File.dirname(file)
-            add(dir) if @hl.agree("Add '#{dir}'?"){|answer| answer.default = 'yes' }
+            add(dir) if hl.agree("Add '#{dir}'?"){|answer| answer.default = 'yes' }
           end
           add_interactive
         end
@@ -83,7 +83,7 @@ module Pik
       puts "This version appears to already be installed at this location:\n\n"
       puts "  #{config[version][:path]}\n\n"
       puts "If you'd still like to add this version, you can.\n\n"
-      modifier = @hl.ask("Enter a unique name to modify the name of this version. (enter to quit)")
+      modifier = hl.ask("Enter a unique name to modify the name of this version. (enter to quit)")
       raise QuitError if modifier.empty?
       "#{version}-#{modifier}"
     end

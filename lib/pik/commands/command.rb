@@ -48,15 +48,10 @@ module Pik
       @names ||= [cmd_name]
     end
 
-    # def hl
-    #   @hl ||= HighLine.new
-    # end
-  
     def initialize(args=ARGV, config_=nil)
       @args    = args
       @options = OptionParser.new
       @config  = config_ || ConfigFile.new
-      @hl      = HighLine.new
       
       add_sigint_handler
 
@@ -135,6 +130,10 @@ module Pik
       system(cmd)
     end
     
+    def hl
+      @hl ||= HighLine.new
+    end
+
     def cmd_name
       self.class.cmd_name
     end

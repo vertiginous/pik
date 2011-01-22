@@ -16,13 +16,13 @@ module Pik
 
       if remove?(name)
         @config.delete(name)
-        @hl.say("#{VersionPattern.full(name)} removed.")
+        hl.say("#{VersionPattern.full(name)} removed.")
       end
     end
     
     def remove?(name)
       msg = "Are you sure you'd like to remove '#{VersionPattern.full(name)}'?"
-      force || @hl.agree(msg){|answer| answer.default = 'yes' }
+      force || hl.agree(msg){|answer| answer.default = 'yes' }
     end
 
     def command_options

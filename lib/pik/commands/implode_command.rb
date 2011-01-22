@@ -10,7 +10,7 @@ module Pik
     def execute
       msg =  "Are you sure you want pik to implode? "
       msg << "This will remove '#{Pik.home.to_ruby}'."
-      if @force || @hl.agree(msg){|answer| answer.default = 'yes' }
+      if @force || hl.agree(msg){|answer| answer.default = 'yes' }
         Pik.home.rmtree
       end
     end

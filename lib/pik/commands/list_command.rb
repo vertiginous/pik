@@ -78,7 +78,7 @@ module Pik
     end
     
     def columns
-      @hl.output_cols
+      hl.output_cols
     end
 
     def command_options
