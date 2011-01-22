@@ -42,11 +42,19 @@ Pik is a tool to manage multiple versions of ruby on Windows.  It can be used fr
 
 *  Windows
 
-*  Build dependencies: exerb-mingw, highline, crown
+*  Development dependencies:
 
-*  Packaging dependencies upx, wix, uuid gem
+      ruby 1.8.7 p330: http://rubinstaller.org
+      upx: http://upx.sourceforge.net/
 
-*  Development dependencies: rake, cucumber, rspec, hoe, hoe-git
+      rake:    gem install rake
+      isolate: gem install isolate
+
+      exerb-mingw: http://vert.igino.us/2011/01/05/exerb-101-building-windows-executables-with-ruby/
+
+*  Packaging dependencies:
+      
+      wix 3.5: http://wix.sourceforge.net/
 
 == INSTALL:
   
@@ -97,11 +105,6 @@ If you install to a directory that's not in your path, you'll need to add it to 
        to:  c:\installs\ruby-1.9.1-p243-i386-mingw32-rc1.7z
     
     ...
-
-*  If you're upgrading from version 0.2.6, you should be able to upgrade with 'pik update'
-
-*  If you're upgrading from a version <= 0.1.1, you'll want to delete the pik.bat file
-   from all of your ruby versions. Gem uninstall should do the trick.
 
      
 == MORE INFORMATION:

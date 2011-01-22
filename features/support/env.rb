@@ -30,7 +30,6 @@ require 'pathname'
 require 'fileutils'
 require 'lib/pik'
 require 'rbconfig'
-require 'win32/process'
 
 REAL_PATH  = SearchPath.new(ENV['PATH']).replace(RbConfig::CONFIG['bindir'], 'C:\temp\more spaces in path\ruby\Ruby-186-p398-2\bin').join
 OTHER_RUBY  = 'c:\\temp\\more spaces in path\\ruby\\Ruby-191-p378-1\\bin'

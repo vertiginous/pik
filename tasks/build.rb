@@ -1,3 +1,14 @@
+@ruby_version    = "1.8.7"
+@ruby_patchlevel =  330
+
+def correct_version?
+  @ruby_version    == RUBY_VERSION  &&
+  @ruby_patchlevel == RUBY_PATCHLEVEL
+end
+
+abort "You can only build pik with ruby-1.8.7-p330" unless correct_version?
+
+
 EXE_VERSION = {
   'version' => {
     'file_version_number' => "#{Pik::VERSION}.0",
