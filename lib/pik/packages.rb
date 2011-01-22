@@ -10,8 +10,8 @@ module Pik
     end
 
     PACKAGES = {
-      "Sqlite"=>{:url=>"http://www.sqlite.org/sqlite-dll-win32-x86-3070400.zip"},
-      "DevKit"=>{:url=>"http://github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.1-20101214-1400-sfx.exe"},
+      "sqlite"=>{:url=>"http://www.sqlite.org/sqlite-dll-win32-x86-3070400.zip"},
+      "devkit"=>{:url=>"http://github.com/downloads/oneclick/rubyinstaller/DevKit-tdm-32-4.5.1-20101214-1400-sfx.exe"},
       "7zip"=>{:url=>"http://downloads.sourceforge.net/sevenzip/7za920.zip"}
     }
     
@@ -24,17 +24,17 @@ module Pik
     RUBIES = [
       ["ironruby-1.0",
         {:implementation=>"IronRuby",
-         :extname=>".zip",
+         :filename=>"ironruby-1.0.zip",
          :url=>
           "http://download.codeplex.com/Project/Download/FileDownload.aspx?ProjectName=ironruby&DownloadId=116525&FileTime=129155864456030000&Build=17501"}],
       ["ironruby-1.1",
         {:implementation=>"IronRuby",
-         :extname=>".zip",
+         :filename=>"ironruby-1.1.zip",
          :url=>
           "http://download.codeplex.com/Project/Download/FileDownload.aspx?ProjectName=ironruby&DownloadId=133275&FileTime=129238225220270000&Build=17501"}],
       ["ironruby[-1.1.1]",
         {:implementation=>"IronRuby",
-         :extname=>".zip",
+         :filename=>"ironruby-1.1.1.zip",
          :url=>
           "http://download.codeplex.com/Project/Download/FileDownload.aspx?ProjectName=ironruby&DownloadId=159562&FileTime=129321656827500000&Build=17501"}],
       ["jruby[-1.5.6]",
