@@ -8,7 +8,7 @@ Rubyforge:  http://rubyforge.org/projects/pik/
 
 Bugs/Feature requests:  http://github.com/vertiginous/pik/issues
 
-Gordon Thiesfeld
+Gordon Thiesfeld  gthiesfeld@gmail.com
 
 == DESCRIPTION:
 
