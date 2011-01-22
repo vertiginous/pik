@@ -2,7 +2,7 @@ module Pik
 
   class Package < Command
 
-    it "downloads and installs dependencies"
+    it "Downloads and installs packages."
     include Installer
 
     def execute
@@ -53,24 +53,37 @@ module Pik
       Packages[package][:url]
     end
 
-    module Devkit
+    def command_options
+      super
+      sep =<<-SEP
+  sqlite: 'pik package sqlite install'
+  7zip:   'pik package 7zip install'
 
-      def write_config
-        File.open("config.yml",'w') do |f|
-          f.puts YAML.dump(mingw_ruby_dirs)
-        end
-      end
+If you have an idea for another package, submit a
+feature request at https://github.com/vertiginous/pik/issues
 
-      def mingw_ruby_dirs
-        config.select{|n, cfg| mingw?(cfg[:version]) }.
-          map{|k,i| i[:path].dirname.to_ruby }
-      end
-
-      def mingw?(version)
-        Pik::VersionParser.parse(version).platform =~ /mingw/
-      end
-
+SEP
+      options.separator sep
     end
+
+    # module Devkit
+
+    #   def write_config
+    #     File.open("config.yml",'w') do |f|
+    #       f.puts YAML.dump(mingw_ruby_dirs)
+    #     end
+    #   end
+
+    #   def mingw_ruby_dirs
+    #     config.select{|n, cfg| mingw?(cfg[:version]) }.
+    #       map{|k,i| i[:path].dirname.to_ruby }
+    #   end
+
+    #   def mingw?(version)
+    #     Pik::VersionParser.parse(version).platform =~ /mingw/
+    #   end
+
+    # end
 
   end
 
