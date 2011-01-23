@@ -11,6 +11,7 @@ module Pik
     end
 
     def download(package, opts={})
+      check_7zip
       download_directory.mkpath
       
       target = download_directory + opts.fetch(:filename, filename(package))
@@ -23,24 +24,17 @@ module Pik
     def filename(package)
       package.split('/').last
     end  
-    
-    def extract(target, file)
-      if Which::SevenZip.exe || Which::SevenZip.exe(Pik.exe.dirname)
-        target.mkpath
-        extract_(file, target)
-      else
+
+    def check_7zip
+      unless seven_zip
         msg =  "You need the 7zip utility to extract this file.\n"
         msg << "Run 'pik package 7zip install'\n\n"
         Log.error msg
       end  
     end
     
-    def seven_zip(target, file)
-      file = Pathname(file)
-      seven_zip = Which::SevenZip.exe || Which::SevenZip.exe(Pik.exe.dirname)
-      Log.info "Extracting:  #{file.windows}\n      to:  #{target}" #if verbose
-      system("#{seven_zip} x \"#{file.windows}\" -y -aoa -o\"#{target}\" > NUL")
-      puts '      Extraction complete.'
+    def seven_zip
+      @seven_zip ||= Which::SevenZip.exe || Which::SevenZip.exe(Pik.exe.dirname)
     end
     
     def mv_r(src, dest, options = {})
@@ -58,14 +52,16 @@ module Pik
       end
     end
 
-    def extract_(file, target, options = {})
-      fail unless File.directory?(target)
+    def extract(target, file)
+      target.mkpath
       # based on filetypes, extract the files
+      Log.info "Extracting:  #{file.windows}\n      to:  #{target}" #if verbose
       case file.to_s
-        when /(^.+\.zip$)/, /(^.+\.7z$)/, /(^.+\.exe$)/
-          seven_zip(target, $1)
-        else
-          raise "Unknown file extension! (for file #{file})"
+      when /(^.+\.zip$)/, /(^.+\.7z$)/, /(^.+\.exe$)/
+        file = Pathname($1)
+        system("#{seven_zip} x \"#{file.windows}\" -y -aoa -o\"#{target}\" > NUL")
+      else
+        raise "Unknown file extension! (for file #{file})"
       end
 
       # after extraction, look for a folder that contains '-' (version number or datestamp)
@@ -89,6 +85,8 @@ module Pik
         # remove the now empty folder
         FileUtils.rm_rf File.join(target, folder)
       end
+
+      puts '      Extraction complete.'
     end
 
   end
