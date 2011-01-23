@@ -11,7 +11,7 @@ module Pik
     attr_accessor :default
     
     def execute
-      new_ver = @config.options[:use] || @config.match(@args.shift)
+      new_ver = @config.options.fetch(:use, @config.match(@args.shift))
       abort('Nothing matches:') unless new_ver
 
       ver_name, ver_config = *new_ver
