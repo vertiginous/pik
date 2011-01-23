@@ -8,7 +8,6 @@ end
 
 abort "You can only build pik with ruby-1.8.7-p330" unless correct_version?
 
-
 EXE_VERSION = {
   'version' => {
     'file_version_number' => "#{Pik::VERSION}.0",
@@ -39,10 +38,11 @@ end
 file 'tools/pik_runner.exe', :needs => ['tools/pik_runner.exy'] do
   Dir.chdir 'tools' do
     sh('ruby -S exerb pik_runner.exy')
-    sh('upx --lzma pik_runner.exe') unless ENV['QUICK']
+    sh('..\tmp\upx307w\upx --lzma pik_runner.exe') unless ENV['QUICK']
   end
 end
 
+desc 'lockds down gems for building exe'
 task :lockdown do
   ENV['ISOLATE_ENV'] = 'production'
   Rake::Task['isolate:lockdown'].invoke('lib/vendor')

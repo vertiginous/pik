@@ -41,6 +41,7 @@ PIM
 
 end
 
+require 'tasks/common'
 require 'tasks/package'
 require 'tasks/build'
 require 'tasks/cucumber'

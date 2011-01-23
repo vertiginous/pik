@@ -1,7 +1,7 @@
 require 'uuid'
 require 'rake/packagetask'
 
-task :package => [:rebuild, 'installer:package']
+task :package => [:build, 'installer:package']
 
 Rake::PackageTask.new('pik-update', Pik::VERSION) do |p|
   p.need_zip = true
@@ -31,23 +31,19 @@ namespace :installer do
   desc "packages the msi installer"
   task :package, :needs => [msi_file, :light]
 
-  task :build_env do
-   ENV['PATH'] = "#{ENV['ProgramFiles(x86)']}\\Windows Installer XML v3.5\\bin;#{ENV['PATH']}"
-  end
-
-  task :candle, :needs => [:build_env] do
+  task :candle do
     chdir 'lib/installer/' do
+      cmd = "../../tmp/wix/candle.exe -nologo"
       wxs_files = ["MyInstallDirDialog.wxs",'WixUI_MyInstallDir.wxs' , "#{@package}.wxs"].join(' ')
-      # wxs_files = ["#{@package}.wxs"].join(' ')
-      sh("candle -nologo #{wxs_files}")
+      sh("#{cmd} #{wxs_files}")
     end
   end
 
   task :light, :needs => :candle do
     chdir 'lib/installer/' do
+      cmd = "../../tmp/wix/light.exe -nologo "
       wixobj_files = ["MyInstallDirDialog.wixobj", 'WixUI_MyInstallDir.wixobj', "#{@package}.wixobj"].join(' ')
-      # wixobj_files = ["#{@package}.wixobj"].join(' ')
-      sh("light -nologo -ext WixUtilExtension -ext WixUIExtension #{wixobj_files} -o ../../#{msi_file}")
+      sh("#{cmd} -ext WixUtilExtension -ext WixUIExtension #{wixobj_files} -o ../../#{msi_file}")
     end
   end
 

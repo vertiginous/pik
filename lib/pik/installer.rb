@@ -7,7 +7,7 @@ module Pik
   module Installer
 
     def download_directory
-      @download_dir ||= config.global.fetch(:download_dir, Pik.home + 'downloads')
+      @download_dir ||= Pik.home + 'downloads'
     end
 
     def download(package, opts={})
@@ -15,7 +15,7 @@ module Pik
       
       target = download_directory + opts.fetch(:filename, filename(package))
       
-      Log.info  "Downloading:  #{package} \n     to:  #{target.windows}"
+      Log.info  "Downloading:  #{package} \n      to:  #{target.windows}"
       URI.download(package, target.to_s, {:progress => true, :verbose => true})
       return target
     end
