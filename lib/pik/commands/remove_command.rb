@@ -9,13 +9,13 @@ module Pik
     attr_reader :force, :quiet
     
     def execute
-      to_remove = @config.match(@args.first)
+      to_remove = config.match(@args.first)
       raise QuitError unless to_remove
       
       name, config = *to_remove
 
       if remove?(name)
-        @config.delete(name)
+        config.delete(name)
         hl.say("#{VersionPattern.full(name)} removed.")
       end
     end

@@ -6,7 +6,6 @@ module Pik
     include ConfigFileEditor
 
     def execute(path=nil)
-      return add_interactive if interactive
       path = @args.first || Which::Ruby.find
       add(Pathname(path))
     end
