@@ -65,8 +65,7 @@ SEP
     end
 
     def add(target)
-      puts
-      p = Pik::Add.new([target + 'bin'], @config)
+      p = Pik::Add.new([target + 'bin'], config)
       p.execute
       p.close
     end

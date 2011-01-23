@@ -80,10 +80,10 @@ SEP
     end
     
     def rubies
-      if versions = @config.options[:versions]
-        versions.split(',').map{|v| @config.match(v) }
+      if versions = config.options[:versions]
+        versions.split(',').map{|v| config.match(v) }
       else
-        @config
+        config
       end
     end
 

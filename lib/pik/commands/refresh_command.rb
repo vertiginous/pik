@@ -8,8 +8,8 @@ module Pik
     def execute
       Log.info "Refreshing the list of installed rubies."
 
-      old_config = @config.rubies.dup
-      @config.rubies.clear
+      old_config = config.rubies.dup
+      config.rubies.clear
 
       
       old_config.each do |version,hash|
@@ -18,7 +18,7 @@ module Pik
     end
 
     def add_cmd
-      @add_cmd ||= Pik::Add.new([], @config)
+      @add_cmd ||= Pik::Add.new([], config)
     end
 
   end

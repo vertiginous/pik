@@ -11,12 +11,12 @@ module Pik
     attr_accessor :default
     
     def execute
-      new_ver = @config.options.fetch(:use, @config.match(@args.shift))
+      new_ver = config.options.fetch(:use, config.match(@args.shift))
       abort('Nothing matches:') unless new_ver
 
       ver_name, ver_config = *new_ver
       
-      @config.global[:default] = VersionPattern.full(ver_name) if default
+      config.global[:default] = VersionPattern.full(ver_name) if default
       
       switch_path_to(ver_config)
       switch_gem_home_to(ver_config[:gem_home])

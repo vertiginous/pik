@@ -5,17 +5,15 @@ module Pik
     it 'Adds another ruby location to pik.'
     include ConfigFileEditor
 
-    attr_reader :interactive 
-
     def execute(path=nil)
       return add_interactive if interactive
       path = @args.first || Which::Ruby.find
-      add(path)
+      add(Pathname(path))
     end
 
     def add(path)
-      path = Pathname.new(path)
       path = path.dirname if path.file?
+
       if Which::Ruby.exist?(path)
         if find_config_from_path(path)
           puts "This version has already been added."
@@ -33,9 +31,9 @@ module Pik
 
           Log.info "Adding:  #{name}\n      Located at:  #{path}\n"
           
-          @config[name]           = {}
-          @config[name][:path]    = path
-          @config[name][:version] = version.full_version
+          config[name]           = {}
+          config[name][:path]    = path
+          config[name][:version] = version.full_version
         end
       else
         puts "Couldn't find a Ruby version at #{path}"
@@ -45,38 +43,12 @@ module Pik
     def command_options
       super
       options.banner += "[path_to_ruby]"
-      options.separator ""      
-      options.on("--interactive", "-i", "Add interactively") do |value|
-        @interactive = value
-      end 
     end    
 
     def get_version(path=Which::Ruby.find)
       cmd = Which::Ruby.exe(path)
       ruby_ver = `"#{cmd}" -v`
       version  = VersionParser.parse(ruby_ver)
-    end
-
-    def add_interactive
-      hl.choose do |menu|  
-        menu.prompt = ""
-        menu.choice('e]nter a path') do
-          dir = hl.ask("Enter a path to a ruby/bin dir (enter to quit)")
-          execute(dir) unless dir.empty? || !hl.agree("Add '#{dir}'?"){|answer| answer.default = 'yes' }
-          add_interactive
-        end
-        menu.choice('s]earch') do
-          search_dir = hl.ask("Enter a search path")
-          files = Which::Ruby.glob(search_dir + '**')
-          files.uniq.each do |file| 
-            dir = File.dirname(file)
-            add(dir) if hl.agree("Add '#{dir}'?"){|answer| answer.default = 'yes' }
-          end
-          add_interactive
-        end
-        menu.choice('q]uit'){raise QuitError}
-      end        
-    
     end
 
     def modify_version(version)
