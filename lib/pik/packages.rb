@@ -27,9 +27,9 @@ module Pik
          :filename=>"ironruby-1.0.0.zip",
          :url=>
           "http://download.codeplex.com/Project/Download/FileDownload.aspx?ProjectName=ironruby&DownloadId=116525&FileTime=129155864456030000&Build=17501"}],
-      ["ironruby-1.1.1",
+      ["ironruby-1.1.0",
         {:implementation=>"IronRuby",
-         :filename=>"ironruby-1.1.1.zip",
+         :filename=>"ironruby-1.1.0.zip",
          :url=>
           "http://download.codeplex.com/Project/Download/FileDownload.aspx?ProjectName=ironruby&DownloadId=133275&FileTime=129238225220270000&Build=17501"}],
       ["ironruby[-1.1.1]",
