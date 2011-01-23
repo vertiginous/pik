@@ -18,7 +18,6 @@ Pik is a tool to manage multiple versions of ruby on Windows.  It can be used fr
 
       add             Adds another ruby location to pik.
       benchmark|bench Runs bencmarks with all versions that pik is aware of.
-      config          Adds/modifies configuration options.
       default         Switches to the default ruby.
       gem             Runs the gem command with all versions that pik is aware of.
       help            Displays help information.
