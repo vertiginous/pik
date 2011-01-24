@@ -51,9 +51,10 @@ end
 desc "builds executable"
 task :build, :needs => [:lockdown, 'tools/pik_runner.exe']
 
-desc "installs executable"
-task :install, :needs => :build do
-  sh('ruby bin/pik_install C:\\bin')
+desc "installs executable to path"
+task :install, :path, :needs => :build do |t,args|
+  args.with_defaults(:path => "C:\\bin")
+  sh("ruby bin/pik_install #{args.path}")
 end
 
 task :clobber_exe do
