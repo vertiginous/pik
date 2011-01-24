@@ -57,6 +57,7 @@ Pik is a tool to manage multiple versions of ruby on Windows.  It can be used fr
 *  Packaging requirements:
       
       wix 3.5[http://wix.sourceforge.net/] (downloaded automatically, as needed)
+
       
 == INSTALL:
   

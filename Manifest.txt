@@ -29,7 +29,6 @@ lib/pik.rb
 lib/pik/commands.rb
 lib/pik/commands/add_command.rb
 lib/pik/commands/command.rb
-lib/pik/commands/config_command.rb
 lib/pik/commands/config_file_editor.rb
 lib/pik/commands/default_command.rb
 lib/pik/commands/gemsync_command.rb
@@ -61,6 +60,7 @@ lib/pik/contrib/zip/ziprequire.rb
 lib/pik/core_ext/pathname.rb
 lib/pik/implementations.rb
 lib/pik/installer.rb
+lib/pik/log.rb
 lib/pik/options.rb
 lib/pik/packages.rb
 lib/pik/scripts/bash_file.rb
@@ -92,6 +92,7 @@ spec/pik/search_path_spec.rb
 spec/pik/version_parser_spec.rb
 spec/pik/which_spec.rb
 tasks/build.rb
+tasks/common.rb
 tasks/cucumber.rb
 tasks/package.rb
 tools/pik.bat

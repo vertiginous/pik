@@ -10,7 +10,7 @@ abort "You can only build pik with ruby-1.8.7-p330" unless correct_version?
 
 EXE_VERSION = {
   'version' => {
-    'file_version_number' => "#{Pik::VERSION}.0",
+    'file_version_number' => "#{Pik::VERSION.gsub(/\.pre/,'')}.0",
     'comments' => 'The Ruby version manager for Windows',
     'product_name' => 'Pik',
     'file_description' => 'Pik Runner',
