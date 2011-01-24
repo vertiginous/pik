@@ -11,7 +11,6 @@ module Pik
     end
 
     def download(package, opts={})
-      check_7zip
       download_directory.mkpath
       
       target = download_directory + opts.fetch(:filename, filename(package))
@@ -28,8 +27,9 @@ module Pik
     def check_7zip
       unless seven_zip
         msg =  "You need the 7zip utility to extract this file.\n"
-        msg << "Run 'pik package 7zip install'\n\n"
+        msg << "       Run 'pik package 7zip install'"
         Log.error msg
+        exit 1
       end  
     end
     

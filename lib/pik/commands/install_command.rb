@@ -16,7 +16,9 @@ module Pik
       name = @args.shift
       ruby = Rubies[name]
       abort "#{name} not found" unless ruby
-      
+
+      check_7zip
+            
       Log.info("Installing #{ruby[:name]}")
       
       @target = install_root + ruby[:name]
@@ -32,9 +34,9 @@ module Pik
     def command_options
       super
       sep =<<SEP
-  Choices are: ruby, jruby, or ironruby
+  Choices are: 1.8.7, 1.9.2, jruby, or ironruby
   
-  If no version is specified, the latest version will be installed.
+  If no version is specified, the default version will be installed.
   You can see the full list by running 'pik list known'.
 
   Examples:

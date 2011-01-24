@@ -35,6 +35,7 @@ module Pik
     end
 
     def devkit
+      check_7zip
       devkit_root = install_root + 'devkit'
       file = download(url('devkit'))
       extract(devkit_root, file)
@@ -46,6 +47,7 @@ module Pik
     end
 
     def sqlite
+      check_7zip
       file = download(url('sqlite'))
       extract(install_root, file)
     end
