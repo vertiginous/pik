@@ -7,13 +7,17 @@ module Pik
 
     def execute
       check_args
-      rubies.sort.each do |version,hash|
+      rubies.each do |version,hash|
         begin
-          switch_path_to(hash)
-          switch_gem_home_to(hash[:gem_home])
-          echo_ruby_version(hash[:path])
-          system command
-          puts
+          if hash
+            switch_path_to(hash)
+            switch_gem_home_to(hash[:gem_home])
+            echo_ruby_version(hash[:path])
+            system command
+          else
+            puts "Unknown version '#{version}', skipping."
+          end 
+           puts
         rescue => e
           puts version
           Pik.print_error(e)
@@ -81,7 +85,7 @@ SEP
     
     def rubies
       if versions = config.options[:versions]
-        versions.split(',').map{|v| config.match(v) }
+        versions.split(',').map{|v| config.match(v) || [v, nil] }
       else
         config
       end
