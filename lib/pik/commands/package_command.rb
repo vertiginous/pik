@@ -40,6 +40,7 @@ module Pik
       extract(devkit_root, file)
       write_devkit_config(devkit_root)
       FileUtils.chdir(devkit_root) do
+        Log.info "Running the devkit installer."
         sh("ruby dk.rb install --force")
       end
     end
@@ -63,6 +64,7 @@ module Pik
       sep =<<-SEP
   sqlite: 'pik package sqlite install'
   7zip:   'pik package 7zip install'
+  devkit: 'pik package devkit install' # Installed to mingw versions only.
 
 If you have an idea for another package, submit a
 feature request at https://github.com/vertiginous/pik/issues
@@ -72,6 +74,7 @@ SEP
     end
 
     def write_devkit_config(dir)
+      Log.info "Writing #{dir + "config.yml"}"
       File.open(dir + "config.yml",'w') do |f|
         f.puts YAML.dump(mingw_ruby_dirs)
       end
