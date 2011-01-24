@@ -89,7 +89,8 @@ module Pik
     end
     
     def pik_version
-      "pik #{Pik::VERSION}\nby Gordon Thiesfeld (gthiesfeld@gmail.com)\n\n" 
+      win_ver = "on #{`ver`.strip}" rescue ''
+      "pik #{Pik::VERSION} #{win_ver}\nby Gordon Thiesfeld (gthiesfeld@gmail.com)\n\n" 
     end
     
     def find_config_from_path(path=Which::Ruby.find)
