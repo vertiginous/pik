@@ -39,11 +39,14 @@ module Pik
 
   Examples:
 
-    # install the latest version of JRuby (currently 1.5.6)
+    # install the default version of JRuby (currently 1.5.6)
     >pik install jruby
 
-    # install the latest 1.8.7 version of MRI Ruby 
-    >pik install ruby-1.8.7    
+    # install the default 1.8.7 version of MRI Ruby 
+    >pik install ruby-1.8.7
+    
+    # install a version with a patchlevel
+    >pik install ruby-1.8.7-p248 
 
 SEP
       options.separator sep

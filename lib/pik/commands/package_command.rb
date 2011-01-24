@@ -8,8 +8,8 @@ module Pik
     def execute
       if @args[1] == "install"
         case @args.first.downcase
-        # when "devkit"
-        #   devkit
+        when "devkit"
+          devkit
         when "7zip"
           sevenzip
         when "sqlite"
@@ -34,10 +34,15 @@ module Pik
       abort "'#{@args.first}' is an unknown package."
     end
 
-    # def devkit
-    #   file = download(url('devkit'))
-    #   extract(install_root + 'devkit', file)
-    # end
+    def devkit
+      devkit_root = install_root + 'devkit'
+      file = download(url('devkit'))
+      extract(devkit_root, file)
+      write_devkit_config(devkit_root)
+      FileUtils.chdir(devkit_root) do
+        sh("ruby dk.rb install --force")
+      end
+    end
 
     def sqlite
       file = download(url('sqlite'))
@@ -66,24 +71,20 @@ SEP
       options.separator sep
     end
 
-    # module Devkit
+    def write_devkit_config(dir)
+      File.open(dir + "config.yml",'w') do |f|
+        f.puts YAML.dump(mingw_ruby_dirs)
+      end
+    end
 
-    #   def write_config
-    #     File.open("config.yml",'w') do |f|
-    #       f.puts YAML.dump(mingw_ruby_dirs)
-    #     end
-    #   end
+    def mingw_ruby_dirs
+      config.select{|n, cfg| mingw?(cfg[:version]) }.
+        map{|k,i| i[:path].dirname.to_ruby }
+    end
 
-    #   def mingw_ruby_dirs
-    #     config.select{|n, cfg| mingw?(cfg[:version]) }.
-    #       map{|k,i| i[:path].dirname.to_ruby }
-    #   end
-
-    #   def mingw?(version)
-    #     Pik::VersionParser.parse(version).platform =~ /mingw/
-    #   end
-
-    # end
+    def mingw?(version)
+      Pik::VersionParser.parse(version).platform =~ /mingw/
+    end
 
   end
 
