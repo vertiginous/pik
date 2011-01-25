@@ -59,7 +59,9 @@ module Pik
       case file.to_s
       when /(^.+\.zip$)/, /(^.+\.7z$)/, /(^.+\.exe$)/
         file = Pathname($1)
-        system("#{seven_zip} x \"#{file.windows}\" -y -o\"#{target}\" > NUL")
+        cmd = " \"#{seven_zip}\" x \"#{file.windows}\" -y -o\"#{target}\" > NUL"
+        Log.debug cmd
+        system(cmd)
       else
         raise "Unknown file extension! (for file #{file})"
       end
