@@ -26,7 +26,17 @@ module Pik
       :delete, :each, :include?, :select
 
     def match(string)
+      find do |pattern, ver| 
+        VersionPattern.parse(pattern).include?(string) || ver[:alias] == string
+      end
+    end
+
+    def find_pattern(string)
       find{|pattern, ver| VersionPattern.parse(pattern).include? string }
+    end
+
+    def find_alias(string)
+      find{|pattern, ver| ver[:alias] == string }
     end
 
     def write
