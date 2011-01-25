@@ -84,6 +84,7 @@ module Pik
       end
       options.on("--debug", "-d", "Outputs debug information") do |value|
         @debug = true
+        Log.level = :debug
       end
       options.parse! @args 
     end

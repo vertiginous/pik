@@ -15,6 +15,18 @@ module Pik
       puts "INFO: #{message}\n\n"
     end
 
+    def debug(message)
+      puts "DEBUG: #{message}\n\n" if level == :debug
+    end
+
+    def level
+      @level ||= :error
+    end
+
+    def level=(sym)
+      @level = sym
+    end
+
   end
 
 end
