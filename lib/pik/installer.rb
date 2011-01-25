@@ -12,8 +12,9 @@ module Pik
     end
 
     def download_directory
-      @download_dir ||= config.global.fetch(:download_dir,
-                                            Pik.home + 'downloads')
+      @download_dir ||= Pathname(
+                config.global.fetch(:download_dir, Pik.home + 'downloads')
+        )
     end
 
     def download(package, opts={})
