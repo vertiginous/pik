@@ -1,11 +1,11 @@
 require 'uuid'
-require 'rake/packagetask'
+task :package => [:build, 'installer:package', "pkg/pik-#{Pik::VERSION}.zip" ]
 
-task :package => [:build, 'installer:package']
-
-Rake::PackageTask.new('pik-update', Pik::VERSION) do |p|
-  p.need_zip = true
-  p.package_files.include("tools/pik_runner.exe",'tools/pik.bat','tools/pik.ps1')
+file "pkg/pik-#{Pik::VERSION}.zip" => "pkg/pik-#{Pik::VERSION}/tools" do
+  chdir("pkg/pik-#{Pik::VERSION}/tools") do
+    sh %{zip pik-#{Pik::VERSION}.zip pik* }
+    mv "pik-#{Pik::VERSION}.zip", '../..'
+  end
 end
 
 ### installer
