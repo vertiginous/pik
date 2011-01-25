@@ -59,7 +59,6 @@ lib/pik/contrib/zip/zip.rb
 lib/pik/contrib/zip/zipfilesystem.rb
 lib/pik/contrib/zip/ziprequire.rb
 lib/pik/core_ext/pathname.rb
-lib/pik/implementations.rb
 lib/pik/installer.rb
 lib/pik/log.rb
 lib/pik/options.rb
