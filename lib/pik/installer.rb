@@ -1,13 +1,19 @@
 require 'pik/contrib/uri_ext'
 require 'pik/contrib/unzip'
 require 'pik/contrib/progressbar'
+require 'pik/config_file'
 
 module Pik
   
   module Installer
 
+    def config
+      @config = ConfigFile.new
+    end
+
     def download_directory
-      @download_dir ||= Pik.home + 'downloads'
+      @download_dir ||= config.global.fetch(:download_dir,
+                                            Pik.home + 'downloads')
     end
 
     def download(package, opts={})
