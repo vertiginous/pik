@@ -1,9 +1,9 @@
 require 'uuid'
 task :package => [:build, 'installer:package', "pkg/pik-#{Pik::VERSION}.zip" ]
 
-file "pkg/pik-#{Pik::VERSION}.zip" => "pkg/pik-#{Pik::VERSION}/tools" do
+file "pkg/pik-#{Pik::VERSION}.zip" => "pkg/pik-#{Pik::VERSION}" do
   chdir("pkg/pik-#{Pik::VERSION}/tools") do
-    sh %{zip pik-#{Pik::VERSION}.zip pik* }
+    sh %{zip pik-#{Pik::VERSION}.zip pik_runner.exe pik.bat pik.ps1 }
     mv "pik-#{Pik::VERSION}.zip", '../..'
   end
 end

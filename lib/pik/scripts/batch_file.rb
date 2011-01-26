@@ -22,6 +22,10 @@ module Pik
       self
     end
 
+    def copy(src, dest)
+      @lines << "copy /y #{src} #{dest}"
+    end
+
     def unset(*items)
       items.flatten.each{|k| @lines << "SET #{k}=" }
       self
