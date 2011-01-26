@@ -59,14 +59,16 @@ module Pik
       end
     end
 
-    def extract(target, file)
+    def extract(target, file, options={})
       target.mkpath
       # based on filetypes, extract the files
-      Log.info "Extracting:  #{file.windows}\n      to:  #{target}" #if verbose
+      Log.info "Extracting:  #{file.windows}\n      to:  #{target}"
       case file.to_s
       when /(^.+\.zip$)/, /(^.+\.7z$)/, /(^.+\.exe$)/
-        file = Pathname($1)
-        cmd = " \"#{seven_zip}\" x \"#{file.windows}\" -y -o\"#{target}\" > NUL"
+        file    = Pathname($1)
+        recurse = "-r #{options[:recurse]}" if options[:recurse]
+        ext = options[:extract] == :flat ? 'e' : 'x'
+        cmd = "\"#{seven_zip}\" #{ext} \"#{file.windows}\" -y #{recurse} -o\"#{target}\" > NUL"
         Log.debug cmd
         system(cmd)
       else

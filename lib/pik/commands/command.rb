@@ -128,9 +128,9 @@ module Pik
       Pik.script_file.path.delete if Pik.script_file.path.exist?
     end
     
-    def sh(cmd)
-      puts cmd if debug
-      system(cmd)
+    def sh(*cmd)
+      Log.debug cmd.join(' ') if debug
+      system(*cmd)
     end
     
     def hl

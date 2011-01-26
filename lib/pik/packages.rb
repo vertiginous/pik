@@ -12,7 +12,8 @@ module Pik
     PACKAGES = {
       "sqlite"=>{:url=>"http://www.sqlite.org/sqlite-dll-win32-x86-3070400.zip"},
       "devkit"=>{:url=>"http://cdn.rubyinstaller.org/archives/devkits/DevKit-tdm-32-4.5.1-20101231-1457.7z"},
-      "7zip"=>{:url=>"http://downloads.sourceforge.net/sevenzip/7za920.zip"}
+      "7zip"=>{:url=>"http://downloads.sourceforge.net/sevenzip/7za920.zip"},
+      "ansicon"=>{:url=>"http://adoxa.110mb.com/ansicon/ansi132.zip"}
     }
     
   end
