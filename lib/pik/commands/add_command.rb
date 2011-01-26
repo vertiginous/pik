@@ -30,9 +30,10 @@ module Pik
 
           Log.info "Adding:  #{name}\n      Located at:  #{path}\n"
           
-          config[name]           = {}
-          config[name][:path]    = path
-          config[name][:version] = version.full_version
+          config[name]            = {}
+          config[name][:path]     = path
+          config[name][:version]  = version.full_version
+          config[name][:platform] = version.platform
         end
       else
         puts "Couldn't find a Ruby version at #{path}"

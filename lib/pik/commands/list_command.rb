@@ -14,11 +14,12 @@ module Pik
       when 'default'
         default_string? ? default_list(:strings) : default_list
       when 'strings'
-         list(:string)
+         strings_list
       else
         if remote
           remote_list
         else
+         puts "\npik rubies\n\n"
          list
         end
       end
@@ -44,14 +45,20 @@ module Pik
         puts
       end
     end
+
+    def strings_list
+      config.sort.each do |name,conf|
+        puts name
+      end
+    end
     
     def default_string?
       @args[1] == 'string'
     end
 
-    def list(type=:simple)
+    def list
       config.sort.each do |name, conf|
-        name = VersionPattern.full(name) if type == :simple
+        name = VersionPattern.full(name)
         puts layout(name, conf)
         puts conf.map{|k,v| "        %s: %s" % [k, v]} + ["\n"] if verbose
       end
@@ -60,13 +67,8 @@ module Pik
     private
     
     def layout(name, conf)
+      name = "#{name} [ #{conf[:platform]} ]"
       name = current?(conf) ? "=> #{name}" : "   #{name}"
-      if name.length > columns
-        remainder = -(name.length - columns + 5)
-        "#{name[0,columns-5]}...#{"         ...%s" % name[remainder..-1] if verbose}"
-      else
-        name
-      end
     end
     
     def current?(conf)
