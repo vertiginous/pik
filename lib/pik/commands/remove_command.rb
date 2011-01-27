@@ -12,7 +12,7 @@ module Pik
       to_remove = config.match(@args.first)
       raise QuitError unless to_remove
       
-      name, config = *to_remove
+      name, data = *to_remove
 
       if remove?(name)
         config.delete(name)
