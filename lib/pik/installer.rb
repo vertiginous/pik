@@ -24,6 +24,8 @@ module Pik
       
       Log.info  "Downloading:  #{package} \n      to:  #{target.windows}"
       URI.download(package, target.to_s, {:progress => true, :verbose => true})
+      puts
+      
       return target
     end
 
