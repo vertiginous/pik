@@ -13,7 +13,11 @@ module Pik
     end
     
     def execute
-      name = @args.shift
+      list = config.options.fetch(:versions, @args.shift)
+      list.split(',').each{|name| install(name) }
+    end
+
+    def install(name)
       ruby = Rubies[name]
       abort "#{name} not found" unless ruby
 
@@ -22,13 +26,12 @@ module Pik
       Log.info("Installing #{ruby[:name]}")
       
       @target = install_root + ruby[:name]
-      handle_target if @target.exist?
-      
-      file = download(ruby[:url],ruby)
 
-      extract(@target, file)
-
-      add(@target)
+      if target_allowed?
+        file = download(ruby[:url],ruby)
+        extract(@target, file)
+        add(@target)
+      end
     end
     
     def command_options
@@ -57,15 +60,21 @@ SEP
       end 
     end
     
-    def handle_target
-      if @force
-        Log.info "Removing #{@target}"
-        FileUtils.rm_rf @target
+    def target_allowed?
+      if @target.exist?
+        if @force
+          Log.info "Removing #{@target}"
+          FileUtils.rm_rf @target
+          true
+        else
+          msg =  "The directory '#{@target}' already exists.\n\n"
+          msg << "Run:\n\n   'pik install --force [ruby]'\n\n" 
+          msg << "if you want to replace it.\n"
+          Log.error msg
+          false
+        end
       else
-        msg =  "\nThe directory '#{@target}' already exists.\n"
-        msg << "Run:\n\n   'pik install --force [ruby]'\n\n" 
-        msg << "if you want to replace it.\n"
-        abort msg
+        true
       end
     end
 
