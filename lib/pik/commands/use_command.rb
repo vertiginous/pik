@@ -16,7 +16,7 @@ module Pik
 
       ver_name, ver_config = *new_ver
       
-      config.global[:default] = VersionPattern.full(ver_name) if default
+      ver_config[:alias] = 'default' if default
       
       switch_path_to(ver_config)
       switch_gem_home_to(ver_config[:gem_home])

@@ -34,15 +34,13 @@ module Pik
     end
 
     def default_list(type=:simple)
-      puts "Default Ruby\n\n"
-      if default = config.match(config.global[:default])
+      if default = config.find_alias('default')
+        puts "Default Ruby\n\n"
         name, config = *default
         name = VersionPattern.full(name) if type == :simple
         puts layout(name, config)
       else
-        puts "no default assigned."
-        puts "run 'pik use [ruby] --default' to assign one"  
-        puts
+        Pik::Help.new(['default']).execute
       end
     end
 

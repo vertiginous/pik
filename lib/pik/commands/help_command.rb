@@ -13,6 +13,10 @@ module Pik
           Commands.find(a).description
         when :commands
           Commands.description
+        when :default
+          msg =  "Error: You must define a default ruby first.\n\nRun:\n\n"
+          msg << "   pik use [ruby] --default\n\n"
+          abort msg
         else
           "There is no command '#{a}' \n" +
           Pik::Help.description

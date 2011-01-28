@@ -31,8 +31,6 @@ lib/pik/commands/add_command.rb
 lib/pik/commands/alias_command.rb
 lib/pik/commands/command.rb
 lib/pik/commands/config_file_editor.rb
-lib/pik/commands/default_command.rb
-lib/pik/commands/gemsync_command.rb
 lib/pik/commands/help_command.rb
 lib/pik/commands/implode_command.rb
 lib/pik/commands/info_command.rb
