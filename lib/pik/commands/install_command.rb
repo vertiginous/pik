@@ -51,7 +51,10 @@ module Pik
     >pik install ruby-1.8.7
     
     # install a version with a patchlevel
-    >pik install ruby-1.8.7-p248 
+    >pik install ruby-1.8.7-p248
+
+    # install all most recent stable versions
+    > pik install 1.8.7,1.9.2,ironruby,jruby
 
 SEP
       options.separator sep
