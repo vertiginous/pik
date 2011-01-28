@@ -10,7 +10,7 @@ module Pik
       add(Pathname(path))
     end
 
-    def add(path)
+    def add(path, options={})
       path = path.dirname if path.file?
 
       if Which::Ruby.exist?(path)
@@ -34,6 +34,7 @@ module Pik
           config[name][:path]     = path
           config[name][:version]  = version.full_version
           config[name][:platform] = version.platform
+          config[name][:alias]    = options[:alias] if options[:alias]
         end
       else
         puts "Couldn't find a Ruby version at #{path}"

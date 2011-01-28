@@ -13,7 +13,7 @@ module Pik
 
       
       old_config.each do |version,hash|
-        add_cmd.add(hash[:path])
+        add_cmd.add(hash[:path], :alias => hash[:alias])
       end 
     end
 
