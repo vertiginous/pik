@@ -54,20 +54,7 @@ puts "Installing to #{install_dir}\n\n"
 cp File.join(src_dir, 'pik_runner.exe'), install_dir, :verbose => true
 cp File.join(src_dir, 'pik.bat'),        install_dir, :verbose => true
 cp File.join(src_dir, 'pik.ps1'),        install_dir, :verbose => true
-
-pikrc_file = File.join(pik_home, '.pikrc')
-pikrc_contents =<<PIKRC
-#!/bin/sh
-pik_path=#{bash_install_dir}
-
-function pik  {
-  $pik_path/pik_runner.exe pik.sh $@
-  [[ -s ~/.pik/pik.sh ]] && source ~/.pik/pik.sh
-} 
-PIKRC
-puts
-puts "creating #{pikrc_file}"
-File.open(pikrc_file, 'w+'){|f| f.puts pikrc_contents }
+cp File.join(src_dir, 'pik.sh'),         install_dir, :verbose => true
 
 puts "\npik is installed"
 
@@ -90,6 +77,6 @@ puts
 puts bash_msg =<<BASH_MSG
 if you want to use pik with git bash, add the following line to your ~/.bashrc:
 
-  [[ -s ~/.pik/.pikrc ]] && source ~/.pik/.pikrc
+  [[ -s #{bash_install_dir}/pik.sh ]] && source #{bash_install_dir}/pik.sh
 
 BASH_MSG
