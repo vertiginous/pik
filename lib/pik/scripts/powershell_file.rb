@@ -17,7 +17,7 @@ module Pik
     end
 
     def echo(str)
-      "Write-Host #{str}"
+      @lines << "Write-Host #{str}"
     end
 
     def set(items)
@@ -25,7 +25,7 @@ module Pik
         @lines << if v
           "$ENV:#{k}=\"#{v}\""
         else
-          "Remove-Item ENV:#{k}"
+          "if ($ENV:#{k}){ Remove-Item ENV:#{k} }"
         end
       end
 
