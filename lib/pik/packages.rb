@@ -50,10 +50,14 @@ module Pik
         {:implementation=>"MRI Ruby",
          :url=>
           "http://rubyforge.org/frs/download.php/72087/ruby-1.8.7-p302-i386-mingw32.7z"}],
-      ["[ruby-]1.8.7[-p330]",
+      ["[ruby-]1.8.7-p330",
         {:implementation=>"MRI Ruby",
          :url=>
           "http://rubyforge.org/frs/download.php/73720/ruby-1.8.7-p330-i386-mingw32.7z"}],
+      ["[ruby-]1.8.7[-p334]",
+        {:implementation=>"MRI Ruby",
+         :url=>
+          "http://rubyforge.org/frs/download.php/74296/ruby-1.8.7-p334-i386-mingw32.7z"}],
       ["[ruby-]1.9.1[-p430]",
         {:implementation=>"MRI Ruby",
          :url=>
@@ -62,10 +66,15 @@ module Pik
         {:implementation=>"MRI Ruby",
          :url=>
           "http://rubyforge.org/frs/download.php/72160/ruby-1.9.2-p0-i386-mingw32.7z"}],
-      ["[ruby-]1.9.2[-p136]",
+      ["[ruby-]1.9.2-p136",
         {:implementation=>"MRI Ruby",
          :url=>
-          "http://rubyforge.org/frs/download.php/73723/ruby-1.9.2-p136-i386-mingw32.7z"}]
+          "http://rubyforge.org/frs/download.php/73723/ruby-1.9.2-p136-i386-mingw32.7z"}],
+      ["[ruby-]1.9.2[-p180]",
+        {:implementation=>"MRI Ruby",
+         :url=>
+          "http://rubyforge.org/frs/download.php/74299/ruby-1.9.2-p180-i386-mingw32.7z"}]
+          
     ]
 
     def rubies 
