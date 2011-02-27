@@ -75,10 +75,11 @@ module Pik
       options.separator ""
       options.separator self.class.summary
       options.separator ""
+      options.separator help_message  
     end
     
     def parse_options
-      options.on("--version", "-V", "Pik version") do |value|
+      options.on("--version", "-V", "Display pik version") do |value|
         @version = true
         puts pik_version
       end
@@ -88,7 +89,10 @@ module Pik
       end
       options.parse! @args 
     end
-    
+ 
+    def help_message
+    end
+ 
     def pik_version
       win_ver = "on #{`ver`.strip}" rescue ''
       "pik #{Pik::VERSION} #{win_ver}\nby Gordon Thiesfeld (gthiesfeld@gmail.com)\n\n" 

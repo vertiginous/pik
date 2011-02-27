@@ -30,11 +30,6 @@ module Pik
       "#{cmd} #{args}"
     end
     
-    def command_options
-      super
-      options.separator help_message  
-    end
-    
     def help_message
       sep =<<SEP
   Examples:

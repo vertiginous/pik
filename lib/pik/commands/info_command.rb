@@ -83,7 +83,7 @@ MSG
       assoc = @reg.hkcr(extension) rescue nil
       ftype = @reg.hkcr("#{assoc}\\Shell\\open\\command") rescue nil
     end
-        
+ 
   end
   
 end

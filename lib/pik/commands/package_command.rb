@@ -74,8 +74,7 @@ module Pik
       Packages[package][:url]
     end
 
-    def command_options
-      super
+    def help_message
       sep =<<-SEP
   sqlite:  'pik package sqlite install'
   7zip:    'pik package 7zip install'
@@ -95,8 +94,8 @@ that you don't install to a path with spaces.
 If you have an idea for another package, submit a
 feature request at https://github.com/vertiginous/pik/issues
 
+
 SEP
-      options.separator sep
     end
 
     def write_devkit_config(dir)

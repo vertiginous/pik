@@ -2,7 +2,7 @@ module Pik
 
   class Alias < Command
 
-    it "manages aliases for ruby versions"
+    it "Manages aliases for ruby versions."
 
     include ConfigFileEditor
 
@@ -42,6 +42,22 @@ module Pik
       puts
     end
 
+    def help_message
+hm =<<HM
+Subcommands:
+  create
+    >pik alias create 187 ruby-1.8.7-p249
+
+  list
+    >pik alias list
+    187 => ruby-1.8.7-p249
+
+  delete
+    >pik alias delete 187
+
+
+HM
+    end
   end
 
 end

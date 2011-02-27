@@ -21,7 +21,7 @@ module Pik
         @force = value
       end 
     end 
-  
+
   end
 
 end

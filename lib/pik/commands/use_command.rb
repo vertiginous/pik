@@ -39,7 +39,9 @@ module Pik
         @default = true
       end
 
+    end
 
+    def help_message
       sep =<<SEP
   Examples:
 
@@ -63,9 +65,10 @@ module Pik
     C:\\>jruby -v
     jruby 1.6.0.RC1 (ruby 1.8.7 patchlevel 330) (2011-01-10 769f847) 
     
+    
 SEP
-      options.separator sep
     end
+    
   end
 
   

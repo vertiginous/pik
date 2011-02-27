@@ -41,11 +41,11 @@ module Pik
       end
     end
 
-    def command_options
-      super
+    def help_message
       options.banner += "[path_to_ruby]"
-    end    
-
+      ""
+    end
+    
     def get_version(path=Which::Ruby.find)
       cmd = Which::Ruby.exe(path)
       ruby_ver = `"#{cmd}" -v`

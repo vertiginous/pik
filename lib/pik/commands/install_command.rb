@@ -34,35 +34,6 @@ module Pik
       end
     end
     
-    def command_options
-      super
-      sep =<<SEP
-  Choices are: 1.8.7, 1.9.2, jruby, or ironruby
-  
-  If no version is specified, the default version will be installed.
-  You can see the full list by running 'pik list known'.
-
-  Examples:
-
-    # install the default version of JRuby (currently 1.5.6)
-    >pik install jruby
-
-    # install the default 1.8.7 version of MRI Ruby 
-    >pik install ruby-1.8.7
-    
-    # install a version with a patchlevel
-    >pik install ruby-1.8.7-p248
-
-    # install all most recent stable versions
-    > pik install 1.8.7,1.9.2,ironruby,jruby
-
-SEP
-      options.separator sep
-      options.on("--force", "Overwrite existing installation") do |value|
-        @force = value
-      end 
-    end
-    
     def target_allowed?
       if @target.exist?
         if @force
@@ -87,6 +58,38 @@ SEP
       p.close
     end
     
+    def help_message
+      sep =<<SEP
+  Choices are: 1.8.7, 1.9.2, jruby, or ironruby
+  
+  If no version is specified, the default version will be installed.
+  You can see the full list by running 'pik list known'.
+
+  Examples:
+
+    # install the default version of JRuby (currently 1.5.6)
+    >pik install jruby
+
+    # install the default 1.8.7 version of MRI Ruby 
+    >pik install ruby-1.8.7
+    
+    # install a version with a patchlevel
+    >pik install ruby-1.8.7-p248
+
+    # install all most recent stable versions
+    > pik install 1.8.7,1.9.2,ironruby,jruby
+
+SEP
+    end
+
+    def command_options
+      super
+
+      options.on("--force", "Overwrite existing installation") do |value|
+        @force = value
+      end 
+    end
+
   end
   
 end
