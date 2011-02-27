@@ -7,6 +7,14 @@ module Pik
     def execute
       puts options if @args.empty? && !version
       
+      if ruby = Rubies[@args.first]
+        msg =  "#{ruby[:name]} is not installed.\n\nRun:\n\n"
+        msg << "    pik install #{ruby[:pattern]}\n\n"
+        msg << "to install it"
+        Log.error msg
+        exit 1
+      end
+
       @args.each do |a|
         @msg = case a.to_sym
         when *Commands.list
