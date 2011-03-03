@@ -7,7 +7,7 @@ module Pik
 
     def execute
       check_args
-      rubies.each do |version,hash|
+      rubies.sort.each do |version,hash|
         begin
           if hash
             switch_path_to(hash)
