@@ -16,7 +16,7 @@ module Pik
 
       ver_name, ver_config = *new_ver
       
-      ver_config[:alias] = 'default' if default
+      config.create_alias(ver_name,'default') if default
       
       switch_path_to(ver_config)
       switch_gem_home_to(ver_config[:gem_home])

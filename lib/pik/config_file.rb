@@ -25,6 +25,11 @@ module Pik
     def_delegators :@rubies, :[], :[]=, :clear, :sort, :find, :keys, 
       :delete, :each, :include?, :select
 
+    def create_alias(key, alias_name)
+      each{|name,data| data.delete_if{|k,v| k == :alias && v == alias_name  }}
+      self[key][:alias] = alias_name
+    end
+
     def match(string)
       find do |pattern, ver| 
         VersionPattern.parse(pattern).include?(string) || ver[:alias] == string

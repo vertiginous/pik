@@ -19,19 +19,19 @@ module Pik
       end
     end
 
-    def create(pseudonum, name)
+    def create(pseudonym, name)
       if version = config.find_pattern(name)
-        config[version.first][:alias] = pseudonum
+        config.create_alias(version.first, pseudonym)
       else
         Log.error "Ruby version not found."
       end
     end
 
-    def delete(pseudonum)
-      if version = config.find_alias(pseudonum)
+    def delete(pseudonym)
+      if version = config.find_alias(pseudonym)
         config[version.first].delete(:alias)
       else
-        Log.error "Ruby version '#{pseudonum}' not found."
+        Log.error "Ruby version '#{pseudonym}' not found."
       end
     end
 
