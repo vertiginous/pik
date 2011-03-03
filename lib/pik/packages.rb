@@ -46,6 +46,10 @@ module Pik
         {:implementation=>"JRuby",
          :url=>
           "http://jruby.org.s3.amazonaws.com/downloads/1.6.0.RC1/jruby-bin-1.6.0.RC1.zip"}],
+      ["jruby-1.6.0.RC2",
+        {:implementation=>"JRuby",
+         :url=>
+          "http://jruby.org.s3.amazonaws.com/downloads/1.6.0.RC2/jruby-bin-1.6.0.RC2.zip"}],   
       ["[ruby-]1.8.7-p302",
         {:implementation=>"MRI Ruby",
          :url=>
