@@ -42,7 +42,7 @@ require 'pik/windows_env'
 require 'pik/which'
 
 module Pik
-  VERSION = '0.3.0.pre'
+  VERSION = '0.3.0.RC1'
   extend self
 
   Scripts = {

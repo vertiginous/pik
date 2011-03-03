@@ -12,7 +12,7 @@ end
 
 EXE_VERSION = {
   'version' => {
-    'file_version_number' => "#{Pik::VERSION.gsub(/\.pre/,'')}.0",
+    'file_version_number' => "#{Pik::VERSION.gsub(/\.[A-z].+/,'')}",
     'comments' => 'The Ruby version manager for Windows',
     'product_name' => 'Pik',
     'file_description' => 'Pik Runner',

@@ -42,7 +42,6 @@ lib/pik/commands/remove_command.rb
 lib/pik/commands/run_command.rb
 lib/pik/commands/script_file_editor.rb
 lib/pik/commands/system_command.rb
-lib/pik/commands/tag_command.rb
 lib/pik/commands/uninstall_command.rb
 lib/pik/commands/update_command.rb
 lib/pik/commands/use_command.rb
@@ -95,5 +94,6 @@ tasks/cucumber.rb
 tasks/package.rb
 tools/pik.bat
 tools/pik.ps1
+tools/pik.sh
 tools/pik_runner
 tools/pik_runner.exe
