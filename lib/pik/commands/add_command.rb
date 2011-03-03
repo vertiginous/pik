@@ -26,6 +26,10 @@ module Pik
             name = name.gsub(/^(ruby\-)(.+)/, '[\1]\2')
           end
           
+          if n = @name || config.options[:name]
+            name = "#{name}-#{n}"
+          end
+
           path    = Pathname(path.expand_path.to_ruby)
 
           Log.info "Adding:  #{name}\n      Located at:  #{path}\n"
@@ -45,7 +49,14 @@ module Pik
       options.banner += "[path_to_ruby]"
       ""
     end
-    
+
+    def command_options
+      super
+      options.on("--name NAME", "-n", "append a unique name to the selector") do |value|
+        @name = value
+      end
+    end
+
     def get_version(path=Which::Ruby.find)
       cmd = Which::Ruby.exe(path)
       ruby_ver = `"#{cmd}" -v`

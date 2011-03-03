@@ -4,19 +4,17 @@ module Pik
     
     extend self
 
-    def parse(name) # contributed by Shane Emmons
-      case name
-      when /^\[(.+)\](.+)\[(.+)\]$/
-        [ $1 + $2 + $3, $1 + $2, $2 + $3, $2 ]
-      when /^\[(.+)\](.+)$/
-        [ $1 + $2, $2 ]
-      when /^(.+)\[(.+)\]$/
-        [ $1, $1 + $2 ]
+    def parse(str) # contributed by Felipe Doria
+      optional = str.match /\[(.+?)\]/
+      if optional
+        with    = optional.pre_match + optional[1] + optional.post_match
+        without = optional.pre_match + optional.post_match
+        parse(with) | parse(without)
       else
-        [ name ]
+        [str]
       end
     end
-    
+
     def full(name)
       name.gsub(/[\[\]]/,'')
     end

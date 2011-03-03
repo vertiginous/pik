@@ -25,6 +25,7 @@ module Pik
             
       Log.info("Installing #{ruby[:name]}")
       
+      ruby[:name] += "-#{@name}" if @name
       @target = install_root + ruby[:name]
 
       if target_allowed?
@@ -53,6 +54,7 @@ module Pik
     end
 
     def add(target)
+      config.options[:name] = @name if @name
       p = Pik::Add.new([target + 'bin'], config)
       p.execute
       p.close
@@ -87,7 +89,11 @@ SEP
 
       options.on("--force", "Overwrite existing installation") do |value|
         @force = value
-      end 
+      end
+
+      options.on("--name NAME", "-n", "append a unique name to the selector") do |value|
+        @name = value
+      end
     end
 
   end
