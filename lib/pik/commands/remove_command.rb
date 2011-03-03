@@ -9,7 +9,7 @@ module Pik
     attr_reader :force, :quiet
     
     def execute
-      to_remove = config.match(@args.first)
+      to_remove = config.options.fetch(:remove, config.match(@args.shift))
       raise QuitError unless to_remove
       
       name, data = *to_remove

@@ -10,22 +10,24 @@ module Pik
     
     def execute
       to_remove = config.match(@args.first)
+      rm_name, rm_config = to_remove
       unless to_remove
         puts "Couldn't find the version you're looking for '#{@args.join(' ')}'."
         raise QuitError
       end
-      if force || hl.agree("Are you sure you'd like to uninstall '#{to_remove}'?"){|answer| answer.default = 'yes' }
-        puts "** Deleting #{config[to_remove][:path].dirname}"
-        path = config[to_remove][:path].dirname
+      if force || hl.agree("Are you sure you'd like to uninstall '#{rm_name}'?"){|answer| answer.default = 'yes' }
+        Log.info "Deleting #{rm_config[:path].dirname}"
+        path = rm_config[:path].dirname
         FileUtils.rm_rf(path) if path.exist?
-        remove(to_remove)
+        remove(rm_name)
         puts
-        hl.say("#{to_remove} has been uninstalled.")
+        Log.info "#{rm_name} has been uninstalled."
       end
     end
     
     def remove(to_remove)
-      rm = Pik::Remove.new([to_remove, '--force', '--quiet'], config)
+      config.options[:remove] = to_remove
+      rm = Pik::Remove.new(['--force'], config)
       rm.execute
       rm.close
     end
