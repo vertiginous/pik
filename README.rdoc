@@ -45,12 +45,12 @@ Pik is a tool to manage multiple versions of ruby on Windows.  It can be used fr
 
 *  Development requirements:
 
-      ruby 1.8.7 p330[http://rubinstaller.org]
+      ruby 1.8.7-p330[http://rubyinstaller.org]
 
       rake:    gem install rake
       isolate: gem install isolate
 
-      exerb-mingw[http://vert.igino.us/2011/01/05/exerb-101-building-windows-executables-with-ruby/] 
+      exerb-mingw[http://vert.igino.us/2011/01/05/exerb-101-building-windows-executables-with-ruby/]
 
       upx[http://upx.sourceforge.net/] (downloaded automatically, as needed)
 
