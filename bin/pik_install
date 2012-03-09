@@ -62,7 +62,7 @@ unless ENV['PATH'].downcase.include?( install_dir.downcase.gsub('/',"\\") )
   
   system_path_msg =<<SYSTEM_PATH_MSG
   
-The directory you installed to is not in the sytem path.
+The directory you installed to is not in the system path.
 #{install_dir}
 
 You will need to add it.
