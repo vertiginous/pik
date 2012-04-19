@@ -18,23 +18,26 @@ Pik is a tool to manage multiple versions of ruby on Windows.  It can be used fr
 
       add             Adds another ruby location to pik.
       benchmark|bench Runs bencmarks with all versions that pik is aware of.
+      config          Adds/modifies configuration options.
+      default         Switches back to the default settings.
+      devkit          Configures devkit settings
       default         Switches to the default ruby.
       gem             Runs the gem command with all versions that pik is aware of.
+      gemsync         Synchronizes gems from the version specified to the current version.
       help            Displays help information.
       implode         Removes your pik configuration.
-      info            Displays information about the current ruby version.
+      info|chekup|cu  Displays information about the current ruby version.
       install|in      Downloads and installs different ruby versions.
       list|ls         Lists ruby versions that pik is aware of.
-      package         Downloads and installs packages.
       rake            Runs the rake command with all versions that pik is aware of.
-      refresh         Refreshes the pik configuration file.
       remove|rm       Removes a ruby location from pik.
       ruby|rb         Runs ruby with all versions that pik is aware of.
-      run|exec        Executes shell command with all versions of ruby that pik is aware of.
-      system          Switches back to initial system environment.
+      run             Executes shell command with all versions of ruby that pik is aware of.
+      tag             Adds the given tag to the current version.
+      tags            Runs the pik command against the given tags.
       uninstall|unin  Deletes a ruby version from the filesystem and removes it from Pik.
       update|up       updates pik.
-      use             Switches ruby versions by name.
+      use|switch      Switches ruby versions by name.
 
     For help on a particular command, use 'pik help COMMAND'.
 
