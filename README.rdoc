@@ -12,7 +12,7 @@ Gordon Thiesfeld  gthiesfeld@gmail.com
 
 == DESCRIPTION:
 
-Pik is a tool to manage multiple versions of ruby on Windows.  It can be used from the Windows command line (cmd.exe), Windows PowerShell, or Git Bash.
+pik is a tool to manage multiple versions of ruby on Windows.  It can be used from the Windows command line (cmd.exe), Windows PowerShell, or Git Bash.
 
     C:\>pik help commands
 
@@ -32,7 +32,7 @@ Pik is a tool to manage multiple versions of ruby on Windows.  It can be used fr
       ruby|rb         Runs ruby with all versions that pik is aware of.
       run|exec        Executes shell command with all versions of ruby that pik is aware of.
       system          Switches back to initial system environment.
-      uninstall|unin  Deletes a ruby version from the filesystem and removes it from Pik.
+      uninstall|unin  Deletes a ruby version from the filesystem and removes it from pik.
       update|up       updates pik.
       use             Switches ruby versions by name.
 
@@ -91,7 +91,9 @@ So I run:
 
 If you want to install to a machine that doesn't have Ruby installed yet, you can download the latest msi file from github[http://github.com/vertiginous/pik/downloads].
 
-The MSI installer currently doesn't install the needed files to use Pik from Git Bash. 
+The MSI installer currently doesn't install the needed files to use pik from Git Bash. 
+
+If you install pik using the installer the .bat you must set the 'HOME' or 'PIK_HOME' to the directory pik installs to, ususally the path specified in %USERPROFILE%.
 
 If you want to install to a directory that's not in your path, you can check the box to have the installer add it to the path for you (this will only work if you're an adminstrator).  After that, you should be ready to run pik. 
 
