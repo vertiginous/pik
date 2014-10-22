@@ -10,6 +10,16 @@ Bugs/Feature requests:  http://github.com/vertiginous/pik/issues
 
 Gordon Thiesfeld  gthiesfeld@gmail.com
 
+== No longer maintained
+
+Since 2012, maintain and update Pik to keep up with changes associated with RubyInstaller has been
+impossible. With main developer gone and limited time availabilty is no longer possible to
+update or workout the issues presented.
+
+Since nobody has volunteered to maintain this project, we recommend you look at Uru as alternative:
+
+https://bitbucket.org/jonforums/uru/
+
 == DESCRIPTION:
 
 pik is a tool to manage multiple versions of ruby on Windows.  It can be used from the Windows command line (cmd.exe), Windows PowerShell, or Git Bash.
