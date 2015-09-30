@@ -105,7 +105,7 @@ The MSI installer currently doesn't install the needed files to use pik from Git
 
 If you install pik using the msi you must set the 'HOME' or 'PIK_HOME' environment variable to the directory pik installs to, ususally the path specified in %USERPROFILE%.
 
-If you want to install to a directory that's not in your path, you can check the box to have the installer add it to the path for you (this will only work if you're an adminstrator).  After that, you should be ready to run pik. 
+If you want to install to a directory that's not in your path, you can check the box to have the installer add it to the path for you (this will only work if you're an administrator).  After that, you should be ready to run pik. 
 
 *  If this is a first-time install, look at pik add, and pik install to set up your environment.
  
